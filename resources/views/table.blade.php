@@ -44,12 +44,16 @@
             <label class="block text-gray-600 mb-2">Notes</label>
             <textarea
                 class="w-full border rounded-md p-3"
+                name="notes"
+                value="{{old('notes')}}"
                 placeholder="Notes - any relevant information not already covered"
             ></textarea>
 
             <label class="block text-gray-600 mt-6 mb-2">Terms</label>
             <textarea
                 class="w-full border rounded-md p-3"
+                name="terms"
+                value="{{old('terms')}}"
                 placeholder="Terms and conditions - late fees, payment methods, delivery schedule"
             ></textarea>
         </div>
@@ -60,15 +64,15 @@
             <input
                 type="hidden"
                 name="subtotal"
+               
                 id="input-subtotal"
-                value="0"
             />
-            <input type="hidden" name="total" id="input-total" value="0" />
+            <input type="hidden" name="total" id="input-total"  />
             <input
                 type="hidden"
                 name="balance_due"
                 id="input-balance-due"
-                value="0"
+                
             />
 
             <div class="flex justify-between">
@@ -90,7 +94,7 @@
                         type="number"
                         min="0"
                         name="shipping"
-                        value="0"
+                        
                         id="shipping"
                         class="input w-24 border rounded-md text-right px-2 py-1 focus:ring-teal-500 focus:border-teal-500"
                         oninput="if (this.value < 0) this.value = 0;"
@@ -107,7 +111,7 @@
                         min="0"
                         step="0.01"
                         name="discount_rate"
-                        value="0"
+                        
                         id="discount"
                         class="input w-24 border rounded-md text-right px-2 py-1 focus:ring-teal-500 focus:border-teal-500"
                         oninput="if (this.value < 0) this.value = 0;"
@@ -124,7 +128,7 @@
                         min="0"
                         step="0.01"
                         name="tax_rate"
-                        value="0"
+                       
                         id="tax"
                         class="input w-24 border rounded-md text-right px-2 py-1 focus:ring-teal-500 focus:border-teal-500"
                         oninput="if (this.value < 0) this.value = 0;"
@@ -151,7 +155,7 @@
                         type="number"
                         min="0"
                         name="amount_paid"
-                        value="0"
+                        
                         id="paid"
                         class="input w-24 border rounded-md text-right px-2 py-1 focus:ring-teal-500 focus:border-teal-500"
                         oninput="if (this.value < 0) this.value = 0;"

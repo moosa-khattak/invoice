@@ -47,6 +47,7 @@
                 <input
                     type="text"
                     name="invoice_number"
+                    value="{{old('invoice_number')}}"
                     class="border border-gray-200 rounded-lg py-2 pr-3 text-right focus:outline-none focus:ring-2 focus:ring-teal-500 transition"
                 />
             </div>
@@ -62,6 +63,7 @@
                 <input
                     type="text"
                     name="from"
+                    value="{{old('from')}}"
                     placeholder="Who is this from?"
                     class="w-full border border-gray-200 rounded-lg p-4 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-500 transition"
                 />
@@ -76,6 +78,7 @@
                     <input
                         type="text"
                         name="bill_to"
+                        value="{{old('bill_to')}}"
                         placeholder="Who is this to?"
                         class="w-full border border-gray-200 rounded-lg p-4 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-500 transition"
                     />
@@ -87,6 +90,7 @@
                     <input
                         type="text"
                         name="ship_to"
+                        value="{{old('ship_to')}}"
                         placeholder="(optional)"
                         class="w-full border border-gray-200 rounded-lg p-4 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-500 transition"
                     />
@@ -102,6 +106,7 @@
                 <input
                     type="date"
                     name="invoice_date"
+                    value="{{old('invoice_date')}}"
                     class="flex-1 border border-gray-200 rounded-lg p-2.5 focus:outline-none focus:ring-2 focus:ring-teal-500 transition"
                 />
             </div>
@@ -114,6 +119,7 @@
                 <input
                     type="text"
                     name="payment_terms"
+                    value="{{old('payment_terms')}}"
                     class="flex-1 border border-gray-200 rounded-lg py-2.5 focus:outline-none focus:ring-2 focus:ring-teal-500 transition"
                 />
             </div>
@@ -124,6 +130,7 @@
                 <input
                     type="date"
                     name="due_date"
+                    value="{{old('due_date')}}"
                     class="flex-1 border border-gray-200 rounded-lg py-2.5 focus:outline-none focus:ring-2 focus:ring-teal-500 transition"
                 />
             </div>
@@ -134,6 +141,7 @@
                 <input
                     type="text"
                     name="po_number"
+                    value="{{old('po_number')}}"
                     class="flex-1 border border-gray-200 rounded-lg py-2.5 focus:outline-none focus:ring-2 focus:ring-teal-500 transition"
                 />
             </div>
@@ -185,13 +193,13 @@
                     document.getElementById('currency-selector').value;
                 row.innerHTML = `
             <td class="p-3">
-                <input type="text" name="items[${rowCount}][Item]" placeholder="Description" class="w-full bg-transparent focus:outline-none placeholder-gray-400 font-medium" />
+                <input type="text" name="items[${rowCount}][Item]" placeholder="Description"  class="w-full bg-transparent focus:outline-none placeholder-gray-400 font-medium" />
             </td>
             <td class="p-3">
-                <input type="number" name="items[${rowCount}][Quantity]" value="0" min="0" step="1" class="w-full text-center bg-transparent focus:outline-none quantity-input" oninput="this.value = Math.max(0, Math.floor(this.value)); calculateRow(this)" />
+                <input type="number" name="items[${rowCount}][Quantity]" min="0" step="1" class="w-full text-center bg-transparent focus:outline-none quantity-input" oninput="this.value = Math.max(0, Math.floor(this.value)); calculateRow(this)" />
             </td>
             <td class="p-3">
-                <input type="number" name="items[${rowCount}][Rate]" value="0" min="0" step="1" class="w-full text-center bg-transparent focus:outline-none rate-input" oninput="this.value = Math.max(0, Math.floor(this.value)); calculateRow(this)" />
+                <input type="number" name="items[${rowCount}][Rate]" min="0" step="1" class="w-full text-center bg-transparent focus:outline-none rate-input" oninput="this.value = Math.max(0, Math.floor(this.value)); calculateRow(this)" />
             </td>
             <td class="p-3 text-right font-medium text-gray-700 amount-display">
             <span class="mr-2 currency-code-display">${selectedCurrency}</span>
