@@ -137,7 +137,7 @@
             <div class="flex justify-between font-semibold text-lg">
                 <span>Total</span>
                 <div class="flex gap-5">
-                    <span id="currency">USD</span>
+                    <span id="currency" class="currency-code-display">USD</span>
                     <span id="total">0.00</span>
                 </div>
             </div>
@@ -146,7 +146,7 @@
                 <span>Amount Paid</span>
 
                 <div class="flex gap-2 items-center">
-                    <span id="currency">USD</span>
+                    <span id="currency" class="currency-code-display">USD</span>
                     <input
                         type="number"
                         min="0"
@@ -162,7 +162,7 @@
             <div class="flex justify-between font-semibold">
                 <span>Balance Due</span>
                 <div class="flex gap-5">
-                    <span id="currency">USD</span>
+                    <span id="currency"  class="currency-code-display">USD</span>
                     <span id="balance">0.00</span>
                 </div>
             </div>
