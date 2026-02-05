@@ -24,12 +24,14 @@
     <!-- Actions -->
     <div class="flex gap-4 mt-4">
         <button
+            type="button"
             onclick="addRow()"
             class="text-green-600 border border-green-500 px-4 py-2 rounded-md font-medium hover:bg-green-50 transition"
         >
             + Line Item
         </button>
         <button
+            type="button"
             onclick="addColumn()"
             class="text-blue-600 border border-blue-500 px-4 py-2 rounded-md font-medium hover:bg-blue-50 transition"
         >
@@ -45,7 +47,7 @@
             <textarea
                 class="w-full border rounded-md p-3"
                 name="notes"
-                value="{{old('notes')}}"
+                value="{{ old('notes') }}"
                 placeholder="Notes - any relevant information not already covered"
             ></textarea>
 
@@ -53,7 +55,7 @@
             <textarea
                 class="w-full border rounded-md p-3"
                 name="terms"
-                value="{{old('terms')}}"
+                value="{{ old('terms') }}"
                 placeholder="Terms and conditions - late fees, payment methods, delivery schedule"
             ></textarea>
         </div>
@@ -61,19 +63,9 @@
         <!-- Right -->
         <div class="col-span-12 md:col-span-5 space-y-4 text-sm">
             <!-- Hidden inputs for calculated values required by backend -->
-            <input
-                type="hidden"
-                name="subtotal"
-               
-                id="input-subtotal"
-            />
-            <input type="hidden" name="total" id="input-total"  />
-            <input
-                type="hidden"
-                name="balance_due"
-                id="input-balance-due"
-                
-            />
+            <input type="hidden" name="subtotal" id="input-subtotal" />
+            <input type="hidden" name="total" id="input-total" />
+            <input type="hidden" name="balance_due" id="input-balance-due" />
 
             <div class="flex justify-between">
                 <span>Subtotal</span>
@@ -94,7 +86,6 @@
                         type="number"
                         min="0"
                         name="shipping"
-                        
                         id="shipping"
                         class="input w-24 border rounded-md text-right px-2 py-1 focus:ring-teal-500 focus:border-teal-500"
                         oninput="if (this.value < 0) this.value = 0;"
@@ -111,7 +102,6 @@
                         min="0"
                         step="0.01"
                         name="discount_rate"
-                        
                         id="discount"
                         class="input w-24 border rounded-md text-right px-2 py-1 focus:ring-teal-500 focus:border-teal-500"
                         oninput="if (this.value < 0) this.value = 0;"
@@ -128,7 +118,6 @@
                         min="0"
                         step="0.01"
                         name="tax_rate"
-                       
                         id="tax"
                         class="input w-24 border rounded-md text-right px-2 py-1 focus:ring-teal-500 focus:border-teal-500"
                         oninput="if (this.value < 0) this.value = 0;"
@@ -155,7 +144,6 @@
                         type="number"
                         min="0"
                         name="amount_paid"
-                        
                         id="paid"
                         class="input w-24 border rounded-md text-right px-2 py-1 focus:ring-teal-500 focus:border-teal-500"
                         oninput="if (this.value < 0) this.value = 0;"
@@ -166,7 +154,7 @@
             <div class="flex justify-between font-semibold">
                 <span>Balance Due</span>
                 <div class="flex gap-5">
-                    <span id="currency"  class="currency-code-display">USD</span>
+                    <span id="currency" class="currency-code-display">USD</span>
                     <span id="balance">0.00</span>
                 </div>
             </div>
