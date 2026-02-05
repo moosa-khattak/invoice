@@ -1,4 +1,4 @@
-<div class="max-w-[910px] mx-4 p-6 bg-white rounded-lg">
+<div class="max-w-[90%]  mx-auto px-4 md:px-6 p-6 bg-white rounded-lg">
     <!-- Items Table -->
     <div class="overflow-x-auto">
         <table class="w-full text-left border-collapse" id="invoice-table">
@@ -7,10 +7,10 @@
                     class="bg-slate-900 text-white text-sm font-semibold"
                     id="header-row"
                 >
-                    <th class="p-3">Item</th>
-                    <th class="p-3 text-center">Quantity</th>
-                    <th class="p-3 text-center">Rate</th>
-                    <th class="p-3 text-right">Amount</th>
+                    <th class="p-3 whitespace-nowrap">Item</th>
+                    <th class="p-3 text-center whitespace-nowrap">Quantity</th>
+                    <th class="p-3 text-center whitespace-nowrap">Rate</th>
+                    <th class="p-3 text-right whitespace-nowrap">Amount</th>
                     <th class="p-3 w-10"></th>
                     <!-- Delete Action Column -->
                 </tr>
@@ -22,30 +22,30 @@
     </div>
 
     <!-- Actions -->
-    <div class="flex gap-4 mt-4">
+    <div class="flex flex-wrap gap-4 mt-4">
         <button
             type="button"
             onclick="addRow()"
-            class="text-green-600 border border-green-500 px-4 py-2 rounded-md font-medium hover:bg-green-50 transition"
+            class="flex-1 sm:flex-none text-green-600 border border-green-500 px-4 py-2 rounded-md font-medium hover:bg-green-50 transition"
         >
             + Line Item
         </button>
-        <button
+        <!-- <button
             type="button"
             onclick="addColumn()"
-            class="text-blue-600 border border-blue-500 px-4 py-2 rounded-md font-medium hover:bg-blue-50 transition"
+            class="flex-1 sm:flex-none text-blue-600 border border-blue-500 px-4 py-2 rounded-md font-medium hover:bg-blue-50 transition"
         >
             + Add Column
-        </button>
+        </button> -->
     </div>
 
     <!-- Notes & Summary -->
-    <div class="grid grid-cols-12 gap-6 mt-10">
+    <div class="grid grid-cols-12 gap-20 mt-10">
         <!-- Left -->
-        <div class="col-span-12 md:col-span-7">
+        <div class="col-span-12 md:col-span-8">
             <label class="block text-gray-600 mb-2">Notes</label>
             <textarea
-                class="w-full border rounded-md p-3"
+                class="w-[70%] border rounded-md p-3"
                 name="notes"
                 value="{{ old('notes') }}"
                 placeholder="Notes - any relevant information not already covered"
@@ -53,7 +53,7 @@
 
             <label class="block text-gray-600 mt-6 mb-2">Terms</label>
             <textarea
-                class="w-full border rounded-md p-3"
+                class="w-[70%] border rounded-md p-3"
                 name="terms"
                 value="{{ old('terms') }}"
                 placeholder="Terms and conditions - late fees, payment methods, delivery schedule"
@@ -61,11 +61,17 @@
         </div>
 
         <!-- Right -->
-        <div class="col-span-12 md:col-span-5 space-y-4 text-sm">
-            <!-- Hidden inputs for calculated values required by backend -->
+        <div class="col-span-12 md:col-span-4  space-y-4 text-sm">
+            <!-- Hidden inputs for calculated values required by backend
             <input type="hidden" name="subtotal" id="input-subtotal" />
             <input type="hidden" name="total" id="input-total" />
             <input type="hidden" name="balance_due" id="input-balance-due" />
+            <input
+                type="hidden"
+                name="currency"
+                id="input-currency"
+                value="USD"
+            /> -->
 
             <div class="flex justify-between">
                 <span>Subtotal</span>
@@ -73,6 +79,22 @@
                 <div class="flex gap-5">
                     <span class="currency-code-display">USD</span>
                     <span id="subtotal">0.00</span>
+                </div>
+            </div>
+
+            <div class="flex justify-between items-center">
+                <span>Discount</span>
+                <div class="flex items-center gap-2">
+                    <span class="">%</span>
+                    <input
+                        type="number"
+                        min="0"
+                        step="0.01"
+                        name="discount_rate"
+                        id="discount"
+                        class="input w-24 border rounded-md text-right px-2 py-1 focus:ring-teal-500 focus:border-teal-500"
+                        oninput="if (this.value < 0) this.value = 0;"
+                    />
                 </div>
             </div>
 
@@ -87,22 +109,6 @@
                         min="0"
                         name="shipping"
                         id="shipping"
-                        class="input w-24 border rounded-md text-right px-2 py-1 focus:ring-teal-500 focus:border-teal-500"
-                        oninput="if (this.value < 0) this.value = 0;"
-                    />
-                </div>
-            </div>
-
-            <div class="flex justify-between items-center">
-                <span>Discount</span>
-                <div class="flex items-center gap-2">
-                    <span class="">%</span>
-                    <input
-                        type="number"
-                        min="0"
-                        step="0.01"
-                        name="discount_rate"
-                        id="discount"
                         class="input w-24 border rounded-md text-right px-2 py-1 focus:ring-teal-500 focus:border-teal-500"
                         oninput="if (this.value < 0) this.value = 0;"
                     />
