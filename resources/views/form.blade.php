@@ -7,23 +7,31 @@
         class="flex flex-col md:flex-row justify-between items-start gap-8 mb-10"
     >
         <!-- Logo Placeholder -->
-        <div class="w-full md:w-64 max-w-xs mx-auto md:mx-0">
+        <div
+            class="w-full md:w-64 max-w-xs mx-auto md:mx-0 relative group/logo"
+        >
             <label
-                class="border border-dashed border-gray-300 bg-gray-50 hover:bg-gray-100 transition rounded-lg h-32 md:h-40 flex flex-col items-center justify-center cursor-pointer group"
+                class="border border-dashed border-gray-300 bg-gray-50 hover:bg-gray-100 transition rounded-lg h-32 md:h-40 flex flex-col items-center justify-center cursor-pointer overflow-hidden"
             >
-                <span
-                    class="text-3xl text-gray-400 mb-2 group-hover:text-gray-500"
+                <div
+                    id="logo-placeholder"
+                    class="flex flex-col items-center justify-center {{ old('logo_base64') ? 'hidden' : '' }}"
                 >
-                    +
-                </span>
-                <span
-                    class="text-gray-400 font-medium group-hover:text-gray-500"
-                >
-                    Add Your Logo
-                </span>
+                    <span
+                        class="text-3xl text-gray-400 mb-2 group-hover:text-gray-500"
+                    >
+                        +
+                    </span>
+                    <span
+                        class="text-gray-400 font-medium group-hover:text-gray-500"
+                    >
+                        Add Your Logo
+                    </span>
+                </div>
                 <img
                     id="logo-preview"
-                    class="hidden h-full w-full object-contain rounded-lg"
+                    src="{{ old('logo_base64') }}"
+                    class="{{ old('logo_base64') ? '' : 'hidden' }} h-full w-full object-contain"
                 />
                 <input
                     type="file"
@@ -32,7 +40,35 @@
                     id="logo-input"
                     class="hidden"
                 />
+                <input
+                    type="hidden"
+                    name="logo_base64"
+                    id="logo-base64-input"
+                    value="{{ old('logo_base64') }}"
+                />
             </label>
+            <!-- Remove Button -->
+            <button
+                type="button"
+                id="remove-logo"
+                class="{{ old('logo_base64') ? '' : 'hidden' }} absolute -top-3 -right-3 bg-white text-gray-500 hover:text-red-600 rounded-full h-8 w-8 shadow-lg border border-gray-200 items-center justify-center transition-all duration-200 hover:scale-110 z-10"
+                title="Remove Logo"
+            >
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-4 w-4 translate-x-2"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2.5"
+                        d="M6 18L18 6M6 6l12 12"
+                    />
+                </svg>
+            </button>
         </div>
 
         <!-- Invoice Header -->

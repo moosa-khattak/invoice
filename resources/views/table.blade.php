@@ -1,4 +1,4 @@
-<div class="max-w-[900px] mx-4 md:px-6 p-6 bg-white rounded-lg">
+<div class="max-w-[910px] mx-4 md:px-6 p-6 bg-white rounded-lg">
     <!-- Items Table -->
     <div class="overflow-x-auto">
         <table class="w-full text-left border-collapse" id="invoice-table">

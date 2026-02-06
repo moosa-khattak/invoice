@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\InvoiceRequest;
 use App\Models\Invoice;
 use App\Models\Currency;
+use Illuminate\Support\Facades\Storage;
 
 class InvoiceController extends Controller
 {
@@ -34,6 +35,19 @@ class InvoiceController extends Controller
         $logoPath = null;
         if ($request->hasFile('logo')) {
             $logoPath = $request->file('logo')->store('logos', 'public');
+        } elseif ($request->filled('logo_base64')) {
+            $base64Image = $request->input('logo_base64');
+            // Basic check to see if it's a data URL
+            if (str_contains($base64Image, ';base64,')) {
+                $image_parts = explode(";base64,", $base64Image);
+                $image_type_aux = explode("image/", $image_parts[0]);
+                $image_type = $image_type_aux[1] ?? 'png';
+                $image_base64 = base64_decode($image_parts[1]);
+                
+                $filename = 'logos/' . uniqid() . '.' . $image_type;
+                Storage::disk('public')->put($filename, $image_base64);
+                $logoPath = $filename;
+            }
         }
 
         // // Calculate totals on backend for security/reliability
@@ -136,6 +150,7 @@ class InvoiceController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        Invoice::destroy($id);
+        return redirect()->route('allinvoices')->with('success', 'Invoice deleted successfully!');
     }
 }

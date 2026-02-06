@@ -24,6 +24,44 @@ const inputs = {
     if (el) el.addEventListener('input', calculateTotals);
 });
 
+// Logo Preview Logic
+const logoInput = document.getElementById('logo-input');
+const logoPreview = document.getElementById('logo-preview');
+const logoPlaceholder = document.getElementById('logo-placeholder');
+const removeLogoBtn = document.getElementById('remove-logo');
+const logoBase64Input = document.getElementById('logo-base64-input');
+
+if (logoInput && logoPreview) {
+    logoInput.addEventListener('change', function (e) {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const base64Data = e.target.result;
+                logoPreview.src = base64Data;
+                if (logoBase64Input) logoBase64Input.value = base64Data;
+
+                logoPreview.classList.remove('hidden');
+                logoPlaceholder?.classList.add('hidden');
+                removeLogoBtn?.classList.remove('hidden');
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
+    removeLogoBtn?.addEventListener('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        logoInput.value = '';
+        logoPreview.src = '';
+        if (logoBase64Input) logoBase64Input.value = '';
+
+        logoPreview.classList.add('hidden');
+        logoPlaceholder?.classList.remove('hidden');
+        removeLogoBtn.classList.add('hidden');
+    });
+}
+
 // --- Functions ---
 
 function formatMoney(amount) {

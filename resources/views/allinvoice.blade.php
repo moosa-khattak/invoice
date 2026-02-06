@@ -20,7 +20,7 @@
                 <table class="w-full text-left border-collapse">
                     <thead>
                         <tr
-                            class="bg-gray-50 text-gray-600 text-sm font-semibold uppercase tracking-wider"
+                            class="bg-gray-100 text-gray-600 text-sm font-semibold uppercase tracking-wider"
                         >
                             <th class="px-6 py-4">Logo</th>
                             <th class="px-6 py-4">Invoice #</th>
@@ -29,7 +29,8 @@
                             <th class="px-6 py-4">Total</th>
                             <th class="px-6 py-4">Balance</th>
                             <th class="px-6 py-4 text-center">Actions</th>
-                        </tr>
+                            <th class="px-6 py-4 text-center">Delete</th>
+                        </tr>   
                     </thead>
                     <tbody class="divide-y divide-gray-100">
                         @forelse ($invoices as $invoice)
@@ -77,6 +78,14 @@
                                         class="text-indigo-600 hover:text-indigo-900 font-medium bg-indigo-50 px-3 py-1 rounded-md transition"
                                     >
                                         View
+                                    </a>
+                                </td>
+                                <td class="px-6 py-4 text-center">
+                                    <a
+                                        href="{{ route('invoice.delete', $invoice->id) }}"
+                                        class="text-red-600 hover:text-red-900 font-medium bg-red-50 px-3 py-1 rounded-md transition"
+                                    >
+                                        Delete
                                     </a>
                                 </td>
                             </tr>
