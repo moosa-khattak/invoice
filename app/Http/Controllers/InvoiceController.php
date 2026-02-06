@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\InvoiceRequest;
 use App\Models\Invoice;
+use App\Models\Currency;
 
 class InvoiceController extends Controller
 {
@@ -13,12 +14,13 @@ class InvoiceController extends Controller
      */
     public function index()
     {
-        //
+        $invoices = Invoice::all();
+        return view('allinvoice', compact('invoices'));
     }
 
     public function create()
     {
-        $currencies = \App\Models\Currency::all();
+        $currencies = Currency::all();
         return view('invoice', compact('currencies'));
     }
 
@@ -35,44 +37,45 @@ class InvoiceController extends Controller
         }
 
         // // Calculate totals on backend for security/reliability
-        // $items = $request->input('items', []);
-        // $subtotal = 0;
+        $items = $request->input('items', []);
+        $subtotal = 0;
         
         // // Ensure items is an array before processing
-        // if (is_array($items)) {
-        //     // Clean up items (remove array keys if they became non-sequential)
-        //     $items = array_values($items);
+        if (is_array($items)) {
+            // Clean up items (remove array keys if they became non-sequential)
+            $items = array_values($items);
             
-        //     foreach ($items as &$item) {
-        //         // Assuming Quantity and Rate always exist or defaut to 0
-        //         $qty = (int)($item['Quantity'] ?? 0);
-        //         $rate = (int)($item['Rate'] ?? 0);
-        //         $amount = $qty * $rate;
-        //         $item['Amount'] = $amount; // Ensure backend calc is saved
-        //         $subtotal += $amount;
-        //     }
-        // }
+            foreach ($items as &$item) {
+                // Assuming Quantity and Rate always exist or defaut to 0
+                $qty = (int)($item['Quantity'] ?? 0);
+                $rate = (int)($item['Rate'] ?? 0);
+                $amount = $qty * $rate;
+                $item['Amount'] = $amount; // Ensure backend calc is saved
+                $subtotal += $amount;
+            }
+            unset($item);
+        }
 
         // Retrieve and sanitize inputs
         // Note: inputs named discount_rate/tax_rate in UI to clearer
-        // $shipping = (float) $request->input('shipping', 0);
-        // $discountRate = (float) $request->input('discount_rate', 0);
-        // $taxRate = (float) $request->input('tax_rate', 0);
-        // $amountPaid = (float) $request->input('amount_paid', 0);
+        $shipping = (float) $request->input('shipping', 0);
+        $discountRate = (float) $request->input('discount_rate', 0);
+        $taxRate = (float) $request->input('tax_rate', 0);
+        $amountPaid = (float) $request->input('amount_paid', 0);
 
         // Calculate Monetary Values
         // Discount Amount = Subtotal * (Rate / 100)
-        // $discountAmount = $subtotal * ($discountRate / 100);
+        $discountAmount = $subtotal * ($discountRate / 100);
         
         // Tax Amount = (Subtotal - DiscountAmount) * (Rate / 100)
-        // $taxableAmount = $subtotal - $discountAmount;
-        // $taxAmount = $taxableAmount * ($taxRate / 100);
+        $taxableAmount = $subtotal - $discountAmount;
+        $taxAmount = $taxableAmount * ($taxRate / 100);
 
         // Calculate Final Total
-        // $total = ($subtotal - $discountAmount) + $taxAmount + $shipping;
+        $total = ($subtotal - $discountAmount) + $taxAmount + $shipping;
         
         // Calculate Balance Due
-        // $balanceDue = $total - $amountPaid;
+        $balanceDue = $total - $amountPaid;
 
         $invoice = Invoice::create([
             'invoice_number' => $request->invoice_number,

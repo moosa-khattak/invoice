@@ -1,4 +1,4 @@
-<div class="max-w-[90%]  mx-auto px-4 md:px-6 p-6 bg-white rounded-lg">
+<div class="max-w-[900px] mx-4 md:px-6 p-6 bg-white rounded-lg">
     <!-- Items Table -->
     <div class="overflow-x-auto">
         <table class="w-full text-left border-collapse" id="invoice-table">
@@ -40,45 +40,64 @@
     </div>
 
     <!-- Notes & Summary -->
-    <div class="grid grid-cols-12 gap-20 mt-10">
+    <div class="grid grid-cols-12 gap- mt-10">
         <!-- Left -->
         <div class="col-span-12 md:col-span-8">
             <label class="block text-gray-600 mb-2">Notes</label>
             <textarea
                 class="w-[70%] border rounded-md p-3"
                 name="notes"
-                value="{{ old('notes') }}"
                 placeholder="Notes - any relevant information not already covered"
-            ></textarea>
+            >
+{{ old('notes') }}</textarea
+            >
 
             <label class="block text-gray-600 mt-6 mb-2">Terms</label>
             <textarea
                 class="w-[70%] border rounded-md p-3"
                 name="terms"
-                value="{{ old('terms') }}"
                 placeholder="Terms and conditions - late fees, payment methods, delivery schedule"
-            ></textarea>
+            >
+{{ old('terms') }}</textarea
+            >
         </div>
 
         <!-- Right -->
-        <div class="col-span-12 md:col-span-4  space-y-4 text-sm">
-            <!-- Hidden inputs for calculated values required by backend
-            <input type="hidden" name="subtotal" id="input-subtotal" />
-            <input type="hidden" name="total" id="input-total" />
-            <input type="hidden" name="balance_due" id="input-balance-due" />
+        <div class="col-span-12 md:col-span-4 space-y-4 text-sm">
+            <!-- Hidden inputs for calculated values required by backend -->
+            <input
+                type="hidden"
+                value="{{ old('subtotal') }}"
+                name="subtotal"
+                id="input-subtotal"
+            />
+            <input
+                type="hidden"
+                value="{{ old('total') }}"
+                name="total"
+                id="input-total"
+            />
+            <input
+                type="hidden"
+                value="{{ old('balance_due') }}"
+                name="balance_due"
+                id="input-balance-due"
+            />
             <input
                 type="hidden"
                 name="currency"
+                value="{{ old('currency') }}"
                 id="input-currency"
-                value="USD"
-            /> -->
+            />
 
             <div class="flex justify-between">
                 <span>Subtotal</span>
 
                 <div class="flex gap-5">
                     <span class="currency-code-display">USD</span>
-                    <span id="subtotal">0.00</span>
+                    <span id="subtotal">
+                        {{ number_format(old('subtotal', 0), 2) }}
+                    </span>
                 </div>
             </div>
 
@@ -91,6 +110,7 @@
                         min="0"
                         step="0.01"
                         name="discount_rate"
+                        value="{{ old('discount_rate') }}"
                         id="discount"
                         class="input w-24 border rounded-md text-right px-2 py-1 focus:ring-teal-500 focus:border-teal-500"
                         oninput="if (this.value < 0) this.value = 0;"
@@ -108,6 +128,7 @@
                         type="number"
                         min="0"
                         name="shipping"
+                        value="{{ old('shipping') }}"
                         id="shipping"
                         class="input w-24 border rounded-md text-right px-2 py-1 focus:ring-teal-500 focus:border-teal-500"
                         oninput="if (this.value < 0) this.value = 0;"
@@ -123,6 +144,7 @@
                         type="number"
                         min="0"
                         step="0.01"
+                        value="{{ old('tax_rate') }}"
                         name="tax_rate"
                         id="tax"
                         class="input w-24 border rounded-md text-right px-2 py-1 focus:ring-teal-500 focus:border-teal-500"
@@ -137,7 +159,9 @@
                 <span>Total</span>
                 <div class="flex gap-5">
                     <span id="currency" class="currency-code-display">USD</span>
-                    <span id="total">0.00</span>
+                    <span id="total">
+                        {{ number_format(old('total', 0), 2) }}
+                    </span>
                 </div>
             </div>
 
@@ -150,6 +174,7 @@
                         type="number"
                         min="0"
                         name="amount_paid"
+                        value="{{ old('amount_paid') }}"
                         id="paid"
                         class="input w-24 border rounded-md text-right px-2 py-1 focus:ring-teal-500 focus:border-teal-500"
                         oninput="if (this.value < 0) this.value = 0;"
@@ -161,9 +186,18 @@
                 <span>Balance Due</span>
                 <div class="flex gap-5">
                     <span id="currency" class="currency-code-display">USD</span>
-                    <span id="balance">0.00</span>
+                    <span id="balance">
+                        {{ number_format(old('balance_due', 0), 2) }}
+                    </span>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<script>
+       window.invoiceOldItems = @json(old('items'));
+</script>
+
+<script src="{{ asset('js/table.js') }}">
+ 
+</script>

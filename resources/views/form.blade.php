@@ -155,6 +155,6 @@
     </div>
 
     @section('script')
-        <script src="{{ asset('js/invoice.js') }}"> </script>
+        <script src="{{ asset('js/invoice.js') }}"></script>
     @endsection
 </div>
