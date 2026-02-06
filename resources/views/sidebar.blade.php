@@ -45,7 +45,7 @@
                 <option
                     value="{{ $currency->code }}"
                     data-symbol="{{ $currency->symbol }}"
-                    {{ $currency->code == 'USD' ? 'selected' : '' }}
+                    {{ old('currency', 'USD') == $currency->code ? 'selected' : '' }}
                 >
                     {{ $currency->code }} ({{ $currency->symbol }})
                 </option>
@@ -53,12 +53,21 @@
         </select>
     </div>
 
-    <div class="pt-4 text-center">
+    <div class="pt-6 space-y-3">
         <button
             type="submit"
-            class="text-teal-600 cursor-pointer border p-2 rounded font-medium hover:text-teal-700 transition"
+            class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-3 px-4 rounded-lg shadow-sm transition duration-200"
         >
-            save Invoice
+            Save Invoice
         </button>
+
+        <div class="text-center">
+            <a
+                href="{{ route('allinvoices') }}"
+                class="text-sm font-medium text-gray-500 hover:text-teal-600 transition duration-150"
+            >
+                View All Invoices
+            </a>
+        </div>
     </div>
 </div>

@@ -85,8 +85,8 @@
             />
             <input
                 type="hidden"
-                name="currency"
-                value="{{ old('currency') }}"
+                name="currency_hidden"
+                value="{{ old('currency', 'USD') }}"
                 id="input-currency"
             />
 
@@ -195,9 +195,7 @@
     </div>
 </div>
 <script>
-       window.invoiceOldItems = @json(old('items'));
+    window.invoiceOldItems = @json(old('items'));
 </script>
 
-<script src="{{ asset('js/table.js') }}">
- 
-</script>
+<script src="{{ asset('js/table.js') }}"></script>
