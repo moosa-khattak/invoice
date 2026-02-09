@@ -109,64 +109,64 @@ function addRow(data = {}) {
     calculateTotals();
 }
 
-function addColumn() {
-    const colName = prompt('Enter column name:');
-    if (!colName || colName.trim() === '') return;
+// function addColumn() {
+//     const colName = prompt('Enter column name:');
+//     if (!colName || colName.trim() === '') return;
 
-    const name = colName.trim();
-    if (extraColumns.includes(name)) {
-        alert('Column already exists');
-        return;
-    }
+//     const name = colName.trim();
+//     if (extraColumns.includes(name)) {
+//         alert('Column already exists');
+//         return;
+//     }
 
-    extraColumns.push(name);
+//     extraColumns.push(name);
 
-    // Update Header
-    const headerRow = document.getElementById('header-row');
-    const lastHeader = headerRow.children[headerRow.children.length - 2];
-    const newTh = document.createElement('th');
-    newTh.className = 'p-3 text-center';
-    newTh.textContent = name;
-    headerRow.insertBefore(newTh, lastHeader.nextSibling);
+//     // Update Header
+//     const headerRow = document.getElementById('header-row');
+//     const lastHeader = headerRow.children[headerRow.children.length - 2];
+//     const newTh = document.createElement('th');
+//     newTh.className = 'p-3 text-center';
+//     newTh.textContent = name;
+//     headerRow.insertBefore(newTh, lastHeader.nextSibling);
 
-    // Update existing rows
-    const rows = document.querySelectorAll('#items-body tr');
-    rows.forEach((row) => {
-        const lastTd = row.children[row.children.length - 2];
-        const newTd = document.createElement('td');
-        newTd.className = 'p-3';
+//     // Update existing rows
+//     const rows = document.querySelectorAll('#items-body tr');
+//     rows.forEach((row) => {
+//         const lastTd = row.children[row.children.length - 2];
+//         const newTd = document.createElement('td');
+//         newTd.className = 'p-3';
 
-        const firstInput = row.querySelector('input');
-        if (firstInput) {
-            const match = firstInput.name.match(/items\[(\d+)\]/);
-            if (match) {
-                const rowIndex = match[1];
-                newTd.innerHTML = `<input type="text" name="items[${rowIndex}][${name}]" class="w-full text-center bg-transparent focus:outline-none" />`;
-            }
-        }
-        row.insertBefore(newTd, lastTd.nextSibling);
-    });
+//         const firstInput = row.querySelector('input');
+//         if (firstInput) {
+//             const match = firstInput.name.match(/items\[(\d+)\]/);
+//             if (match) {
+//                 const rowIndex = match[1];
+//                 newTd.innerHTML = `<input type="text" name="items[${rowIndex}][${name}]" class="w-full text-center bg-transparent focus:outline-none" />`;
+//             }
+//         }
+//         row.insertBefore(newTd, lastTd.nextSibling);
+//     });
 
-    // Update hidden inputs for header columns
-    updateHeaderColumnsInput();
-}
+//     // Update hidden inputs for header columns
+//     updateHeaderColumnsInput();
+// }
 
-function updateHeaderColumnsInput() {
-    // Remove existing header columns inputs
-    document
-        .querySelectorAll('.header-column-input')
-        .forEach((el) => el.remove());
+// function updateHeaderColumnsInput() {
+//     // Remove existing header columns inputs
+//     document
+//         .querySelectorAll('.header-column-input')
+//         .forEach((el) => el.remove());
 
-    // Add new hidden inputs for each column
-    extraColumns.forEach((col) => {
-        const input = document.createElement('input');
-        input.type = 'hidden';
-        input.name = 'header_columns[]';
-        input.value = col;
-        input.className = 'header-column-input';
-        document.querySelector('form').appendChild(input);
-    });
-}
+//     // Add new hidden inputs for each column
+//     extraColumns.forEach((col) => {
+//         const input = document.createElement('input');
+//         input.type = 'hidden';
+//         input.name = 'header_columns[]';
+//         input.value = col;
+//         input.className = 'header-column-input';
+//         document.querySelector('form').appendChild(input);
+//     });
+// }
 
 function deleteRow(btn) {
     btn.closest('tr').remove();

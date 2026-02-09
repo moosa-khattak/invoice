@@ -13,13 +13,13 @@ return new class extends Migration
     {
         Schema::create('invoices', function (Blueprint $table) {
             $table->id();
-            $table->string('invoice_number')->unique()->nullable();
-            $table->string('from')->nullable();
-            $table->string('bill_to')->nullable();
+            $table->string('invoice_number')->unique();
+            $table->string('from');
+            $table->string('bill_to');
             $table->string('ship_to')->nullable();
-            $table->date('date')->nullable();
-            $table->date('due_date')->nullable();
-            $table->string('payment_terms')->nullable();
+            $table->date('date');
+            $table->date('due_date');
+            $table->string('payment_terms');
             $table->string('po_number')->nullable();
             $table->string('logo_path')->nullable();
             $table->json('header_columns')->nullable(); // Stores custom column definitions
