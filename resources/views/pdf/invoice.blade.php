@@ -5,10 +5,10 @@
         <title>Invoice {{ $invoice->invoice_number }}</title>
         <style>
             body {
-                font-family: Arial, sans-serif;
-                font-size: 12px;
+                font-family: 'DejaVu Sans', sans-serif;
+                font-size: 11px;
                 color: #333;
-                line-height: 1.6;
+                line-height: 1.5;
             }
             .container {
                 max-width: 800px;
