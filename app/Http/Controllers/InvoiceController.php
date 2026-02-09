@@ -55,11 +55,11 @@ class InvoiceController extends Controller
             }
         }
 
-        // // Calculate totals on backend for security/reliability
+        // Calculate totals on backend for security/reliability
         $items = $request->input('items', []);
         $subtotal = 0;
         
-        // // Ensure items is an array before processing
+        // Ensure items is an array before processing
         if (is_array($items)) {
             // Clean up items (remove array keys if they became non-sequential)
             $items = array_values($items);
@@ -147,21 +147,7 @@ class InvoiceController extends Controller
         return $pdf->download('invoice-' . $invoice->invoice_number . '.pdf');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
 
     /**
      * Remove the specified resource from storage.
