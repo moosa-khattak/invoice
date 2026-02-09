@@ -1,7 +1,7 @@
 <!-- Sidebar (Right Side) -->
 <div class="w-full md:w-72 space-y-6">
     <!-- Download Button -->
-    <button
+    <!-- <button
         type="button"
         class="w-full bg-teal-500 hover:bg-teal-600 text-white font-medium py-3 px-4 rounded-lg shadow transition flex items-center justify-center gap-2"
     >
@@ -18,7 +18,7 @@
             />
         </svg>
         Download
-    </button>
+    </button> -->
 
     <div class="border-t border-gray-200 my-6"></div>
 

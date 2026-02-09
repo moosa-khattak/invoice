@@ -84,7 +84,7 @@
                             >
                                 Amount Due
                             </p>
-                            <p class="text-4xl font-bold text-slate-900">
+                            <p class="text-3xl font-bold text-slate-900">
                                 {{ $invoice->currency }}
                                 {{ number_format($invoice->balance_due, 2) }}
                             </p>
@@ -276,7 +276,7 @@
                             </span>
                         </div>
                         <div
-                            class="flex justify-between text-lg p-2 font-extrabold text-slate-900 bg-gray-100 rounded-lg"
+                            class="flex justify-between text-lg py-2 px-0.5 font-extrabold text-slate-900 bg-gray-50 rounded-lg"
                         >
                             <span>Balance Due</span>
                             <span>
