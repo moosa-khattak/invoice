@@ -3,7 +3,7 @@
 @section('content')
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <!-- Back Button -->
-        <div class="mb-8">
+        <div class="mb-8 flex justify-between items-center">
             <a
                 href="{{ route('allinvoices') }}"
                 class="inline-flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 transition duration-150"
@@ -23,6 +23,26 @@
                 </svg>
                 Back to All Invoices
             </a>
+
+            <a
+                href="{{ route('invoice.pdf', $invoice->id) }}"
+                class="inline-flex items-center px-4 py-2 bg-slate-900 text-white text-sm font-medium rounded-lg hover:bg-slate-800 transition duration-150"
+            >
+                <svg
+                    class="w-5 h-5 mr-2"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10"
+                    ></path>
+                </svg>
+                Download PDF
+            </a>
         </div>
 
         <!-- Invoice Paper Design -->
@@ -35,7 +55,7 @@
                     class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6"
                 >
                     <div>
-                        @if ($invoice->logo_path)
+                        @if ($invoice->logo_path && file_exists(storage_path('app/public/' . $invoice->logo_path)))
                             <img
                                 src="{{ asset('storage/' . $invoice->logo_path) }}"
                                 alt="Logo"
@@ -256,7 +276,7 @@
                             </span>
                         </div>
                         <div
-                            class="flex justify-between text-lg  p-2 font-extrabold text-slate-900 bg-gray-100 rounded-lg"
+                            class="flex justify-between text-lg p-2 font-extrabold text-slate-900 bg-gray-100 rounded-lg"
                         >
                             <span>Balance Due</span>
                             <span>
@@ -268,7 +288,9 @@
                 </div>
 
                 <!-- Notes & Terms -->
-                <div class="mt-16 grid grid-cols-1 md:grid-cols-2 gap-12 text-center">
+                <div
+                    class="mt-16 grid grid-cols-1 md:grid-cols-2 gap-12 text-center"
+                >
                     <div
                         class="bg-gray-50/50 p-6 rounded-xl border border-gray-100"
                     >
@@ -288,7 +310,7 @@
                         class="bg-gray-50/50 p-6 rounded-xl border border-gray-100 text-center"
                     >
                         <h3
-                            class="text-xs  font-bold text-gray-400 uppercase tracking-widest mb-4"
+                            class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4"
                         >
                             Terms & Conditions
                         </h3>

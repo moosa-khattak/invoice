@@ -9,4 +9,5 @@ Route::post('/invoice', [InvoiceController::class, 'store'])->name('invoice.stor
 
 Route::get("/allinvoices" , [InvoiceController::class, "index"])->name("allinvoices");
 Route::get("/invoice/{id}", [InvoiceController::class, "show"])->name("invoice.show");
+Route::get("/invoice/{id}/pdf", [InvoiceController::class, "downloadPdf"])->name("invoice.pdf");
 Route::get("/invoice/{id}/delete", [InvoiceController::class, "destroy"])->name("invoice.delete");

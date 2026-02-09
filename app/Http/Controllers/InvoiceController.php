@@ -7,6 +7,7 @@ use App\Http\Requests\InvoiceRequest;
 use App\Models\Invoice;
 use App\Models\Currency;
 use Illuminate\Support\Facades\Storage;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class InvoiceController extends Controller
 {
@@ -42,11 +43,15 @@ class InvoiceController extends Controller
                 $image_parts = explode(";base64,", $base64Image);
                 $image_type_aux = explode("image/", $image_parts[0]);
                 $image_type = $image_type_aux[1] ?? 'png';
-                $image_base64 = base64_decode($image_parts[1]);
+                $image_data = $image_parts[1] ?? '';
                 
-                $filename = 'logos/' . uniqid() . '.' . $image_type;
-                Storage::disk('public')->put($filename, $image_base64);
-                $logoPath = $filename;
+                if (!empty($image_data)) {
+                    $image_base64 = base64_decode($image_data);
+                    
+                    $filename = 'logos/' . uniqid() . '.' . $image_type;
+                    Storage::disk('public')->put($filename, $image_base64);
+                    $logoPath = $filename;
+                }
             }
         }
 
@@ -130,6 +135,19 @@ class InvoiceController extends Controller
     }
 
     /**
+     * Download the invoice as PDF.
+     */
+    public function downloadPdf(string $id)
+    {
+        $invoice = Invoice::findOrFail($id);
+        $pdf = Pdf::loadView('pdf.invoice', compact('invoice'))
+            ->setPaper('a4', 'portrait')
+            ->setOption('isHtml5ParserEnabled', true)
+            ->setOption('isRemoteEnabled', true);
+        return $pdf->download('invoice-' . $invoice->invoice_number . '.pdf');
+    }
+
+    /**
      * Show the form for editing the specified resource.
      */
     public function edit(string $id)
@@ -150,7 +168,14 @@ class InvoiceController extends Controller
      */
     public function destroy(string $id)
     {
-        Invoice::destroy($id);
+        $invoice = Invoice::findOrFail($id);
+        
+        // Cleanup logo file if it exists
+        if ($invoice->logo_path) {
+            Storage::disk('public')->delete($invoice->logo_path);
+        }
+        
+        $invoice->delete();
         return redirect()->route('allinvoices')->with('success', 'Invoice deleted successfully!');
     }
 }
