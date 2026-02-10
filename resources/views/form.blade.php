@@ -85,8 +85,9 @@
                 <input
                     type="text"
                     name="invoice_number"
-                    value="{{ old('invoice_number') }}"
-                    class="border border-gray-200 rounded-lg py-2 pr-3 text-right focus:outline-none focus:ring-2 focus:ring-teal-500 transition @error('invoice_number') border-red-500 @enderror"
+                    value="{{ old('invoice_number', $nextInvoiceNumber ?? '') }}"
+                    readonly
+                    class="border border-gray-200 rounded-lg py-2 pr-3 text-right bg-gray-50 cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-teal-500 transition @error('invoice_number') border-red-500 @enderror"
                 />
                 <span class="text-red-500 block">
                     @error('invoice_number')
@@ -128,13 +129,13 @@
                         name="bill_to"
                         value="{{ old('bill_to') }}"
                         placeholder="Who is this to?"
-                        class="w-full border border-gray-200 rounded-lg p-4 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-500 transition  @error('bill_to') border-red-500 @enderror"
+                        class="w-full border border-gray-200 rounded-lg p-4 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-500 transition @error('bill_to') border-red-500 @enderror"
                     />
-                     <span class="text-red-500">
-                    @error('bill_to')
-                        {{ $message }}
-                    @enderror
-                </span>
+                    <span class="text-red-500">
+                        @error('bill_to')
+                            {{ $message }}
+                        @enderror
+                    </span>
                 </div>
                 <div>
                     <label class="block text-gray-500 mb-2 font-medium">
@@ -156,18 +157,18 @@
             <!-- Date -->
             <div class="flex flex-col sm:flex-row sm:items-center gap-1">
                 <label class="sm:w-32 sm:text-right text-gray-500">Date</label>
-                <div class = "flex flex-col">
+                <div class="flex flex-col">
                     <input
-                    type="date"
-                    name="date"
-                    value="{{ old('date') }}"
-                    class="flex-1 border border-gray-200 rounded-lg p-2.5 focus:outline-none focus:ring-2 focus:ring-teal-500 transition @error('date') border-red-500 @enderror"
-                />
-                <span class="text-red-500 block">
-                    @error('date')
-                        {{ $message }}
-                    @enderror
-                </span>
+                        type="date"
+                        name="date"
+                        value="{{ old('date') }}"
+                        class="flex-1 border border-gray-200 rounded-lg p-2.5 focus:outline-none focus:ring-2 focus:ring-teal-500 transition @error('date') border-red-500 @enderror"
+                    />
+                    <span class="text-red-500 block">
+                        @error('date')
+                            {{ $message }}
+                        @enderror
+                    </span>
                 </div>
             </div>
 
@@ -176,19 +177,19 @@
                 <label class="sm:w-32 sm:text-right text-gray-500">
                     Payment Terms
                 </label>
-               <div class = "flex flex-col">
-                 <input
-                    type="text"
-                    name="payment_terms"
-                    value="{{ old('payment_terms') }}"
-                    class="flex-1 border border-gray-200 rounded-lg py-2.5 focus:outline-none focus:ring-2 focus:ring-teal-500 transition @error('payment_terms') border-red-500 @enderror"
-                />
-                <span class="text-red-500 ">
-                    @error('payment_terms')
-                        {{ $message }}
-                    @enderror
-                </span>
-               </div>
+                <div class="flex flex-col">
+                    <input
+                        type="text"
+                        name="payment_terms"
+                        value="{{ old('payment_terms') }}"
+                        class="flex-1 border border-gray-200 rounded-lg py-2.5 focus:outline-none focus:ring-2 focus:ring-teal-500 transition @error('payment_terms') border-red-500 @enderror"
+                    />
+                    <span class="text-red-500">
+                        @error('payment_terms')
+                            {{ $message }}
+                        @enderror
+                    </span>
+                </div>
             </div>
 
             <!-- Due Date -->
@@ -196,19 +197,19 @@
                 <label class="sm:w-32 sm:text-right text-gray-500">
                     Due Date
                 </label>
-               <div class='flex flex-col'>
-                 <input
-                    type="date"
-                    name="due_date"
-                    value="{{ old('due_date') }}"
-                    class="flex-1 border border-gray-200 rounded-lg py-2.5 focus:outline-none focus:ring-2 focus:ring-teal-500 transition @error('due_date') border-red-500 @enderror"
-                />
-                <span class="text-red-500 ">
-                    @error('due_date')
-                        {{ $message }}
-                    @enderror
-                </span>
-               </div>
+                <div class="flex flex-col">
+                    <input
+                        type="date"
+                        name="due_date"
+                        value="{{ old('due_date') }}"
+                        class="flex-1 border border-gray-200 rounded-lg py-2.5 focus:outline-none focus:ring-2 focus:ring-teal-500 transition @error('due_date') border-red-500 @enderror"
+                    />
+                    <span class="text-red-500">
+                        @error('due_date')
+                            {{ $message }}
+                        @enderror
+                    </span>
+                </div>
             </div>
 
             <!-- PO Number -->

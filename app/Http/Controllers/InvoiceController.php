@@ -23,7 +23,12 @@ class InvoiceController extends Controller
     public function create()
     {
         $currencies = Currency::all();
-        return view('invoice', compact('currencies'));
+        
+        // Generate next invoice number
+        $lastInvoice = Invoice::orderBy('invoice_number', 'desc')->first();
+        $nextInvoiceNumber = $lastInvoice ? (int)$lastInvoice->invoice_number + 1 : 1;
+        
+        return view('invoice', compact('currencies', 'nextInvoiceNumber'));
     }
 
     /**
@@ -161,7 +166,7 @@ class InvoiceController extends Controller
             Storage::disk('public')->delete($invoice->logo_path);
         }
         
-        $invoice->delete();
+        $invoice->destroy($id);
         return redirect()->route('allinvoices')->with('success', 'Invoice deleted successfully!');
     }
 }
