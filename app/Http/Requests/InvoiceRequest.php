@@ -24,7 +24,7 @@ class InvoiceRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'invoice_number' => 'required|string',
+            'invoice_number' => 'required|string|unique:invoices,invoice_number',
             'from' => 'required|string',
             'bill_to' => 'required|string',
             'ship_to' => 'nullable|string',
