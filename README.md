@@ -1,66 +1,102 @@
-# Professional Invoice Generator
+# 💼 Professional Invoice Generator
 
-A modern, robust, and feature-rich invoice management system built with Laravel. This application allows users to create, manage, and download professional invoices with ease.
+A modern, robust, and feature-rich invoice management system built with **Laravel 12**. This application provides a seamless workflow for creating, managing, and exporting professional invoices.
 
-## 🚀 Features
+---
 
-- **Logo Management**: Upload your business logo with live preview and automatic storage.
-- **Dynamic Invoicing**: Add or remove rows dynamically for products and services.
-- **Smart Calculations**: Automatic real-time calculation of subtotal, discounts, taxes, shipping, and balance due.
-- **Multi-Currency Support**: Choose your preferred currency for each invoice.
-- **PDF Generation**: High-quality PDF exports powered by DomPDF, optimized for A4 printing.
-- **History Management**: Keep track of all your invoices in a clean, searchable dashboard.
-- **Responsive Design**: Built with Tailwind CSS for a seamless experience across all devices.
+## ✨ Key Features
+
+- **Smart Auto-Generation**: Unique invoice numbers are automatically generated based on the highest existing number in the database.
+- **Dynamic Line Items**: Add or remove rows dynamically for products and services with real-time UI updates.
+- **Intelligent Calculations**: Automatic calculation of subtotals, tax rates, discounts, shipping, and remaining balance.
+- **Logo Persistence**: Upload business logos with live preview and secure storage management.
+- **PDF Core**: High-quality PDF exports powered by DomPDF, optimized for A4 printing.
+- **Audit History**: Clean dashboard to track and manage all saved invoices.
+- **Multi-Currency Support**: Flexible currency selection for global billing.
+
+---
+
+## 🏗️ Architecture & Best Practices
+
+This project follows **Clean Architecture** principles to ensure maintainability and scalability:
+
+- **Repository Pattern**: Centralized data access logic in `InvoiceRepository`.
+- **Service Pattern**: Business logic (calculations, file processing) isolated in `InvoiceService`.
+- **Form Requests**: Robust validation handled independently in `InvoiceRequest`.
+- **Dependency Injection**: Services and Repositories are cleanly injected into controllers.
+
+---
 
 ## 🛠️ Tech Stack
 
-- **Backend**: Laravel 12
-- **Frontend**: Tailwind CSS, Vanilla JavaScript
-- **Database**: MySQL
-- **PDF Core**: barryvdh/laravel-dompdf
+- **Backend**: PHP 8.2+ / Laravel 12
+- **Frontend**: Tailwind CSS / Vanilla JavaScript
+- **Database**: MySQL / PostgreSQL / SQLite
+- **Tools**: Composer, Vite
 
-## 📦 Installation
+---
 
-To get this project running locally, follow these steps:
+## � Installation Guide
 
-1. **Clone the repository**
+Follow these steps to set up the project on your local machine:
 
-    ```bash
-    git clone [repository-url]
-    cd invoice
-    ```
+### 1. Prerequisites
 
-2. **Install dependencies**
+Ensure you have **PHP 8.2+**, **Composer**, and **Node.js** installed.
 
-    ```bash
-    composer install
-    npm install && npm run build
-    ```
+### 2. Clone and Install
 
-3. **Configure Environment**
-    - Copy `.env.example` to `.env`
-    - Configure your database settings in `.env`
-    - Set `APP_URL=http://localhost:8000`
+```bash
+git clone [repository-url]
+cd invoice
+composer install
+npm install && npm run build
+```
 
-4. **Initialize Database & Storage**
+### 3. Environment Configuration
 
-    ```bash
-    php artisan key:generate
-    php artisan migrate
-    php artisan storage:link
-    ```
+Copy the example environment file and set your credentials:
 
-5. **Run the Application**
-    ```bash
-    php artisan serve
-    ```
+```bash
+cp .env.example .env
+```
 
-## 📝 Usage
+> [!IMPORTANT]
+> Update your database connection details in the `.env` file before proceeding.
 
-1. Navigate to `http://localhost:8000` to create your first invoice.
-2. Upload your logo and fill in the sender/receiver details.
-3. Add items, quantities, and rates.
-4. Save the invoice and click "Download PDF" to generate a professional document.
+### 4. Database Initialization
+
+```bash
+php artisan key:generate
+php artisan migrate
+php artisan storage:link
+```
+
+### 5. Running the Application
+
+```bash
+php artisan serve
+```
+
+Access the application at `http://localhost:8000`.
+
+---
+
+## 💻 Project Structure
+
+```text
+app/
+├── Http/
+│   ├── Controllers/    # Controller coordination
+│   └── Requests/       # Validation logic
+├── Repositories/       # Data access layer
+├── Services/           # Business logic layer
+└── Models/             # Database entities
+resources/
+└── views/              # Blade templates
+```
+
+---
 
 ## 📄 License
 
