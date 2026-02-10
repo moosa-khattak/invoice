@@ -73,9 +73,9 @@
                         >
                             INVOICE
                         </h1>
-                        <!-- <p class="text-gray-500 mt-1 font-medium">
+                        <p class="text-gray-500 mt-1 font-medium">
                             {{ $invoice->invoice_number ?? '#' . $invoice->id }}
-                        </p> -->
+                        </p>
                     </div>
                     <div class="text-left md:text-right">
                         <div class="space-y-1">
