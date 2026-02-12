@@ -50,6 +50,11 @@ class InvoiceRequest extends FormRequest
         ];
     }
 
+    /**
+     * Get custom error messages for validation errors.
+     *
+     * @return array
+     */
     public function messages(){
         return [
            "invoice_number.required" => "Invoice Number is Required",
