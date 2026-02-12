@@ -23,15 +23,16 @@ class InvoiceRequest extends FormRequest
      */
     public function rules(): array
     {
+        $id = $this->route('id');
         return [
-            'invoice_number' => 'required|string|unique:invoices,invoice_number',
+            'invoice_number' => 'required|string|unique:invoices,invoice_number,' . $id,
             'from' => 'required|string',
             'bill_to' => 'required|string',
             'ship_to' => 'nullable|string',
             'date' => 'required|date',
             'due_date' => 'required|date',
             'payment_terms' => 'required|string',
-            'po' => 'nullable|string',
+            'po_number' => 'nullable|string',
             'logo' => 'nullable|image|max:2048',
             'items' => 'required|array',
             'header_columns' => 'nullable|array',

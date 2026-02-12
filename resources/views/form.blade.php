@@ -15,7 +15,7 @@
             >
                 <div
                     id="logo-placeholder"
-                    class="flex flex-col items-center justify-center {{ old('logo_base64') ? 'hidden' : '' }}"
+                    class="flex flex-col items-center justify-center {{ old('logo_base64') || (isset($invoice) && $invoice->logo_path) ? 'hidden' : '' }}"
                 >
                     <span
                         class="text-3xl text-gray-400 mb-2 group-hover:text-gray-500"
@@ -30,8 +30,8 @@
                 </div>
                 <img
                     id="logo-preview"
-                    src="{{ old('logo_base64') }}"
-                    class="{{ old('logo_base64') ? '' : 'hidden' }} h-full w-full object-contain"
+                    src="{{ old('logo_base64') ?: (isset($invoice) && $invoice->logo_path ? asset('storage/' . $invoice->logo_path) : '') }}"
+                    class="{{ old('logo_base64') || (isset($invoice) && $invoice->logo_path) ? '' : 'hidden' }} h-full w-full object-contain"
                 />
                 <input
                     type="file"
@@ -44,14 +44,14 @@
                     type="hidden"
                     name="logo_base64"
                     id="logo-base64-input"
-                    value="{{ old('logo_base64', $invoice->logo_path ?? '') }}"
+                    value="{{ old('logo_base64') }}"
                 />
             </label>
             <!-- Remove Button -->
             <button
                 type="button"
                 id="remove-logo"
-                class="{{ old('logo_base64') ? '' : 'hidden' }} absolute -top-3 -right-3 bg-white text-gray-500 hover:text-red-600 rounded-full h-8 w-8 shadow-lg border border-gray-200 items-center justify-center transition-all duration-200 hover:scale-110 z-10"
+                class="{{ old('logo_base64') || (isset($invoice) && $invoice->logo_path) ? '' : 'hidden' }} absolute -top-3 -right-3 bg-white text-gray-500 hover:text-red-600 rounded-full h-8 w-8 shadow-lg border border-gray-200 items-center justify-center transition-all duration-200 hover:scale-110 z-10"
                 title="Remove Logo"
             >
                 <svg
@@ -163,7 +163,7 @@
                     <input
                         type="date"
                         name="date"
-                        value="{{ old('date', $invoice->date ?? '') }}"
+                        value="{{ old('date', isset($invoice) && $invoice->date ? $invoice->date->format('Y-m-d') : '') }}"
                         class="flex-1 border border-gray-200 rounded-lg p-2.5 focus:outline-none focus:ring-2 focus:ring-teal-500 transition @error('date') border-red-500 @enderror"
                     />
                     <span class="text-red-500 block">
@@ -203,7 +203,7 @@
                     <input
                         type="date"
                         name="due_date"
-                        value="{{ old('due_date', $invoice->due_date ?? '') }}"
+                        value="{{ old('due_date', isset($invoice) && $invoice->due_date ? $invoice->due_date->format('Y-m-d') : '') }}"
                         class="flex-1 border border-gray-200 rounded-lg py-2.5 focus:outline-none focus:ring-2 focus:ring-teal-500 transition @error('due_date') border-red-500 @enderror"
                     />
                     <span class="text-red-500">
@@ -222,7 +222,7 @@
                 <input
                     type="text"
                     name="po"
-                    value="{{ old('po', $invoice->po ?? '') }}"
+                    value="{{ old('po', $invoice->po_number ?? '') }}"
                     class="flex-1 border border-gray-200 rounded-lg py-2.5 focus:outline-none focus:ring-2 focus:ring-teal-500 transition"
                 />
             </div>

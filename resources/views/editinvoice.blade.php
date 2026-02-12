@@ -2,7 +2,7 @@
 
 @section('content')
     <form
-        action="{{ route('invoice.update', $invoice->id) }}"
+        action="{{ route('invoice.update', $invoice->invoice_number) }}"
         method="POST"
         enctype="multipart/form-data"
     >

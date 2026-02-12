@@ -49,6 +49,7 @@ class InvoiceController extends Controller
             'tax' => $totals['tax'],
             'total' => $totals['total'],
             'balance_due' => $totals['balance_due'],
+            'po_number' => $request->input('po'),
         ]);
 
         $this->repository->create($data);
@@ -58,18 +59,18 @@ class InvoiceController extends Controller
 
     public function show(string $id)
     {
-        $invoice = $this->repository->getById($id);
+        $invoice = $this->repository->getByInvoiceNumber($id);
         return view('showinvoice', compact('invoice'));
     }
     public function edit(string $id){
-         $invoice = $this->repository->getById($id);
+         $invoice = $this->repository->getByInvoiceNumber($id);
          $currencies = Currency::all();
          return view("editinvoice" , compact("invoice", "currencies"));
     }
 
     public function update(InvoiceRequest $request, string $id)
     {
-        $invoice = $this->repository->getById($id);
+        $invoice = $this->repository->getByInvoiceNumber($id);
 
         $logoPath = $invoice->logo_path;
         if ($newLogoPath = $this->service->processLogoUpload($request)) {
@@ -92,6 +93,7 @@ class InvoiceController extends Controller
             'tax' => $totals['tax'],
             'total' => $totals['total'],
             'balance_due' => $totals['balance_due'],
+            'po_number' => $request->input('po_number'),
         ]);
 
         $this->repository->update($invoice, $data);
@@ -101,7 +103,7 @@ class InvoiceController extends Controller
 
     public function downloadPdf(string $id)
     {
-        $invoice = $this->repository->getById($id);
+        $invoice = $this->repository->getByInvoiceNumber($id);
 
         $pdf = Pdf::loadView('pdf.invoice', compact('invoice'))
             ->setPaper('a4', 'portrait')
@@ -113,7 +115,7 @@ class InvoiceController extends Controller
 
     public function destroy(string $id)
     {
-        $invoice = $this->repository->getById($id);
+        $invoice = $this->repository->getByInvoiceNumber($id);
         $this->repository->delete($invoice);
 
         return redirect()->route('allinvoices')->with('success', 'Invoice deleted successfully!');

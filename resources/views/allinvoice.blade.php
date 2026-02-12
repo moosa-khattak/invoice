@@ -75,20 +75,20 @@
                                 </td>
                                 <td class="px-6 py-4 text-center">
                                     <a
-                                        href="{{ route('invoice.show', $invoice->id) }}"
+                                        href="{{ route('invoice.show', $invoice->invoice_number) }}"
                                         class="text-indigo-600 hover:text-indigo-900 font-medium bg-indigo-50 px-3 py-1 rounded-md transition"
                                     >
                                         View
                                     </a>
                                 </td>
                                 <td class="px-6 py-4 text-center">
-                                    <a  class="text-green-600 hover:text-green-900 font-medium bg-green-100 px-4  py-1 rounded-md transition" href="{{route('invoice.edit', $invoice->id )}}">
+                                    <a  class="text-green-600 hover:text-green-900 font-medium bg-green-100 px-4  py-1 rounded-md transition" href="{{route('invoice.edit', $invoice->invoice_number )}}">
                                         edit
                                     </a>
                                 </td>
                                 <td class="px-6 py-4 text-center">
                                     <a
-                                        href="{{ route('invoice.delete', $invoice->id) }}"
+                                        href="{{ route('invoice.delete', $invoice->invoice_number) }}"
                                         class="text-red-600 hover:text-red-900 font-medium bg-red-50 px-3 py-1 rounded-md transition"
                                     >
                                         Delete

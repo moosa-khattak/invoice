@@ -17,6 +17,11 @@ class InvoiceRepository
         return Invoice::findOrFail($id);
     }
 
+    public function getByInvoiceNumber($invoice_number)
+    {
+        return Invoice::where('invoice_number', $invoice_number)->firstOrFail();
+    }
+
     public function create(array $data)
     {
         return Invoice::create($data);
