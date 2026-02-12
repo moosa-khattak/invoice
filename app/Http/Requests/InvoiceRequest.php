@@ -38,7 +38,6 @@ class InvoiceRequest extends FormRequest
             'header_columns' => 'nullable|array',
             'notes' => 'nullable|string',
             'terms' => 'nullable|string',
-            // 'subtotal' => 'required|numeric',
             'shipping' => 'nullable|numeric|min:0',
             'discount_rate' => 'nullable|numeric|min:0',
             'discount' => 'nullable|numeric|min:0',
@@ -52,16 +51,14 @@ class InvoiceRequest extends FormRequest
     }
 
     public function messages(){
-            return [
-              
-           "invoice_number.required" => "Invoice Number is Required" ,
-           "from.required" => " from field is required",
-           "bill_to.required" => "Bill_To is required",
+        return [
+           "invoice_number.required" => "Invoice Number is Required",
+           "from.required" => "From field is required",
+           "bill_to.required" => "Bill To is required",
            "date.required" => "Date is Required",
            "due_date.required" => "Due Date is Required",
-           "payment_terms.required" => "payment_terms is Required",
-           "items.required" => "items is Required",
-        
-            ];
+           "payment_terms.required" => "Payment Terms is Required",
+           "items.required" => "Items is Required",
+        ];
     } 
 }
