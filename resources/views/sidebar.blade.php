@@ -27,7 +27,7 @@
                 <option
                     value="{{ $currency->code }}"
                     data-symbol="{{ $currency->symbol }}"
-                    {{ old('currency', 'USD') == $currency->code ? 'selected' : '' }}
+                    {{ old('currency', $invoice->currency ?? 'USD') == $currency->code ? 'selected' : '' }}
                 >
                     {{ $currency->code }} ({{ $currency->symbol }})
                 </option>

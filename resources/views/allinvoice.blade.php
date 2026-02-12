@@ -29,6 +29,7 @@
                             <th class="px-6 py-4">Total</th>
                             <th class="px-6 py-4">Balance</th>
                             <th class="px-6 py-4 text-center">Actions</th>
+                            <th class="px-6 py-4 text-center">Edit</th>
                             <th class="px-6 py-4 text-center">Delete</th>
                         </tr>   
                     </thead>
@@ -78,6 +79,11 @@
                                         class="text-indigo-600 hover:text-indigo-900 font-medium bg-indigo-50 px-3 py-1 rounded-md transition"
                                     >
                                         View
+                                    </a>
+                                </td>
+                                <td class="px-6 py-4 text-center">
+                                    <a  class="text-green-600 hover:text-green-900 font-medium bg-green-100 px-4  py-1 rounded-md transition" href="{{route('invoice.edit', $invoice->id )}}">
+                                        edit
                                     </a>
                                 </td>
                                 <td class="px-6 py-4 text-center">

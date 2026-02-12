@@ -42,7 +42,7 @@
                 name="notes"
                 placeholder="Notes - any relevant information not already covered"
             >
-{{ old('notes') }}</textarea
+{{ old('notes', $invoice->notes ?? '') }}</textarea
             >
 
             <label class="block text-gray-600 mt-6 mb-2">Terms</label>
@@ -51,7 +51,7 @@
                 name="terms"
                 placeholder="Terms and conditions - late fees, payment methods, delivery schedule"
             >
-{{ old('terms') }}</textarea
+{{ old('terms', $invoice->terms ?? '') }}</textarea
             >
         </div>
 
@@ -60,26 +60,26 @@
             <!-- Hidden inputs for calculated values required by backend -->
             <input
                 type="hidden"
-                value="{{ old('subtotal') }}"
+                value="{{ old('subtotal', $invoice->subtotal ?? '') }}"
                 name="subtotal"
                 id="input-subtotal"
             />
             <input
                 type="hidden"
-                value="{{ old('total') }}"
+                value="{{ old('total', $invoice->total ?? '') }}"
                 name="total"
                 id="input-total"
             />
             <input
                 type="hidden"
-                value="{{ old('balance_due') }}"
+                value="{{ old('balance_due', $invoice->balance_due ?? '') }}"
                 name="balance_due"
                 id="input-balance-due"
             />
             <input
                 type="hidden"
                 name="currency_hidden"
-                value="{{ old('currency', 'USD') }}"
+                value="{{ old('currency', $invoice->currency ?? 'USD') }}"
                 id="input-currency"
             />
 
@@ -89,7 +89,7 @@
                 <div class="flex gap-5">
                     <span class="currency-code-display">USD</span>
                     <span id="subtotal">
-                        {{ number_format(old('subtotal', 0), 2) }}
+                        {{ number_format(old('subtotal', $invoice->subtotal ?? 0), 2) }}
                     </span>
                 </div>
             </div>
@@ -103,7 +103,7 @@
                         min="0"
                         step="0.01"
                         name="discount_rate"
-                        value="{{ old('discount_rate') }}"
+                        value="{{ old('discount_rate', $invoice->discount ?? '') }}"
                         id="discount"
                         class="input w-24 border rounded-md text-right px-2 py-1 focus:ring-teal-500 focus:border-teal-500"
                         oninput="if (this.value < 0) this.value = 0;"
@@ -121,7 +121,7 @@
                         type="number"
                         min="0"
                         name="shipping"
-                        value="{{ old('shipping') }}"
+                        value="{{ old('shipping', $invoice->shipping ?? '') }}"
                         id="shipping"
                         class="input w-24 border rounded-md text-right px-2 py-1 focus:ring-teal-500 focus:border-teal-500"
                         oninput="if (this.value < 0) this.value = 0;"
@@ -137,7 +137,7 @@
                         type="number"
                         min="0"
                         step="0.01"
-                        value="{{ old('tax_rate') }}"
+                        value="{{ old('tax_rate', $invoice->tax ?? '') }}"
                         name="tax_rate"
                         id="tax"
                         class="input w-24 border rounded-md text-right px-2 py-1 focus:ring-teal-500 focus:border-teal-500"
@@ -153,7 +153,7 @@
                 <div class="flex gap-5">
                     <span id="currency" class="currency-code-display">USD</span>
                     <span id="total">
-                        {{ number_format(old('total', 0), 2) }}
+                        {{ number_format(old('total', $invoice->total ?? 0), 2) }}
                     </span>
                 </div>
             </div>
@@ -167,7 +167,7 @@
                         type="number"
                         min="0"
                         name="amount_paid"
-                        value="{{ old('amount_paid') }}"
+                        value="{{ old('amount_paid', $invoice->amount_paid ?? '') }}"
                         id="paid"
                         class="input w-24 border rounded-md text-right px-2 py-1 focus:ring-teal-500 focus:border-teal-500"
                         oninput="if (this.value < 0) this.value = 0;"
@@ -180,7 +180,7 @@
                 <div class="flex gap-5">
                     <span id="currency" class="currency-code-display">USD</span>
                     <span id="balance">
-                        {{ number_format(old('balance_due', 0), 2) }}
+                        {{ number_format(old('balance_due', $invoice->balance_due ?? 0), 2) }}
                     </span>
                 </div>
             </div>
@@ -188,7 +188,7 @@
     </div>
 </div>
 <script>
-    window.invoiceOldItems = @json(old('items'));
+    window.invoiceOldItems = @json(old('items', $invoice->items ?? []));
 </script>
 
 <script src="{{ asset('js/table.js') }}"></script>
