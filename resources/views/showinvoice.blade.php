@@ -25,7 +25,7 @@
             </a>
 
             <a
-                href="{{ route('invoice.pdf', $invoice->id) }}"
+                href="{{ route('invoice.pdf', $invoice->invoice_number) }}"
                 class="inline-flex items-center px-4 py-2 bg-slate-900 text-white text-sm font-medium rounded-lg hover:bg-slate-800 transition duration-150"
             >
                 <svg
@@ -73,20 +73,14 @@
                         >
                             INVOICE
                         </h1>
-                        <p class="text-gray-500 mt-1 font-medium">
-                            {{ $invoice->invoice_number ?? '#' . $invoice->id }}
-                        </p>
                     </div>
                     <div class="text-left md:text-right">
                         <div class="space-y-1">
-                            <p
-                                class="text-sm font-semibold text-gray-400 uppercase tracking-wider"
-                            >
-                                Amount Due
-                            </p>
-                            <p class="text-3xl font-bold text-slate-900">
-                                {{ $invoice->currency }}
-                                {{ number_format($invoice->balance_due, 2) }}
+                            <h2 class="text-xl font-bold text-gray-900 uppercase tracking-wider">
+                                Invoice
+                            </h2>
+                            <p class="text-lg font-medium text-gray-500">
+                                #{{ $invoice->invoice_number }}
                             </p>
                         </div>
                     </div>

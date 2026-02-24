@@ -190,8 +190,13 @@
                         @endphp
 
                         @if (file_exists($logoPath))
+                            @php
+                                $type = pathinfo($logoPath, PATHINFO_EXTENSION);
+                                $data = file_get_contents($logoPath);
+                                $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
+                            @endphp
                             <img
-                                src="{{ $logoPath }}"
+                                src="{{ $base64 }}"
                                 alt="Logo"
                                 class="logo"
                             />
@@ -201,10 +206,9 @@
                     <h1>INVOICE</h1>
                 </div>
                 <div class="header-right">
-                    <div class="amount-due">Amount Due</div>
-                    <div class="amount-value">
-                        {{ $invoice->currency }}
-                        {{ number_format($invoice->balance_due, 2) }}
+                    <div style="font-size: 16px; font-weight: bold; margin-bottom: 5px;">INVOICE</div>
+                    <div style="font-size: 14px; color: #666;">
+                        #{{ $invoice->invoice_number }}
                     </div>
                 </div>
             </div>

@@ -25,7 +25,7 @@ class InvoiceRequest extends FormRequest
     {
         $id = $this->route('id');
         return [
-            'invoice_number' => 'required|string|unique:invoices,invoice_number,' . $id,
+            'invoice_number' => 'required|string|unique:invoices,invoice_number,' . $id . ',invoice_number',
             'from' => 'required|string',
             'bill_to' => 'required|string',
             'ship_to' => 'nullable|string',
