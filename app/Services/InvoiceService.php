@@ -41,7 +41,7 @@ class InvoiceService
         foreach ($items as &$item) {
             $qty = (float)($item['Quantity'] ?? 0);
             $rate = (float)($item['Rate'] ?? 0);
-            $item['Amount'] = $qty * $rate;
+            $item['Amount'] = round($qty * $rate);
             $subtotal += $item['Amount'];
         }
         unset($item); // Unset reference to avoid unexpected behavior
@@ -54,11 +54,11 @@ class InvoiceService
 
         return [
             'items' => $items,
-            'subtotal' => $subtotal,
-            'discount' => $discountAmount,
-            'tax' => $taxAmount,
-            'total' => $total,
-            'balance_due' => $balanceDue
+            'subtotal' => round($subtotal),
+            'discount' => round($discountAmount),
+            'tax' => round($taxAmount),
+            'total' => round($total),
+            'balance_due' => round($balanceDue)
         ];
     }
 }

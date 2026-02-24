@@ -11,6 +11,9 @@
                 Create New Invoice
             </a>
         </div>
+        <div class = "mb-4 text-right">
+            <input type="text" placeholder= "Search invoice" class = " border border-gray-300  rounded-lg px-4 py-2" >
+        </div>
 
         <!-- Invoices Table -->
         <div
@@ -68,10 +71,10 @@
                                     class="px-6 py-4 font-semibold text-gray-900"
                                 >
                                     {{ $invoice->currency }}
-                                    {{ number_format($invoice->total, 2) }}
+                                    {{ number_format($invoice->total, 0) }}
                                 </td>
                                 <td class="px-6 py-4 text-gray-600">
-                                    {{ number_format($invoice->balance_due, 2) }}
+                                    {{ number_format($invoice->balance_due, 0) }}
                                 </td>
                                 <td class="px-6 py-4 text-center">
                                     <a

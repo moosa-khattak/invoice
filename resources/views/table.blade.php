@@ -89,7 +89,7 @@
                 <div class="flex gap-5">
                     <span class="currency-code-display">USD</span>
                     <span id="subtotal">
-                        {{ number_format(old('subtotal', $invoice->subtotal ?? 0), 2) }}
+                        {{ number_format(old('subtotal', $invoice->subtotal ?? 0), 0) }}
                     </span>
                 </div>
             </div>
@@ -101,7 +101,7 @@
                     <input
                         type="number"
                         min="0"
-                        step="0.01"
+                        step="1"
                         name="discount_rate"
                         value="{{ old('discount_rate', $invoice->discount_rate ?? '') }}"
                         id="discount"
@@ -136,7 +136,6 @@
                     <input
                         type="number"
                         min="0"
-                        step="0.01"
                         value="{{ old('tax_rate', $invoice->tax_rate ?? '') }}"
                         name="tax_rate"
                         id="tax"
@@ -153,7 +152,7 @@
                 <div class="flex gap-5">
                     <span id="currency" class="currency-code-display">USD</span>
                     <span id="total">
-                        {{ number_format(old('total', $invoice->total ?? 0), 2) }}
+                        {{ number_format(old('total', $invoice->total ?? 0), 0) }}
                     </span>
                 </div>
             </div>
@@ -180,7 +179,7 @@
                 <div class="flex gap-5">
                     <span id="currency" class="currency-code-display">USD</span>
                     <span id="balance">
-                        {{ number_format(old('balance_due', $invoice->balance_due ?? 0), 2) }}
+                        {{ number_format(old('balance_due', $invoice->balance_due ?? 0), 0) }}
                     </span>
                 </div>
             </div>

@@ -62,6 +62,10 @@ class InvoiceController extends Controller
             'total' => $totals['total'],
             'balance_due' => $totals['balance_due'],
             'po_number' => $request->input('po'),
+            'shipping' => (float) $request->input('shipping', 0),
+            'discount_rate' => (float) $request->input('discount_rate', 0),
+            'tax_rate' => (float) $request->input('tax_rate', 0),
+            'amount_paid' => (float) $request->input('amount_paid', 0),
         ]);
 
         $this->repository->create($data);
@@ -126,6 +130,10 @@ class InvoiceController extends Controller
             'total' => $totals['total'],
             'balance_due' => $totals['balance_due'],
             'po_number' => $request->input('po_number'),
+            'shipping' => (float) $request->input('shipping', 0),
+            'discount_rate' => (float) $request->input('discount_rate', 0),
+            'tax_rate' => (float) $request->input('tax_rate', 0),
+            'amount_paid' => (float) $request->input('amount_paid', 0),
         ]);
 
         $this->repository->update($invoice, $data);

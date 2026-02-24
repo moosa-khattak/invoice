@@ -1,5 +1,5 @@
 <!-- Sidebar (Right Side) -->
-<div class="w-full md:w-72 space-y-6">
+<div class="w-full md:w-72 space-y-6 ">
     <!-- Download Button -->
 
     <div class="border-t border-gray-200 my-6"></div>
@@ -38,7 +38,7 @@
     <div class="pt-6 space-y-3">
         <button
             type="submit"
-            class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-3 px-4 rounded-lg shadow-sm transition duration-200"
+            class="w-full cursor-pointer bg-slate-900 hover:bg-slate-800 text-white font-bold py-3 px-4 rounded-lg shadow-sm transition duration-200"
         >
             Save Invoice
         </button>

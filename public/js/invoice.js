@@ -64,8 +64,8 @@ if (logoInput && logoPreview) {
 
 function formatMoney(amount) {
     return new Intl.NumberFormat('en-US', {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2,
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0,
     }).format(amount);
 }
 function addRow(data = {}) {
@@ -84,10 +84,10 @@ function addRow(data = {}) {
                 <input type="text" name="items[${rowCount}][Item]" value="${data.Item || ''}" placeholder="Products" class="w-full bg-transparent border border-gray-300 px-2 py-1 rounded-md focus:outline-none" />
             </td>
             <td class="p-3">
-                <input type="number" name="items[${rowCount}][Quantity]" value="${data.Quantity || ''}" min="0" class="quantity-input w-30 border border-gray-300 px-2 py-1 rounded-md" oninput="calculateRow(this)" />
+                <input type="number" step="1" name="items[${rowCount}][Quantity]" value="${data.Quantity || ''}" min="0" class="quantity-input w-30 border border-gray-300 px-2 py-1 rounded-md" oninput="calculateRow(this)" />
             </td>
             <td class="p-3">
-                <input type="number" name="items[${rowCount}][Rate]" value="${data.Rate || ''}" min="0" class="rate-input w-30 border border-gray-300 px-2 py-1 rounded-md" oninput="calculateRow(this)" />
+                <input type="number" step="1" name="items[${rowCount}][Rate]" value="${data.Rate || ''}" min="0" class="rate-input w-30 border border-gray-300 px-2 py-1 rounded-md" oninput="calculateRow(this)" />
             </td>
         `;
 
@@ -114,13 +114,9 @@ function deleteRow(btn) {
 
 function calculateRow(input) {
     const row = input.closest('tr');
-    // Force integer parsing
-    const qty = Math.floor(
-        parseFloat(row.querySelector('.quantity-input').value) || 0,
-    );
-    const rate = Math.floor(
-        parseFloat(row.querySelector('.rate-input').value) || 0,
-    );
+    // Allow decimals by parsing floats appropriately
+    const qty = parseFloat(row.querySelector('.quantity-input').value) || 0;
+    const rate = parseFloat(row.querySelector('.rate-input').value) || 0;
     const amount = qty * rate;
 
     row.querySelector('.row-amount').textContent = formatMoney(amount);
@@ -150,12 +146,8 @@ function calculateTotals() {
 
     // Sum all rows
     document.querySelectorAll('#items-body tr').forEach((row) => {
-        const qty = Math.floor(
-            parseFloat(row.querySelector('.quantity-input').value) || 0,
-        );
-        const rate = Math.floor(
-            parseFloat(row.querySelector('.rate-input').value) || 0,
-        );
+        const qty = parseFloat(row.querySelector('.quantity-input').value) || 0;
+        const rate = parseFloat(row.querySelector('.rate-input').value) || 0;
         subtotal += qty * rate;
     });
 
@@ -170,20 +162,20 @@ function calculateTotals() {
     const taxableAmount = subtotal - discountAmount;
     const taxAmount = taxableAmount * (taxRate / 100);
 
-    // Calculate final figures
+    // Calculate final figures (rounded)
     // Formula: (Subtotal - DiscountAmount) + TaxAmount + Shipping
-    const total = subtotal - discountAmount + taxAmount + shipping;
-    const balance = total - paid;
+    const total = Math.round(subtotal - discountAmount + taxAmount + shipping);
+    const balance = Math.round(total - paid);
 
     // Update UI Text
-    subtotalEl.textContent = formatMoney(subtotal);
+    subtotalEl.textContent = formatMoney(Math.round(subtotal));
     totalEl.textContent = formatMoney(total);
     balanceEl.textContent = formatMoney(balance);
 
     // Update Hidden Inputs
-    inputs.subtotal.value = subtotal.toFixed(2);
-    inputs.total.value = total.toFixed(2);
-    inputs.balance.value = balance.toFixed(2);
+    inputs.subtotal.value = Math.round(subtotal);
+    inputs.total.value = total;
+    inputs.balance.value = balance;
 }
 
 // Initialize
