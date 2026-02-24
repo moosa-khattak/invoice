@@ -12,7 +12,7 @@
             </a>
         </div>
         <div class = "mb-4 text-right">
-            <input type="text" placeholder= "Search invoice" class = " border border-gray-300  rounded-lg px-4 py-2" >
+            <input type="text" id="searchInput" placeholder= "Search invoice" class = " border border-gray-300  rounded-lg px-4 py-2" >
         </div>
 
         <!-- Invoices Table -->
@@ -136,4 +136,8 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('script')
+<script src="{{ asset('js/allInvoiceFilter.js') }}"></script>
 @endsection
