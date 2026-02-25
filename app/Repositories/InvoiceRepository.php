@@ -14,7 +14,7 @@ class InvoiceRepository
      */
     public function getAll()
     {
-        return Invoice::latest()->get();
+        return Invoice::orderBy('id', 'asc')->get();
     }
 
     /**

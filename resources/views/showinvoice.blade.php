@@ -24,6 +24,14 @@
                 Back to All Invoices
             </a>
 
+           <div class = "flex gap-4">
+              <a
+                 href="{{ route('invoice.edit', $invoice->invoice_number) }}"
+                 class="text-green-600 hover:text-indigo-900 font-medium bg-green-50 px-4 py-2 shadow rounded-md transition"
+             >
+                    Edit
+             </a>
+
             <a
                 href="{{ route('invoice.pdf', $invoice->invoice_number) }}"
                 class="inline-flex items-center px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 shadow-sm transition-all duration-200"
@@ -43,6 +51,7 @@
                 </svg>
                 Download PDF
             </a>
+           </div>
         </div>
 
         <!-- Invoice Paper Design -->
