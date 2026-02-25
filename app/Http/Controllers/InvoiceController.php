@@ -15,18 +15,12 @@ class InvoiceController extends Controller
         protected InvoiceService $service
     ) {}
 
-    /**
-     * Display a listing of the invoices.
-     */
     public function index()
     {
         $invoices = $this->repository->getAll();
         return view('allinvoice', compact('invoices'));
     }
 
-    /**
-     * Show the form for creating a new invoice.
-     */
     public function create()
     {
         $currencies = Currency::all();
@@ -35,15 +29,10 @@ class InvoiceController extends Controller
         return view('invoice', compact('currencies', 'nextInvoiceNumber'));
     }
 
-    /**
-     * Store a newly created invoice in storage.
-     */
     public function store(InvoiceRequest $request)
     {
-        // Handle Logo Upload
         $logoPath = $this->service->processLogoUpload($request);
         
-        // Calculate Totals (Subtotal, Tax, Discount, Total)
         $totals = $this->service->calculateTotals(
             $request->input('items', []),
             (float) $request->input('shipping', 0),
@@ -52,7 +41,6 @@ class InvoiceController extends Controller
             (float) $request->input('amount_paid', 0)
         );
 
-        // Prepare Data for Storage
         $data = array_merge($request->validated(), [
             'logo_path' => $logoPath,
             'items' => $totals['items'],
@@ -73,45 +61,27 @@ class InvoiceController extends Controller
         return redirect()->back()->with('success', 'Invoice saved successfully!');
     }
 
-    /**
-     * Display the specified invoice.
-     * 
-     * @param string $id The invoice_number
-     */
     public function show(string $id)
     {
         $invoice = $this->repository->getByInvoiceNumber($id);
         return view('showinvoice', compact('invoice'));
     }
 
-    /**
-     * Show the form for editing the specified invoice.
-     * 
-     * @param string $id The invoice_number
-     */
     public function edit(string $id){
          $invoice = $this->repository->getByInvoiceNumber($id);
          $currencies = Currency::all();
          return view("editinvoice" , compact("invoice", "currencies"));
     }
 
-    /**
-     * Update the specified invoice in storage.
-     * 
-     * @param InvoiceRequest $request
-     * @param string $id The invoice_number
-     */
     public function update(InvoiceRequest $request, string $id)
     {
         $invoice = $this->repository->getByInvoiceNumber($id);
 
-        // Handle Logo Upload (Delete old if replaced)
         $logoPath = $invoice->logo_path;
         if ($newLogoPath = $this->service->processLogoUpload($request)) {
             $logoPath = $newLogoPath;
         }
 
-        // Recalculate Totals
         $totals = $this->service->calculateTotals(
             $request->input('items', []),
             (float) $request->input('shipping', 0),
@@ -120,7 +90,6 @@ class InvoiceController extends Controller
             (float) $request->input('amount_paid', 0)
         );
 
-        // Prepare Data
         $data = array_merge($request->validated(), [
             'logo_path' => $logoPath,
             'items' => $totals['items'],
@@ -141,11 +110,6 @@ class InvoiceController extends Controller
         return redirect()->route('allinvoices')->with('success', 'Invoice updated successfully!');
     }
 
-    /**
-     * Download the invoice as a PDF.
-     * 
-     * @param string $id The invoice_number
-     */
     public function downloadPdf(string $id)
     {
         $invoice = $this->repository->getByInvoiceNumber($id);
@@ -158,11 +122,6 @@ class InvoiceController extends Controller
         return $pdf->download('invoice-' . $invoice->invoice_number . '.pdf');
     }
 
-    /**
-     * Remove the specified invoice from storage.
-     * 
-     * @param string $id The invoice_number
-     */
     public function destroy(string $id)
     {
         $invoice = $this->repository->getByInvoiceNumber($id);
