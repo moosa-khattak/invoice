@@ -6,8 +6,10 @@
         <title>invoice</title>
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body>
-        <div class="bg-gray-50 min-h-screen py-10">
+    <body class="bg-gray-50 min-h-screen">
+        @include('partials.navbar')
+        
+        <div class="py-10">
             @yield('content')
         </div>
         <!-- Logo Preview Script & Table Logic -->

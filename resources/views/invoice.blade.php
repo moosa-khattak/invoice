@@ -6,7 +6,7 @@
         @csrf
 
         {{-- Alert Containers --}}
-        <div class="max-w-7xl mx-auto px-4 mb-6">
+        <!-- <div class="max-w-7xl mx-auto px-4 mb-6">
             @if (session('success'))
                 <div
                     class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4"
@@ -18,7 +18,7 @@
                     </span>
                 </div>
             @endif
-        </div>
+        </div> -->
 
         {{-- Main Container --}}
         <div

@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\UserController;
+
 Route::controller(InvoiceController::class)->group(function(){
 
     Route::get('/', 'create')->name('invoice.create');
@@ -15,3 +17,9 @@ Route::controller(InvoiceController::class)->group(function(){
     // for downlode pdf 
     Route::get("/invoice/{id}/pdf", "downloadPdf")->name("invoice.pdf");
 });
+
+Route::view("register","register")->name("register");
+Route::post("/userredistersave" , [UserController::class , "register"])->name("register.save");
+Route::view("login","login")->name("login");
+
+
