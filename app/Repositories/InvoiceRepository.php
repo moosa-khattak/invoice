@@ -3,18 +3,21 @@
 namespace App\Repositories;
 
 use App\Models\Invoice;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class InvoiceRepository
 {
     public function getAll()
     {
-        return Invoice::orderBy('id', 'asc')->get();
+        $user_id = Auth::user()->id;
+        return Invoice::where('user_id', $user_id)->orderBy('id', 'asc')->get();
     }
 
     public function getById($id)
     {
-        return Invoice::findOrFail($id);
+        $user_id = Auth::user()->id;
+        return Invoice::where('user_id', $user_id)->findOrFail($id);
     }
 
     public function getByInvoiceNumber($invoice_number)
@@ -24,7 +27,9 @@ class InvoiceRepository
 
     public function create(array $data)
     {
-        return Invoice::create($data);
+        $user_id = Auth::user()->id;
+        
+        return Invoice::where('user_id', $user_id)->create($data);
     }
 
     public function update(Invoice $invoice, array $data)

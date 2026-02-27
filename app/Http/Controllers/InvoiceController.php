@@ -7,6 +7,7 @@ use App\Models\Currency;
 use App\Repositories\InvoiceRepository;
 use App\Services\InvoiceService;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Auth;
 
 class InvoiceController extends Controller
 {
@@ -31,6 +32,12 @@ class InvoiceController extends Controller
 
     public function store(InvoiceRequest $request)
     {
+        $user = Auth::user();
+        
+        if(!$user){
+            return redirect()->route('login')->with('error', 'Please login to create an invoice!');
+        }
+      
         $logoPath = $this->service->processLogoUpload($request);
         
         $totals = $this->service->calculateTotals(
@@ -54,6 +61,7 @@ class InvoiceController extends Controller
             'discount_rate' => (float) $request->input('discount_rate', 0),
             'tax_rate' => (float) $request->input('tax_rate', 0),
             'amount_paid' => (float) $request->input('amount_paid', 0),
+        
         ]);
 
         $this->repository->create($data);

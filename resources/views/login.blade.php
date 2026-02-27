@@ -40,13 +40,13 @@
             </div> -->
 
             <button type="submit"
-                class="w-full py-2 px-4 bg-teal-600 text-white rounded-lg font-medium hover:bg-teal-700 transition">
+                class="w-full py-2 px-4 bg-teal-600 text-white rounded-lg font-medium hover:bg-teal-700 transition cursor-pointer">
                 Login
             </button>
         </form>
 
         <div class="mt-4 text-center text-sm text-gray-600">
-            <a href="{{ route('invoice.create') }}" class="text-teal-600 hover:underline">Back to Invoice</a>
+            <a href="{{ route('invoice.create') }}" class="text-teal-600 hover:underline cursor-pointer">Back to Invoice</a>
         </div>
     </div>
 </div>

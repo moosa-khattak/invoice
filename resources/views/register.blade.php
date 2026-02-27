@@ -55,11 +55,11 @@
 
         <div class="mt-4 text-center text-sm text-gray-600">
             Already have an account? 
-            <a href="{{ route('login') }}" class="text-teal-600 hover:underline">Login</a>
+            <a href="{{ route('login') }}" class="text-teal-600 hover:underline cursor-pointer">Login</a>
         </div>
 
         <div class="mt-2 text-center text-sm text-gray-600">
-            <a href="{{ route('invoice.create') }}" class="text-teal-600 hover:underline">Back to Invoice</a>
+            <a href="{{ route('invoice.create') }}" class="text-teal-600 hover:underline cursor-pointer">Back to Invoice</a>
         </div>
     </div>
 </div>

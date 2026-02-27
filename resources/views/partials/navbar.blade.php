@@ -97,12 +97,12 @@
 
             @guest
                 <a href="{{ route('login') }}"
-                   class="block pl-3 pr-4 py-2 text-gray-600 hover:bg-gray-50">
+                   class="block pl-3 pr-4 py-2 text-gray-600 hover:bg-gray-50 cursor-pointer">
                     Login
                 </a>
 
                 <a href="{{ route('register') }}"
-                   class="block pl-3 pr-4 py-2 text-teal-600 font-medium hover:bg-gray-50">
+                   class="block pl-3 pr-4 py-2 text-teal-600 font-medium hover:bg-gray-50 cursor-pointer">
                     Register
                 </a>
             @endguest
@@ -111,7 +111,7 @@
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
                     <button type="submit"
-                        class="block w-full text-left pl-3 pr-4 py-2 text-red-600 hover:bg-gray-50">
+                        class="cursor-pointer block w-full text-left pl-3 pr-4 py-2 text-red-600 hover:bg-gray-50">
                         Logout
                     </button>
                 </form>
