@@ -2,7 +2,7 @@
     "version": 2,
     "builds": [
         {
-            "src": "public/index.php",
+            "src": "api/index.php",
             "use": "vercel-php@0.7.1"
         },
         {
@@ -24,7 +24,15 @@
         },
         {
             "src": "/(.*)",
-            "dest": "/public/index.php"
+            "dest": "/api/index.php"
         }
-    ]
+    ],
+    "env": {
+        "APP_ENV": "production",
+        "APP_DEBUG": "true",
+        "LOG_CHANNEL": "stderr",
+        "VIEW_COMPILED_PATH": "/tmp",
+        "CACHE_STORE": "array",
+        "SESSION_DRIVER": "cookie"
+    }
 }
