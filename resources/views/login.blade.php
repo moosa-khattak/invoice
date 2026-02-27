@@ -16,7 +16,7 @@
             </div>
         @endif
 
-        <form action="" method="post" class="space-y-4">
+        <form action="{{ route("login.save") }}" method="post" class="space-y-4">
             @csrf
 
             <!-- Email -->

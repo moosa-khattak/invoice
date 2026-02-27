@@ -19,7 +19,9 @@ Route::controller(InvoiceController::class)->group(function(){
 });
 
 Route::view("register","register")->name("register");
-Route::post("/userredistersave" , [UserController::class , "register"])->name("register.save");
+Route::post("/userregistersave" , [UserController::class , "register"])->name("register.save");
 Route::view("login","login")->name("login");
+Route::post("loginMatch" , [UserController::class , "login"])->name("login.save");
 
 
+Route::post("logout", [UserController::class ,"logout"])->name("logout");

@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UserRequest;
 use App\Models\User;
+
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -12,10 +14,26 @@ class UserController extends Controller
       $user = User::create([
         "name"=>$request->name,
         "email"=>$request->email,
-        "passwaord"=>$request->password,
+        "password"=>$request->password,
        ]) ;
       if($user){
         return redirect()->route("login")->with("success", "user successfully registered ");
       }
+    }
+
+    public function login(Request $request){
+      $credentials = $request->validate([
+           "email"=>"required",
+           "password"=> "required"
+      ]);
+
+      if(Auth::attempt($credentials)){
+           return redirect()->route("invoice.create")->with("success","user login successfully ");
+      }
+    }
+
+    public function logout(){
+      Auth::logout();
+      return redirect()->route("login")->with("success","user logout successfully ");
     }
 }
