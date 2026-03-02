@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\InvoiceRequest;
+use App\Interfaces\InvoiceRepositoryInterface;
 use App\Models\Currency;
-use App\Repositories\InvoiceRepository;
 use App\Services\InvoiceService;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Auth;
@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Auth;
 class InvoiceController extends Controller
 {
     public function __construct(
-        protected InvoiceRepository $repository,
+        protected InvoiceRepositoryInterface $repository,
         protected InvoiceService $service
     ) {}
 

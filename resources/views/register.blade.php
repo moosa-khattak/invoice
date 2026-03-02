@@ -48,7 +48,7 @@
             </div>
 
             <button type="submit"
-                    class="w-full py-2 px-4 bg-teal-600 text-white rounded-lg font-medium hover:bg-teal-700 transition">
+                    class="w-full py-2 px-4 bg-teal-600 text-white rounded-lg font-medium hover:bg-teal-700 transition cursor-pointer">
                 Register
             </button>
         </form>

@@ -2,15 +2,17 @@
 
 namespace App\Repositories;
 
+use App\Interfaces\InvoiceRepositoryInterface;
 use App\Models\Invoice;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
-class InvoiceRepository
+class InvoiceRepository implements InvoiceRepositoryInterface
 {
     public function getAll()
     {
         $user_id = Auth::user()->id;
+       
         return Invoice::where('user_id', $user_id)->orderBy('id', 'asc')->get();
     }
 
