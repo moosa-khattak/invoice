@@ -1,0 +1,28 @@
+{
+    "total_invoices": 3,
+    "null_user_invoices": 3,
+    "invoices": [
+        {
+            "id": 1,
+            "user_id": null,
+            "invoice_number": "INV-001"
+        },
+        {
+            "id": 3,
+            "user_id": null,
+            "invoice_number": "INV-002"
+        },
+        {
+            "id": 4,
+            "user_id": null,
+            "invoice_number": "INV-003"
+        }
+    ],
+    "users": [
+        {
+            "id": 4,
+            "name": "Muhammad moosa",
+            "email": "moosakhattak333@gmail.com"
+        }
+    ]
+}

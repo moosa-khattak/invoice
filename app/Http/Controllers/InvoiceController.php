@@ -61,8 +61,8 @@ class InvoiceController extends Controller
             'discount_rate' => (float) $request->input('discount_rate', 0),
             'tax_rate' => (float) $request->input('tax_rate', 0),
             'amount_paid' => (float) $request->input('amount_paid', 0),
-        
         ]);
+        unset($data['logo']); // remove raw file upload, already saved as logo_path
 
         $this->repository->create($data);
 
@@ -112,6 +112,7 @@ class InvoiceController extends Controller
             'tax_rate' => (float) $request->input('tax_rate', 0),
             'amount_paid' => (float) $request->input('amount_paid', 0),
         ]);
+        unset($data['logo']); // remove raw file upload, already saved as logo_path
 
         $this->repository->update($invoice, $data);
 

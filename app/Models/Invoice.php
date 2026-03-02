@@ -6,15 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Invoice extends Model
 {
-    protected $fillable = [
-        'user_id', 'invoice_number', 'from', 'bill_to', 'ship_to',
-        'date', 'due_date', 'payment_terms', 'po_number',
-        'logo_path', 'header_columns', 'items', 'notes',
-        'terms', 'subtotal', 'shipping', 'discount_rate', 'discount', 
-        'tax_rate', 'tax', 'total', 'currency', 'amount_paid', 
-        'balance_due'
-    ];
-
+   protected $guarded = [];
     protected $casts = [
         'header_columns' => 'array',
         'items' => 'array',

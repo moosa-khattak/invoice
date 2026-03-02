@@ -12,6 +12,7 @@ class InvoiceRepository implements InvoiceRepositoryInterface
     public function getAll()
     {
         $user_id = Auth::user()->id;
+        // print_r($user_id);
        
         return Invoice::where('user_id', $user_id)->orderBy('id', 'asc')->get();
     }
@@ -29,9 +30,8 @@ class InvoiceRepository implements InvoiceRepositoryInterface
 
     public function create(array $data)
     {
-        $user_id = Auth::user()->id;
-        
-        return Invoice::where('user_id', $user_id)->create($data);
+      $data['user_id'] = Auth::user()->id;
+      return Invoice::create($data);
     }
 
     public function update(Invoice $invoice, array $data)
