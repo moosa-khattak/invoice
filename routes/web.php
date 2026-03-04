@@ -4,13 +4,14 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\UserController;
-Route::middleware("auth")->group(function(){
 
-    Route::controller(InvoiceController::class)->group(function(){
-    
+Route::middleware("auth")->group(function () {
+
+    Route::controller(InvoiceController::class)->group(function () {
+
         Route::get('/', 'create')->name('invoice.create');
         Route::post('/invoice', 'store')->name('invoice.store');
-        Route::get("/allinvoices" , "index")->name("allinvoices");
+        Route::get("/allinvoices", "index")->name("allinvoices");
         Route::get("/invoice/{id}", "show")->name("invoice.show");
         Route::get("/invoice/{id}/edit", "edit")->name("invoice.edit");
         Route::put('/invoice/{id}', 'update')->name('invoice.update');
@@ -21,10 +22,12 @@ Route::middleware("auth")->group(function(){
 });
 
 
-Route::view("register","register")->name("register");
-Route::post("/userregistersave" , [UserController::class , "register"])->name("register.save");
-Route::view("login","login")->name("login");
-Route::post("loginMatch" , [UserController::class , "login"])->name("login.save");
+Route::view("register", "register")->name("register");
+Route::post("/userregistersave", [UserController::class, "register"])->name("register.save");
+Route::view("login", "login")->name("login");
+Route::post("loginMatch", [UserController::class, "login"])->name("login.save");
 
 
-Route::post("logout", [UserController::class ,"logout"])->name("logout");
+Route::match(['get', 'post'], "logout", [UserController::class, "logout"])->name("logout");
+Route::get("googlelogin", [UserController::class, "googlelogin"])->name("login.google");
+Route::get("auth/google/callback", [UserController::class, "googleCallback"])->name("google.callback");

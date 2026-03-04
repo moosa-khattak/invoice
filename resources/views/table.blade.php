@@ -5,8 +5,7 @@
             <thead>
                 <tr
                     class="bg-slate-900 text-white text-sm font-semibold"
-                    id="header-row"
-                >
+                    id="header-row">
                     <th class="p-3 whitespace-nowrap">Item</th>
                     <th class="p-3 text-center whitespace-nowrap">Quantity</th>
                     <th class="p-3 text-center whitespace-nowrap">Rate</th>
@@ -26,8 +25,7 @@
         <button
             type="button"
             onclick="addRow()"
-            class="flex-1 sm:flex-none text-green-600 border border-green-500 px-4 py-2 rounded-md font-medium hover:bg-green-50 transition"
-        >
+            class="flex-1 sm:flex-none text-green-600 border border-green-500 px-4 py-2 rounded-md font-medium hover:bg-green-50 transition">
             + Line Item
         </button>
     </div>
@@ -40,19 +38,15 @@
             <textarea
                 class="w-[70%] border rounded-md p-3"
                 name="notes"
-                placeholder="Notes - any relevant information not already covered"
-            >
-{{ old('notes', $invoice->notes ?? '') }}</textarea
-            >
+                placeholder="Notes - any relevant information not already covered">
+            {{ old('notes', $invoice->notes ?? '') }}</textarea>
 
             <label class="block text-gray-600 mt-6 mb-2">Terms</label>
             <textarea
                 class="w-[70%] border rounded-md p-3"
                 name="terms"
-                placeholder="Terms and conditions - late fees, payment methods, delivery schedule"
-            >
-{{ old('terms', $invoice->terms ?? '') }}</textarea
-            >
+                placeholder="Terms and conditions - late fees, payment methods, delivery schedule">
+            {{ old('terms', $invoice->terms ?? '') }}</textarea>
         </div>
 
         <!-- Right -->
@@ -62,26 +56,22 @@
                 type="hidden"
                 value="{{ old('subtotal', $invoice->subtotal ?? '') }}"
                 name="subtotal"
-                id="input-subtotal"
-            />
+                id="input-subtotal" />
             <input
                 type="hidden"
                 value="{{ old('total', $invoice->total ?? '') }}"
                 name="total"
-                id="input-total"
-            />
+                id="input-total" />
             <input
                 type="hidden"
                 value="{{ old('balance_due', $invoice->balance_due ?? '') }}"
                 name="balance_due"
-                id="input-balance-due"
-            />
+                id="input-balance-due" />
             <input
                 type="hidden"
                 name="currency_hidden"
                 value="{{ old('currency', $invoice->currency ?? 'USD') }}"
-                id="input-currency"
-            />
+                id="input-currency" />
 
             <div class="flex justify-between">
                 <span>Subtotal</span>
@@ -106,8 +96,7 @@
                         value="{{ old('discount_rate', $invoice->discount_rate ?? '') }}"
                         id="discount"
                         class="input w-24 border rounded-md text-right px-2 py-1 focus:ring-teal-500 focus:border-teal-500"
-                        oninput="if (this.value < 0) this.value = 0;"
-                    />
+                        oninput="if (this.value < 0) this.value = 0;" />
                 </div>
             </div>
 
@@ -124,8 +113,7 @@
                         value="{{ old('shipping', $invoice->shipping ?? '') }}"
                         id="shipping"
                         class="input w-24 border rounded-md text-right px-2 py-1 focus:ring-teal-500 focus:border-teal-500"
-                        oninput="if (this.value < 0) this.value = 0;"
-                    />
+                        oninput="if (this.value < 0) this.value = 0;" />
                 </div>
             </div>
 
@@ -140,8 +128,7 @@
                         name="tax_rate"
                         id="tax"
                         class="input w-24 border rounded-md text-right px-2 py-1 focus:ring-teal-500 focus:border-teal-500"
-                        oninput="if (this.value < 0) this.value = 0;"
-                    />
+                        oninput="if (this.value < 0) this.value = 0;" />
                 </div>
             </div>
 
@@ -169,8 +156,7 @@
                         value="{{ old('amount_paid', $invoice->amount_paid ?? '') }}"
                         id="paid"
                         class="input w-24 border rounded-md text-right px-2 py-1 focus:ring-teal-500 focus:border-teal-500"
-                        oninput="if (this.value < 0) this.value = 0;"
-                    />
+                        oninput="if (this.value < 0) this.value = 0;" />
                 </div>
             </div>
 
@@ -186,8 +172,6 @@
         </div>
     </div>
 </div>
-<script>
-    window.invoiceOldItems = @json(old('items', $invoice->items ?? []));
-</script>
+
 
 <script src="{{ asset('js/table.js') }}"></script>

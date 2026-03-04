@@ -7,13 +7,13 @@
 
         <!-- Display validation errors -->
         @if ($errors->any())
-            <div class="mb-4 p-3 bg-red-100 text-red-700 rounded">
-                <ul class="list-disc list-inside">
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
+        <div class="mb-4 p-3 bg-red-100 text-red-700 rounded">
+            <ul class="list-disc list-inside">
+                @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
         @endif
 
         <form action="{{ route("login.save") }}" method="post" class="space-y-4">
@@ -43,6 +43,10 @@
                 class="w-full py-2 px-4 bg-teal-600 text-white rounded-lg font-medium hover:bg-teal-700 transition cursor-pointer">
                 Login
             </button>
+            <a href="{{ route("login.google") }}"
+                class=" flex justify-center py-2 px-4 bg-red-600 text-white rounded-lg font-medium hover:bg-red-700  transition cursor-pointer">
+                Login with Google
+            </a>
         </form>
 
         <div class="mt-4 text-center text-sm text-gray-600">

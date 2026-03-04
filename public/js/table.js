@@ -1,4 +1,4 @@
-
+  window.invoiceOldItems = @json(old('items', $invoice - > items ?? []));
 
 document.addEventListener('DOMContentLoaded', function () {
     // 1. Get old items from Laravel session
