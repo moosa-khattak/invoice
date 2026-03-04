@@ -47,6 +47,10 @@
                 class=" flex justify-center py-2 px-4 bg-red-600 text-white rounded-lg font-medium hover:bg-red-700  transition cursor-pointer">
                 Login with Google
             </a>
+            <a href="{{ route("login.github") }}"
+                class=" flex justify-center py-2 px-4 bg-black text-white rounded-lg font-medium hover:bg-gray-700  transition cursor-pointer">
+                Login with Github
+            </a>
         </form>
 
         <div class="mt-4 text-center text-sm text-gray-600">

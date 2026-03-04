@@ -28,6 +28,12 @@ Route::view("login", "login")->name("login");
 Route::post("loginMatch", [UserController::class, "login"])->name("login.save");
 
 
-Route::match(['get', 'post'], "logout", [UserController::class, "logout"])->name("logout");
+Route::get("logout", [UserController::class, "logout"])->name("logout");
+
+// google login 
 Route::get("googlelogin", [UserController::class, "googlelogin"])->name("login.google");
 Route::get("auth/google/callback", [UserController::class, "googleCallback"])->name("google.callback");
+
+// github login 
+Route::get("githublogin", [UserController::class, "githublogin"])->name("login.github");
+Route::get("auth/github/callback", [UserController::class, "githubCallback"])->name("github.callback");

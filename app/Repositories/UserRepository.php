@@ -21,4 +21,9 @@ class UserRepository implements UserRepositoryInterface
     {
         return User::where('email', $email)->first();
     }
+
+    public function updateOrCreate(array $attributes, array $values): ?User
+    {
+        return User::updateOrCreate($attributes, $values);
+    }
 }

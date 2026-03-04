@@ -5,9 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\UserRequest;
 use App\Interfaces\UserRepositoryInterface;
-use App\Models\User;
-use Illuminate\Auth\Events\Login;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Str;
@@ -29,7 +26,7 @@ class UserController extends Controller
     try {
       $googleUser = Socialite::driver("google")->user();
 
-      $user = User::updateOrCreate(
+      $user = $this->userRepository->updateOrCreate(
         ['email' => $googleUser->getEmail()],
         [
           'name'     => $googleUser->getName(),
@@ -47,6 +44,36 @@ class UserController extends Controller
       return redirect()->route("invoice.create")->with("success", "Logged in with Google successfully!");
     } catch (\Exception $e) {
       return redirect()->route("login")->with("error", "Failed to login with Google: " . $e->getMessage());
+    }
+  }
+
+
+  public function githublogin(){
+    return Socialite::driver("github")->redirect();
+  }
+
+  public function githubCallback(){
+    try {
+      $githubUser = Socialite::driver("github")->user();
+
+      $user = $this->userRepository->updateOrCreate(
+        ['email' => $githubUser->getEmail()],
+        [
+          'name'     => $githubUser->getName(),
+          'password' => bcrypt(Str::random(24)),
+        ]
+      );
+
+      // Log the user in to create a session for the 'auth' middleware
+      Auth::login($user);
+
+      // Store additional session data as requested
+      session()->put("id", $user->id);
+      session()->put("type", $user->type);
+
+      return redirect()->route("invoice.create")->with("success", "Logged in with Github successfully!");
+    } catch (\Exception $e) {
+      return redirect()->route("login")->with("error", "Failed to login with Github: " . $e->getMessage());
     }
   }
 
