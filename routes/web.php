@@ -16,6 +16,10 @@ Route::middleware("auth")->group(function () {
         Route::get("/invoice/{id}/edit", "edit")->name("invoice.edit");
         Route::put('/invoice/{id}', 'update')->name('invoice.update');
         Route::get("/invoice/{id}/delete", "destroy")->name("invoice.delete");
+
+        // Payment process
+        Route::get('/invoice/{id}/payment', 'payment')->name('invoice.payment');
+        Route::post('/invoice/{id}/payment/process', 'processPayment')->name('invoice.payment.process');
         // for downlode pdf 
         Route::get("/invoice/{id}/pdf", "downloadPdf")->name("invoice.pdf");
     });

@@ -137,9 +137,10 @@ function updateCurrency() {
     if (currencyInput) currencyInput.value = selectedCode;
 }
 
-document
-    .getElementById('currency-selector')
-    .addEventListener('change', updateCurrency);
+const currencySelector = document.getElementById('currency-selector');
+if (currencySelector) {
+    currencySelector.addEventListener('change', updateCurrency);
+}
 
 function calculateTotals() {
     let subtotal = 0;

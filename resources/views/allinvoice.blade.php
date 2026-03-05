@@ -31,6 +31,7 @@
                         <th class="px-6 py-4 text-center">Actions</th>
                         <th class="px-6 py-4 text-center">Edit</th>
                         <th class="px-6 py-4 text-center">Delete</th>
+                        <th class="px-6 py-4 text-center">status</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-100">
@@ -87,11 +88,19 @@
                                 Delete
                             </a>
                         </td>
+                        <td class="px-6 py-4 text-center">
+                            <!-- add status paid or unpaid  -->
+                            @if($invoice->status == 'Paid')
+                            <span class="text-green-600 bg-green-100 font-medium px-2 py-1 rounded-md">Paid</span>
+                            @else
+                            <span class="text-red-600 bg-red-100 font-medium px-2 py-1 rounded-md">Unpaid</span>
+                            @endif
+                        </td>
                     </tr>
                     @empty
                     <tr>
                         <td
-                            colspan="7"
+                            colspan="10"
                             class="px-6 py-12 text-center text-gray-500">
                             <div class="flex flex-col items-center">
                                 <svg

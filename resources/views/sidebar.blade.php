@@ -35,13 +35,17 @@
     <div class="pt-6 space-y-3">
         <button
             type="submit"
+            name="action"
+            value="save"
             class="w-full cursor-pointer bg-slate-900 hover:bg-slate-800 text-white font-bold py-3 px-4 rounded-lg shadow-sm transition duration-200">
             Save Invoice
         </button>
         <button
-            type="button"
+            type="submit"
+            name="action"
+            value="pay"
             class="w-full cursor-pointer bg-teal-600 hover:bg-teal-700 text-white font-bold py-3 px-4 rounded-lg shadow-sm transition duration-200">
-         Pay and Save Invoice
+            Pay and Save Invoice
         </button>
         <div class="text-center">
             <a

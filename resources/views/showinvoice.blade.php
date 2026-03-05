@@ -22,9 +22,17 @@
         </a>
 
         <div class="flex gap-4">
+            @if($invoice->status !== 'Paid')
+            <a
+                href="{{ route('invoice.payment', $invoice->invoice_number) }}"
+                class="text-teal-600 border border-teal-600 hover:bg-teal-600 hover:text-white font-medium px-4 py-2 rounded-md shadow-sm transition-all duration-200">
+                Pay Now
+            </a>
+            @endif
+
             <a
                 href="{{ route('invoice.edit', $invoice->invoice_number) }}"
-                class="text-green-600 hover:text-indigo-900 font-medium bg-green-50 px-4 py-2 shadow rounded-md transition">
+                class="text-green-600 hover:text-indigo-900 font-medium bg-green-50 px-4 py-2 shadow rounded-md transition border border-green-200">
                 Edit
             </a>
 
@@ -206,7 +214,23 @@
         </div>
 
         <!-- Totals Area -->
-        <div class="px-8 md:px-12 pb-12 flex justify-end">
+        <div class="px-8 md:px-12 pb-12 flex flex-col-reverse md:flex-row justify-between items-end gap-8">
+            <!-- Left Side: QR Code (if Unpaid) -->
+            <div class="w-full md:w-1/2">
+                @if($invoice->status !== 'Paid')
+                <div class="flex flex-col items-center md:items-start text-center md:text-left">
+                    <p class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-3">Scan to Pay</p>
+                    <div class="p-3 bg-white border border-gray-200 rounded-xl shadow-sm inline-block">
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={{ urlencode(route('invoice.payment', ['id' => $invoice->invoice_number])) }}" alt="Payment QR Code" class="w-32 h-32" />
+                    </div>
+                    <p class="text-xs text-gray-400 mt-3 max-w-xs">Point your phone camera at this QR code to quickly access the payment page.</p>
+                </div>
+                @else
+                <div></div>
+                @endif
+            </div>
+
+            <!-- Right Side: Totals Box -->
             <div class="w-full md:w-1/2 lg:w-2/5">
                 <div class="bg-gray-50/80 rounded-xl p-6 border border-gray-100 space-y-3">
 

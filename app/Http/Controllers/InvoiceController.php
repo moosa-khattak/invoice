@@ -7,6 +7,7 @@ use App\Interfaces\InvoiceRepositoryInterface;
 use App\Models\Currency;
 use App\Services\InvoiceService;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class InvoiceController extends Controller
@@ -33,13 +34,13 @@ class InvoiceController extends Controller
     public function store(InvoiceRequest $request)
     {
         $user = Auth::user();
-        
-        if(!$user){
+
+        if (!$user) {
             return redirect()->route('login')->with('error', 'Please login to create an invoice!');
         }
-      
+
         $logoPath = $this->service->processLogoUpload($request);
-        
+
         $totals = $this->service->calculateTotals(
             $request->input('items', []),
             (float) $request->input('shipping', 0),
@@ -64,7 +65,14 @@ class InvoiceController extends Controller
         ]);
         unset($data['logo']); // remove raw file upload, already saved as logo_path
 
-        $this->repository->create($data);
+        // Normal save
+        $data['status'] = 'Unpaid';
+        $invoice = $this->repository->create($data);
+
+        // Check determine the action requested
+        if ($request->input('action') === 'pay') {
+            return redirect()->route('invoice.payment', ['id' => $invoice->invoice_number]);
+        }
 
         return redirect()->back()->with('success', 'Invoice saved successfully!');
     }
@@ -75,10 +83,11 @@ class InvoiceController extends Controller
         return view('showinvoice', compact('invoice'));
     }
 
-    public function edit(string $id){
-         $invoice = $this->repository->getByInvoiceNumber($id);
-         $currencies = Currency::all();
-         return view("editinvoice" , compact("invoice", "currencies"));
+    public function edit(string $id)
+    {
+        $invoice = $this->repository->getByInvoiceNumber($id);
+        $currencies = Currency::all();
+        return view("editinvoice", compact("invoice", "currencies"));
     }
 
     public function update(InvoiceRequest $request, string $id)
@@ -116,6 +125,10 @@ class InvoiceController extends Controller
 
         $this->repository->update($invoice, $data);
 
+        if ($request->input('action') === 'pay') {
+            return redirect()->route('invoice.payment', ['id' => $invoice->invoice_number]);
+        }
+
         return redirect()->route('allinvoices')->with('success', 'Invoice updated successfully!');
     }
 
@@ -137,5 +150,40 @@ class InvoiceController extends Controller
         $this->repository->delete($invoice);
 
         return redirect()->route('allinvoices')->with('success', 'Invoice deleted successfully!');
+    }
+
+    public function payment(string $id)
+    {
+        $invoice = $this->repository->getByInvoiceNumber($id);
+
+        if ($invoice->status === 'Paid') {
+            return redirect()->route('allinvoices')->with('success', 'This invoice is already paid.');
+        }
+
+        return view('pay', compact('invoice'));
+    }
+
+    public function processPayment(Request $request, string $id)
+    {
+        $invoice = $this->repository->getByInvoiceNumber($id);
+
+        if ($invoice->status === 'Paid') {
+            return redirect()->route('allinvoices')->with('error', 'Invoice was already paid.');
+        }
+
+        // Update status to paid, save payment method, and confirm amount paid matches total
+        $data = [
+            'status' => 'Paid',
+            'payment_method' => $request->input('payment_method', 'Unknown'),
+            'amount_paid' => $invoice->total,
+            'balance_due' => 0,
+        ];
+
+        $this->repository->update($invoice, $data);
+
+        // Refresh the model so the view gets the updated payment_method/status
+        $invoice->refresh();
+
+        return view('successfullypaid', compact('invoice'));
     }
 }
