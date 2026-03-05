@@ -16,6 +16,20 @@
         </div>
         @endif
 
+        <!-- Display session success messages -->
+        @if (session('success'))
+        <div class="mb-4 p-3 bg-green-100 text-green-700 rounded">
+            {{ session('success') }}
+        </div>
+        @endif
+
+        <!-- Display session error messages -->
+        @if (session('error'))
+        <div class="mb-4 p-3 bg-red-100 text-red-700 rounded">
+            {{ session('error') }}
+        </div>
+        @endif
+
         <form action="{{ route("login.save") }}" method="post" class="space-y-4">
             @csrf
 

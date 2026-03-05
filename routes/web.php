@@ -28,7 +28,7 @@ Route::view("login", "login")->name("login");
 Route::post("loginMatch", [UserController::class, "login"])->name("login.save");
 
 
-Route::get("logout", [UserController::class, "logout"])->name("logout");
+Route::post("logout", [UserController::class, "logout"])->name("logout");
 
 // google login 
 Route::get("googlelogin", [UserController::class, "googlelogin"])->name("login.google");

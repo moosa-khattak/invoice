@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\UserRequest;
 use App\Interfaces\UserRepositoryInterface;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Str;
@@ -48,21 +49,28 @@ class UserController extends Controller
   }
 
 
-  public function githublogin(){
-    return Socialite::driver("github")->redirect();
+  public function githublogin()
+  {
+    return Socialite::driver('github')->redirect();
   }
 
-  public function githubCallback(){
+  public function githubCallback()
+  {
     try {
-      $githubUser = Socialite::driver("github")->user();
+      $githubUser = Socialite::driver('github')->user();
+
 
       $user = $this->userRepository->updateOrCreate(
-        ['email' => $githubUser->getEmail()],
         [
-          'name'     => $githubUser->getName(),
+          'github_id' => $githubUser->getId(),
+        ],
+        [
+          'name' => $githubUser->getName() ?? $githubUser->getNickname() ?? 'Github User',
+          'email' => $githubUser->getEmail() ?? $githubUser->getId() . '@github.com',
           'password' => bcrypt(Str::random(24)),
         ]
       );
+
 
       // Log the user in to create a session for the 'auth' middleware
       Auth::login($user);
