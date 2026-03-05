@@ -1,4 +1,5 @@
 // window.invoiceOldItems is set in the Blade view that includes this script
+// (It must be defined via an inline <script> in the .blade.php file before this file is loaded)
 
 document.addEventListener('DOMContentLoaded', function () {
     // 1. Get old items from Laravel session

@@ -174,8 +174,4 @@
 </div>
 
 
-<script>
-    // This data must be set here in the Blade view where @json() is compiled
-    window.invoiceOldItems = @json(old('items', isset($invoice) ? $invoice - > items : []));
-</script>
 <script src="{{ asset('js/table.js') }}"></script>
