@@ -88,7 +88,7 @@
             <a href="{{ route('invoice.show', $invoice->invoice_number) }}" class="w-1/3 text-center py-3 px-4 border border-gray-300 rounded-lg text-gray-700 font-medium hover:bg-gray-50 transition">
                 Cancel Payment
             </a>
-            <button type="submit" class="w-2/3 bg-teal-600 hover:bg-teal-700 text-white py-3 px-4 rounded-lg font-bold shadow-sm transition flex justify-center items-center gap-2">
+            <button type="submit" class="w-2/3 bg-teal-600 hover:bg-teal-700 text-white py-3 px-4 rounded-lg font-bold shadow-sm transition flex justify-center items-center gap-2 cursor-pointer">
                 <span>Pay</span>
                 <span>{{ $invoice->currency ?? 'USD' }} {{ number_format($invoice->total ?? 0, 2) }}</span>
             </button>

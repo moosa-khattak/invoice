@@ -173,5 +173,6 @@
     </div>
 </div>
 
-
+@section('scripts')
 <script src="{{ asset('js/table.js') }}"></script>
+@endsection

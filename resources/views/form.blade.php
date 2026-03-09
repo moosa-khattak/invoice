@@ -158,7 +158,7 @@
         <div class="w-full md:w-80 space-y-4">
             <!-- Date -->
             <div class="flex flex-col sm:flex-row sm:items-center gap-1">
-                <label class="sm:w-32 sm:text-right text-gray-500">Date</label>
+                <label class="sm:w-32 md:text-right text-gray-500">Date</label>
                 <div class="flex flex-col">
                     <input
                         type="date"
@@ -177,7 +177,7 @@
 
             <!-- Payment Terms -->
             <div class="flex flex-col sm:flex-row sm:items-center gap-1">
-                <label class="sm:w-32 sm:text-right text-gray-500">
+                <label class="sm:w-32 md:text-right text-gray-500">
                     Payment Terms
                 </label>
                 <div class="flex flex-col">
@@ -197,7 +197,7 @@
 
             <!-- Due Date -->
             <div class="flex flex-col sm:flex-row sm:items-center gap-1">
-                <label class="sm:w-32 sm:text-right text-gray-500">
+                <label class="sm:w-32 md:text-right text-gray-500">
                     Due Date
                 </label>
                 <div class="flex flex-col">
@@ -218,7 +218,7 @@
 
             <!-- PO Number -->
             <div class="flex flex-col sm:flex-row sm:items-center gap-1">
-                <label class="sm:w-32 sm:text-right text-gray-500">
+                <label class="sm:w-32 md:text-right text-gray-500">
                     PO Number
                 </label>
                 <input

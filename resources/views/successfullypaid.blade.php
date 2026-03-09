@@ -52,13 +52,13 @@
             <!-- Action Buttons -->
             <div class="flex gap-4">
                 <a href="{{ route('invoice.show', $invoice->invoice_number) }}"
-                    class="w-1/2 py-3 px-4 bg-gray-100 hover:bg-gray-200 
+                    class="w-1/2 cursor-pointer py-3 px-4 bg-gray-100 hover:bg-gray-200 
                           text-gray-700 rounded-lg font-medium transition text-center">
                     View Invoice
                 </a>
 
                 <a href="{{ route('allinvoices') }}"
-                    class="w-1/2 py-3 px-4 bg-emerald-600 hover:bg-emerald-700 
+                    class="w-1/2 cursor-pointer py-3 px-4 bg-emerald-600 hover:bg-emerald-700 
                           text-white rounded-lg font-medium transition text-center">
                     Back to Invoices
                 </a>

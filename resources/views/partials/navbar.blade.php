@@ -121,8 +121,7 @@
     </div>
 </nav>
 
-<script>
-    function toggleMobileMenu() {
-        document.getElementById('mobile-menu').classList.toggle('hidden');
-    }
-</script>
+
+@section('scripts')
+<script src="{{ asset('js/navbar.js') }}"></script>
+@endsection
