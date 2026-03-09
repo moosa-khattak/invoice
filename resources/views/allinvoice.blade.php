@@ -23,7 +23,7 @@
                     <tr
                         class="bg-gray-100 text-gray-600 text-sm font-semibold uppercase tracking-wider">
                         <th class="px-6 py-4">Logo</th>
-                        <th class="px-6 py-4">Invoice #</th>
+                        <th class="px-6 py-4">#Invoice</th>
                         <th class="px-6 py-4">Client</th>
                         <th class="px-6 py-4">Date</th>
                         <th class="px-6 py-4">Total</th>

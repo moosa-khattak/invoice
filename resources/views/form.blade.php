@@ -88,7 +88,10 @@
                     name="invoice_number"
                     value="{{ old('invoice_number', $invoice->invoice_number ?? ($nextInvoiceNumber ?? '')) }}"
                     readonly
-                    class="border border-gray-200 rounded-lg py-2 pr-3 text-right bg-gray-50 cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-teal-500 transition @error('invoice_number') border-red-500 @enderror"
+                    class="border border-gray-200 rounded-lg py-2 pr-3 text-right bg-gray-50 cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-teal-500 transition 
+                    @error('invoice_number')
+                     border-red-500 
+                    @enderror"
                 />
                 <span class="text-red-500 block">
                     @error('invoice_number')
@@ -111,7 +114,10 @@
                     name="from"
                     value="{{ old('from', $invoice->from ?? '') }}"
                     placeholder="Who is this from?"
-                    class="w-full border border-gray-200 rounded-lg p-4 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-500 transition @error('from') border-red-500 @enderror"
+                    class="w-full border border-gray-200 rounded-lg p-4 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-500 transition 
+                     @error('from')
+                      border-red-500 
+                     @enderror"
                 />
                 <span class="text-red-500">
                     @error('from')
@@ -131,7 +137,10 @@
                         name="bill_to"
                         value="{{ old('bill_to', $invoice->bill_to ?? '') }}"
                         placeholder="Who is this to?"
-                        class="w-full border border-gray-200 rounded-lg p-4 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-500 transition @error('bill_to') border-red-500 @enderror"
+                        class="w-full border border-gray-200 rounded-lg p-4 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-500 transition 
+                        @error('bill_to')
+                         border-red-500 
+                        @enderror"
                     />
                     <span class="text-red-500">
                         @error('bill_to')
@@ -165,7 +174,10 @@
                         name="date"
                         id="invoice-date"
                         value="{{ old('date', isset($invoice) && $invoice->date ? $invoice->date->format('Y-m-d') : '') }}"
-                        class="flex-1 border border-gray-200 rounded-lg p-2.5 focus:outline-none focus:ring-2 focus:ring-teal-500 transition @error('date') border-red-500 @enderror"
+                        class="flex-1 border border-gray-200 rounded-lg p-2.5 focus:outline-none focus:ring-2 focus:ring-teal-500 transition 
+                        @error('date')
+                            border-red-500 
+                        @enderror"
                     />
                     <span class="text-red-500 block">
                         @error('date')
@@ -185,7 +197,10 @@
                         type="text"
                         name="payment_terms"
                         value="{{ old('payment_terms', $invoice->payment_terms ?? '') }}"
-                        class="flex-1 border border-gray-200 rounded-lg py-2.5 focus:outline-none focus:ring-2 focus:ring-teal-500 transition @error('payment_terms') border-red-500 @enderror"
+                        class="flex-1 border border-gray-200 rounded-lg py-2.5 focus:outline-none focus:ring-2 focus:ring-teal-500 transition 
+                        @error('payment_terms') 
+                            border-red-500 
+                        @enderror"
                     />
                     <span class="text-red-500">
                         @error('payment_terms')
@@ -206,7 +221,10 @@
                         name="due_date"
                         id="invoice-due-date"
                         value="{{ old('due_date', isset($invoice) && $invoice->due_date ? $invoice->due_date->format('Y-m-d') : '') }}"
-                        class="flex-1 border border-gray-200 rounded-lg py-2.5 focus:outline-none focus:ring-2 focus:ring-teal-500 transition @error('due_date') border-red-500 @enderror"
+                        class="flex-1 border border-gray-200 rounded-lg py-2.5 focus:outline-none focus:ring-2 focus:ring-teal-500 transition 
+                        @error('due_date') 
+                        border-red-500 
+                        @enderror"
                     />
                     <span class="text-red-500">
                         @error('due_date')

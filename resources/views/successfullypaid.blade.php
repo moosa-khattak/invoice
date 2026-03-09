@@ -1,7 +1,7 @@
 @extends('layout.layout')
 
 @section('content')
-<div class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center px-4">
+<div class="min-h-screen bg-linear-to-br from-gray-50 to-gray-100 flex items-center justify-center px-4">
 
     <div class="w-full max-w-lg bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
 
