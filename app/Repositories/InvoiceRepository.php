@@ -13,7 +13,7 @@ class InvoiceRepository implements InvoiceRepositoryInterface
     {
         $user_id = Auth::user()->id;
         // print_r($user_id);
-       
+
         return Invoice::where('user_id', $user_id)->orderBy('id', 'asc')->get();
     }
 
@@ -25,13 +25,14 @@ class InvoiceRepository implements InvoiceRepositoryInterface
 
     public function getByInvoiceNumber($invoice_number)
     {
-        return Invoice::where('invoice_number', $invoice_number)->firstOrFail();
+        $user_id = Auth::user()->id;
+        return Invoice::where('user_id', $user_id)->where('invoice_number', $invoice_number)->firstOrFail();
     }
 
     public function create(array $data)
     {
-      $data['user_id'] = Auth::user()->id;
-      return Invoice::create($data);
+        $data['user_id'] = Auth::user()->id;
+        return Invoice::create($data);
     }
 
     public function update(Invoice $invoice, array $data)
@@ -49,7 +50,9 @@ class InvoiceRepository implements InvoiceRepositoryInterface
 
     public function getNextInvoiceNumber()
     {
-        $lastInvoice = Invoice::latest()->first();
+        $user_id = Auth::user()->id;
+        $lastInvoice = Invoice::where('user_id', $user_id)->latest()->first();
+
         if (!$lastInvoice) {
             return 'INV-001';
         }

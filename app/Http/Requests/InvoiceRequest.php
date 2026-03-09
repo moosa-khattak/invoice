@@ -4,6 +4,9 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Auth;
+
 class InvoiceRequest extends FormRequest
 {
     /**
@@ -14,8 +17,6 @@ class InvoiceRequest extends FormRequest
         return true;
     }
 
-
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -25,7 +26,13 @@ class InvoiceRequest extends FormRequest
     {
         $id = $this->route('id');
         return [
-            'invoice_number' => 'required|string|unique:invoices,invoice_number,' . $id . ',invoice_number',
+            'invoice_number' => [
+                'required',
+                'string',
+                Rule::unique('invoices', 'invoice_number')
+                    ->where('user_id', Auth::id())
+                    ->ignore($id, 'invoice_number'),
+            ],
             'from' => 'required|string',
             'bill_to' => 'required|string',
             'ship_to' => 'nullable|string',
@@ -55,15 +62,16 @@ class InvoiceRequest extends FormRequest
      *
      * @return array
      */
-    public function messages(){
+    public function messages()
+    {
         return [
-           "invoice_number.required" => "Invoice Number is Required",
-           "from.required" => "From field is required",
-           "bill_to.required" => "Bill To is required",
-           "date.required" => "Date is Required",
-           "due_date.required" => "Due Date is Required",
-           "payment_terms.required" => "Payment Terms is Required",
-           "items.required" => "Items is Required",
+            "invoice_number.required" => "Invoice Number is Required",
+            "from.required" => "From field is required",
+            "bill_to.required" => "Bill To is required",
+            "date.required" => "Date is Required",
+            "due_date.required" => "Due Date is Required",
+            "payment_terms.required" => "Payment Terms is Required",
+            "items.required" => "Items is Required",
         ];
-    } 
+    }
 }

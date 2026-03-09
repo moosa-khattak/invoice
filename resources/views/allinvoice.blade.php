@@ -133,6 +133,6 @@
 </div>
 @endsection
 
-@section('script')
+@push('scripts')
 <script src="{{ asset('js/allInvoiceFilter.js') }}"></script>
-@endsection
+@endpush

@@ -57,7 +57,7 @@ class InvoiceController extends Controller
             'tax' => $totals['tax'],
             'total' => $totals['total'],
             'balance_due' => $totals['balance_due'],
-            'po_number' => $request->input('po'),
+            'po_number' => $request->input('po_number'),
             'shipping' => (float) $request->input('shipping', 0),
             'discount_rate' => (float) $request->input('discount_rate', 0),
             'tax_rate' => (float) $request->input('tax_rate', 0),

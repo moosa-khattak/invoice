@@ -15,7 +15,8 @@
         @yield('content')
     </div>
     <!-- Logo Preview Script & Table Logic -->
-    @yield('script')
+    @stack('script')
+    @stack('scripts')
 </body>
 
 </html>

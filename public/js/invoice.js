@@ -74,20 +74,20 @@ function addRow(data = {}) {
     row.className = 'border-b border-gray-100 group';
     const selectedCurrency = document.getElementById('currency-selector').value;
 
-    // Calculate initial amount for old data
-    const initialQty = parseFloat(data.Quantity) || 0;
-    const initialRate = parseFloat(data.Rate) || 0;
+    // Calculate initial amount for old data (handle both cases)
+    const initialQty = parseFloat(data.Quantity ?? data.quantity) || 0;
+    const initialRate = parseFloat(data.Rate ?? data.rate) || 0;
     const initialAmount = initialQty * initialRate;
 
     let rowHtml = `
             <td class="p-3">
-                <input type="text" name="items[${rowCount}][Item]" value="${data.Item || ''}" placeholder="Products" class="w-full bg-transparent border border-gray-300 px-2 py-1 rounded-md focus:outline-none" />
+                <input type="text" name="items[${rowCount}][Item]" value="${data.Item ?? data.item ?? ''}" placeholder="Products" class="w-full bg-transparent border border-gray-300 px-2 py-1 rounded-md focus:outline-none" />
             </td>
             <td class="p-3">
-                <input type="number" step="1" name="items[${rowCount}][Quantity]" value="${data.Quantity || ''}" min="0" class="quantity-input w-30 border border-gray-300 px-2 py-1 rounded-md" oninput="calculateRow(this)" />
+                <input type="number" step="1" name="items[${rowCount}][Quantity]" value="${data.Quantity ?? data.quantity ?? ''}" min="0" class="quantity-input w-30 border border-gray-300 px-2 py-1 rounded-md" oninput="calculateRow(this)" />
             </td>
             <td class="p-3">
-                <input type="number" step="1" name="items[${rowCount}][Rate]" value="${data.Rate || ''}" min="0" class="rate-input w-30 border border-gray-300 px-2 py-1 rounded-md" oninput="calculateRow(this)" />
+                <input type="number" step="1" name="items[${rowCount}][Rate]" value="${data.Rate ?? data.rate ?? ''}" min="0" class="rate-input w-30 border border-gray-300 px-2 py-1 rounded-md" oninput="calculateRow(this)" />
             </td>
         `;
 
@@ -164,9 +164,8 @@ function calculateTotals() {
     const taxAmount = taxableAmount * (taxRate / 100);
 
     // Calculate final figures (rounded)
-    // Formula: (Subtotal - DiscountAmount) + TaxAmount + Shipping
-    const total = Math.round(subtotal - discountAmount + taxAmount + shipping);
-    const balance = Math.round(total - paid);
+    const total = Math.round(subtotal - discountAmount + taxAmount + shipping) || 0;
+    const balance = Math.round(total - paid) || 0;
 
     // Update UI Text
     subtotalEl.textContent = formatMoney(Math.round(subtotal));

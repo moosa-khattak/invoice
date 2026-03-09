@@ -122,6 +122,6 @@
 </nav>
 
 
-@section('scripts')
+@push('scripts')
 <script src="{{ asset('js/navbar.js') }}"></script>
-@endsection
+@endpush

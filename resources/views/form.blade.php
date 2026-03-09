@@ -128,9 +128,8 @@
                 type="date"
                 :value="isset($invoice) && $invoice->due_date ? $invoice->due_date->format('Y-m-d') : ''" />
 
-            <!-- PO Number -->
             <x-input
-                name="po"
+                name="po_number"
                 label="PO Number"
                 :value="$invoice->po_number ?? ''" />
 
@@ -138,11 +137,9 @@
 
     </div>
 
-    @section('script')
-
+    @push('scripts')
     <script src="{{ asset('js/invoice.js') }}"></script>
     <script src="{{ asset('js/form.js') }}"></script>
-
-    @endsection
+    @endpush
 
 </div>

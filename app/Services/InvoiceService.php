@@ -34,14 +34,16 @@ class InvoiceService
     public function calculateTotals(array $items, float $shipping, float $discountRate, float $taxRate, float $amountPaid)
     {
         $subtotal = 0;
-        
+
         // Clean up items array (ensure sequential keys)
         $items = array_values($items);
 
         foreach ($items as &$item) {
-            $qty = (float)($item['Quantity'] ?? 0);
-            $rate = (float)($item['Rate'] ?? 0);
+            $qty = (float)($item['Quantity'] ?? $item['quantity'] ?? 0);
+            $rate = (float)($item['Rate'] ?? $item['rate'] ?? 0);
             $item['Amount'] = round($qty * $rate);
+            $item['Quantity'] = $qty; // Normalize for DB consistency
+            $item['Rate'] = $rate;
             $subtotal += $item['Amount'];
         }
         unset($item); // Unset reference to avoid unexpected behavior

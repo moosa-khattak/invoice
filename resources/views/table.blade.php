@@ -179,6 +179,9 @@
     </div>
 </div>
 
-@section('scripts')
+@push('scripts')
+<script>
+    window.invoiceOldItems = <?php echo json_encode(old('items', $invoice->items ?? [])); ?>;
+</script>
 <script src="{{ asset('js/table.js') }}"></script>
-@endsection
+@endpush

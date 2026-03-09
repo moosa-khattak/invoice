@@ -16,7 +16,7 @@ return new class extends Migration
             // user_id
             $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->string('invoice_number')->unique();
+            $table->string('invoice_number');
             $table->string('from');
             $table->string('bill_to');
             $table->string('ship_to')->nullable();
