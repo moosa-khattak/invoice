@@ -1,244 +1,156 @@
 <!-- Invoice Paper (Left Side) -->
-<div
-    class="flex-1 bg-white p-8 md:p-12 rounded-lg shadow-sm border border-gray-200 w-full">
-    <!-- Top Section: Logo & Header -->
-    <div
-        class="flex flex-col md:flex-row justify-between items-start gap-8 mb-10">
-        <!-- Logo Placeholder -->
-        <div
-            class="w-full md:w-64 max-w-xs mx-auto md:mx-0 relative group/logo">
+<div class="flex-1 bg-white p-8 md:p-12 rounded-lg shadow-sm border border-gray-200 w-full">
+
+    <!-- Top Section -->
+    <div class="flex flex-col md:flex-row justify-between items-start gap-8 mb-10">
+
+        <!-- Logo Upload -->
+        <div class="w-full md:w-64 max-w-xs mx-auto md:mx-0 relative group/logo">
+
             <label
                 class="border border-dashed border-gray-300 bg-gray-50 hover:bg-gray-100 transition rounded-lg h-32 md:h-40 flex flex-col items-center justify-center cursor-pointer overflow-hidden">
-                <div
-                    id="logo-placeholder"
+
+                <div id="logo-placeholder"
                     class="flex flex-col items-center justify-center {{ old('logo_base64') || (isset($invoice) && $invoice->logo_path) ? 'hidden' : '' }}">
-                    <span
-                        class="text-3xl text-gray-400 mb-2 group-hover:text-gray-500">
-                        +
-                    </span>
-                    <span
-                        class="text-gray-400 font-medium group-hover:text-gray-500">
+
+                    <span class="text-3xl text-gray-400 mb-2 group-hover:text-gray-500">+</span>
+                    <span class="text-gray-400 font-medium group-hover:text-gray-500">
                         Add Your Logo
                     </span>
+
                 </div>
+
                 <img
                     id="logo-preview"
                     src="{{ old('logo_base64') ?: (isset($invoice) && $invoice->logo_path ? asset('storage/' . $invoice->logo_path) : '') }}"
                     class="{{ old('logo_base64') || (isset($invoice) && $invoice->logo_path) ? '' : 'hidden' }} h-full w-full object-contain" />
-                <input
-                    type="file"
-                    name="logo"
-                    accept="image/*"
-                    id="logo-input"
-                    class="hidden" />
+
+                <input type="file" name="logo" accept="image/*" id="logo-input" class="hidden" />
+
                 <input
                     type="hidden"
                     name="logo_base64"
                     id="logo-base64-input"
                     value="{{ old('logo_base64') }}" />
+
             </label>
-            <!-- Remove Button -->
+
+            <!-- Remove Logo -->
             <button
                 type="button"
                 id="remove-logo"
-                class="{{ old('logo_base64') || (isset($invoice) && $invoice->logo_path) ? '' : 'hidden' }} absolute -top-3 -right-3 bg-white text-gray-500 hover:text-red-600 rounded-full h-8 w-8 shadow-lg border border-gray-200 items-center justify-center transition-all duration-200 hover:scale-110 z-10"
-                title="Remove Logo">
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="h-4 w-4 translate-x-2"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor">
-                    <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2.5"
-                        d="M6 18L18 6M6 6l12 12" />
+                class="{{ old('logo_base64') || (isset($invoice) && $invoice->logo_path) ? '' : 'hidden' }} absolute -top-3 -right-3 bg-white text-gray-500 hover:text-red-600 rounded-full h-8 w-8 shadow-lg border border-gray-200 items-center justify-center transition-all duration-200 hover:scale-110 z-10">
+
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 translate-x-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12" />
                 </svg>
+
             </button>
+
         </div>
 
         <!-- Invoice Header -->
         <div class="w-full md:w-64 text-center md:text-right">
-            <h1
-                class="text-4xl md:text-5xl font-light text-gray-800 tracking-wide mb-4">
+
+            <h1 class="text-4xl md:text-5xl font-light text-gray-800 tracking-wide mb-4">
                 INVOICE
             </h1>
+
             <div class="relative">
+
                 <span class="absolute right-2 top-2.5 text-gray-400 font-bold">
                     #
                 </span>
-                <input
-                    type="text"
+
+                <x-input
                     name="invoice_number"
-                    name="invoice_number"
-                    value="{{ old('invoice_number', $invoice->invoice_number ?? ($nextInvoiceNumber ?? '')) }}"
-                    readonly
-                    @class([
-                        "mt-1 block w-full rounded-lg border px-3 py-2 focus:outline-none focus:ring-2 transition", 
-                        "border-gray-300 focus:ring-teal-500"=> !$errors->has("invoice_number"),
-                        "border-red-500 focus:ring-red-500" => $errors->has("invoice_number"),
-                ])
+                    :value="$invoice->invoice_number ?? ($nextInvoiceNumber ?? '')"
+                    :readonly="true"
                 />
-                <span class="text-red-500 block">
-                    @error('invoice_number')
-                    {{ $message }}
-                    @enderror
-                </span>
+
             </div>
+
         </div>
+
     </div>
 
-    <!-- Middle Section: From & Meta Data -->
+    <!-- Middle Section -->
     <div class="flex flex-col md:flex-row gap-12">
-        <!-- Left Column (From, Bill To, Ship To) -->
+
+        <!-- Left Column -->
         <div class="flex-1 space-y-8">
+
             <!-- From -->
-            <div>
-                <input
-                    type="text"
-                    name="from"
-                    name="from"
-                    value="{{ old('from', $invoice->from ?? '') }}"
-                    placeholder="Who is this from?"
-                    @class([ "mt-1 block w-full rounded-lg border px-3 py-2 focus:outline-none focus:ring-2 transition" , "border-gray-300 focus:ring-teal-500"=> !$errors->has("from"),
-                "border-red-500 focus:ring-red-500" => $errors->has("from"),
-                ])
+            <x-input
+                name="from"
+                placeholder="Who is this from?"
+                :value="$invoice->from ?? ''"
+            />
+
+            <!-- Bill To + Ship To -->
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                <x-input
+                    name="bill_to"
+                    label="Bill To"
+                    placeholder="Who is this to?"
+                    :value="$invoice->bill_to ?? ''"
                 />
-                <span class="text-red-500">
-                    @error('from')
-                    {{ $message }}
-                    @enderror
-                </span>
+
+                <x-input
+                    name="ship_to"
+                    label="Ship To"
+                    placeholder="(optional)"
+                    :value="$invoice->ship_to ?? ''"
+                />
+
             </div>
 
-            <!-- Bill To & Ship To Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                    <label class="block text-gray-500 mb-2 font-medium">
-                        Bill To
-                    </label>
-                    <input
-                        type="text"
-                        name="bill_to"
-                        value="{{ old('bill_to', $invoice->bill_to ?? '') }}"
-                        placeholder="Who is this to?"
-                        @class([ 'mt-1 block w-full rounded-lg border px-3 py-2 focus:outline-none focus:ring-2 transition' , 'border-gray-300 focus:ring-teal-500'=> !$errors->has('bill_to'),
-                    'border-red-500 focus:ring-red-500' => $errors->has('bill_to'),
-                    ])
-                    />
-                    <span class="text-red-500">
-                        @error('bill_to')
-                        {{ $message }}
-                        @enderror
-                    </span>
-                </div>
-                <div>
-                    <label class="block text-gray-500 mb-2 font-medium">
-                        Ship To
-                    </label>
-                    <input
-                        type="text"
-                        name="ship_to"
-                        value="{{ old('ship_to', $invoice->ship_to ?? '') }}"
-                        placeholder="(optional)"
-                        @class([ 'mt-1 block w-full rounded-lg border px-3 py-2 focus:outline-none focus:ring-2 transition' , 'border-gray-300 focus:ring-teal-500'=> !$errors->has('ship_to'),
-                    'border-red-500 focus:ring-red-500' => $errors->has('ship_to'),
-                    ])
-                    />
-                    <span class="text-red-500">
-                        @error('ship_to')
-                        {{ $message }}
-                        @enderror
-                    </span>
-                </div>
-            </div>
         </div>
 
-        <!-- Right Column (Dates & Meta) -->
+        <!-- Right Column -->
         <div class="w-full md:w-80 space-y-4">
+
             <!-- Date -->
-            <div class="flex flex-col sm:flex-row sm:items-center gap-1">
-                <label class="sm:w-32 md:text-right text-gray-500">Date</label>
-                <div class="flex flex-col">
-                    <input
-                        type="date"
-                        name="date"
-                        id="invoice-date"
-                        value="{{ old('date', isset($invoice) && $invoice->date ? $invoice->date->format('Y-m-d') : '') }}"
-                        @class([ 'mt-1 block w-full rounded-lg border px-3 py-2 focus:outline-none focus:ring-2 transition' , 'border-gray-300 focus:ring-teal-500'=> !$errors->has('date'),
-                    'border-red-500 focus:ring-red-500' => $errors->has('date'),
-                    ])
-                    />
-                    <span class="text-red-500 block">
-                        @error('date')
-                        {{ $message }}
-                        @enderror
-                    </span>
-                </div>
-            </div>
+            <x-input
+                name="date"
+                label="Date"
+                type="date"
+                :value="isset($invoice) && $invoice->date ? $invoice->date->format('Y-m-d') : ''"
+            />
 
             <!-- Payment Terms -->
-            <div class="flex flex-col sm:flex-row sm:items-center gap-1">
-                <label class="sm:w-32 md:text-right text-gray-500">
-                    Payment Terms
-                </label>
-                <div class="flex flex-col">
-                    <input
-                        type="text"
-                        name="payment_terms"
-                        value="{{ old('payment_terms', $invoice->payment_terms ?? '') }}"
-                        @class([ 'mt-1 block w-full rounded-lg border px-3 py-2 focus:outline-none focus:ring-2 transition' , 'border-gray-300 focus:ring-teal-500'=> !$errors->has('payment_terms'),
-                    'border-red-500 focus:ring-red-500' => $errors->has('payment_terms'),
-                    ])
-                    />
-                    <span class="text-red-500">
-                        @error('payment_terms')
-                        {{ $message }}
-                        @enderror
-                    </span>
-                </div>
-            </div>
+            <x-input
+                name="payment_terms"
+                label="Payment Terms"
+                :value="$invoice->payment_terms ?? ''"
+            />
 
             <!-- Due Date -->
-            <div class="flex flex-col sm:flex-row sm:items-center gap-1">
-                <label class="sm:w-32 md:text-right text-gray-500">
-                    Due Date
-                </label>
-                <div class="flex flex-col">
-                    <input
-                        type="date"
-                        name="due_date"
-                        id="invoice-due-date"
-                        value="{{ old('due_date', isset($invoice) && $invoice->due_date ? $invoice->due_date->format('Y-m-d') : '') }}"
-                        @class([ 'mt-1 block w-full rounded-lg border px-3 py-2 focus:outline-none focus:ring-2 transition' , 'border-gray-300 focus:ring-teal-500'=> !$errors->has('due_date'),
-                    'border-red-500 focus:ring-red-500' => $errors->has('due_date'),
-                    ])
-                    />
-                    <span class="text-red-500">
-                        @error('due_date')
-                        {{ $message }}
-                        @enderror
-                    </span>
-                </div>
-            </div>
+            <x-input
+                name="due_date"
+                label="Due Date"
+                type="date"
+                :value="isset($invoice) && $invoice->due_date ? $invoice->due_date->format('Y-m-d') : ''"
+            />
 
             <!-- PO Number -->
-            <div class="flex flex-col sm:flex-row sm:items-center gap-1">
-                <label class="sm:w-32 md:text-right text-gray-500">
-                    PO Number
-                </label>
-                <input
-                    type="text"
-                    name="po"
-                    value="{{ old('po', $invoice->po_number ?? '') }}"
-                    class="flex-1 border border-gray-200 rounded-lg py-2.5 focus:outline-none focus:ring-2 focus:ring-teal-500 transition" />
-            </div>
+            <x-input
+                name="po"
+                label="PO Number"
+                :value="$invoice->po_number ?? ''"
+            />
+
         </div>
+
     </div>
 
     @section('script')
+
     <script src="{{ asset('js/invoice.js') }}"></script>
     <script src="{{ asset('js/form.js') }}"></script>
+
     @endsection
+
 </div>

@@ -34,19 +34,21 @@
     <div class="grid grid-cols-12 gap- mt-10">
         <!-- Left -->
         <div class="col-span-12 md:col-span-8">
-            <label class="block text-gray-600 mb-2">Notes</label>
-            <textarea
-                class="w-[70%] border rounded-md p-3"
+            <x-textarea
                 name="notes"
-                placeholder="Notes - any relevant information not already covered">
-            {{ old('notes', $invoice->notes ?? '') }}</textarea>
+                label="Notes"
+                placeholder="Notes - any relevant information not already covered"
+                :value="$invoice->notes ?? ''"
+                class="w-[70%]" />
 
-            <label class="block text-gray-600 mt-6 mb-2">Terms</label>
-            <textarea
-                class="w-[70%] border rounded-md p-3"
-                name="terms"
-                placeholder="Terms and conditions - late fees, payment methods, delivery schedule">
-            {{ old('terms', $invoice->terms ?? '') }}</textarea>
+            <div class="mt-6">
+                <x-textarea
+                    name="terms"
+                    label="Terms"
+                    placeholder="Terms and conditions - late fees, payment methods, delivery schedule"
+                    :value="$invoice->terms ?? ''"
+                    class="w-[70%]" />
+            </div>
         </div>
 
         <!-- Right -->
@@ -88,14 +90,15 @@
                 <span>Discount</span>
                 <div class="flex items-center gap-2">
                     <span class="">%</span>
-                    <input
+                    <x-input
+                        name="discount_rate"
                         type="number"
+                        :value="$invoice->discount_rate ?? ''"
+                        id="discount"
+                        class="w-24 text-right"
                         min="0"
                         step="1"
-                        name="discount_rate"
-                        value="{{ old('discount_rate', $invoice->discount_rate ?? '') }}"
-                        id="discount"
-                        class="input w-24 border rounded-md text-right px-2 py-1 focus:ring-teal-500 focus:border-teal-500"
+                        noWrapper="true"
                         oninput="if (this.value < 0) this.value = 0;" />
                 </div>
             </div>
@@ -106,13 +109,14 @@
                 <div class="flex gap-2 items-center">
                     <span class="currency-code-display">USD</span>
 
-                    <input
-                        type="number"
-                        min="0"
+                    <x-input
                         name="shipping"
-                        value="{{ old('shipping', $invoice->shipping ?? '') }}"
+                        type="number"
+                        :value="$invoice->shipping ?? ''"
                         id="shipping"
-                        class="input w-24 border rounded-md text-right px-2 py-1 focus:ring-teal-500 focus:border-teal-500"
+                        class="w-24 text-right"
+                        min="0"
+                        noWrapper="true"
                         oninput="if (this.value < 0) this.value = 0;" />
                 </div>
             </div>
@@ -121,13 +125,14 @@
                 <span>Tax</span>
                 <div class="flex items-center gap-2">
                     <span class="text-gray-500">%</span>
-                    <input
-                        type="number"
-                        min="0"
-                        value="{{ old('tax_rate', $invoice->tax_rate ?? '') }}"
+                    <x-input
                         name="tax_rate"
+                        type="number"
+                        :value="$invoice->tax_rate ?? ''"
                         id="tax"
-                        class="input w-24 border rounded-md text-right px-2 py-1 focus:ring-teal-500 focus:border-teal-500"
+                        class="w-24 text-right"
+                        min="0"
+                        noWrapper="true"
                         oninput="if (this.value < 0) this.value = 0;" />
                 </div>
             </div>
@@ -149,13 +154,14 @@
 
                 <div class="flex gap-2 items-center">
                     <span id="currency" class="currency-code-display">USD</span>
-                    <input
-                        type="number"
-                        min="0"
+                    <x-input
                         name="amount_paid"
-                        value="{{ old('amount_paid', $invoice->amount_paid ?? '') }}"
+                        type="number"
+                        :value="$invoice->amount_paid ?? ''"
                         id="paid"
-                        class="input w-24 border rounded-md text-right px-2 py-1 focus:ring-teal-500 focus:border-teal-500"
+                        class="w-24 text-right"
+                        min="0"
+                        noWrapper="true"
                         oninput="if (this.value < 0) this.value = 0;" />
                 </div>
             </div>
