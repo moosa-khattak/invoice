@@ -65,8 +65,7 @@
                 <x-input
                     name="invoice_number"
                     :value="$invoice->invoice_number ?? ($nextInvoiceNumber ?? '')"
-                    :readonly="true"
-                />
+                    :readonly="true" />
 
             </div>
 
@@ -84,8 +83,7 @@
             <x-input
                 name="from"
                 placeholder="Who is this from?"
-                :value="$invoice->from ?? ''"
-            />
+                :value="$invoice->from ?? ''" />
 
             <!-- Bill To + Ship To -->
 
@@ -95,15 +93,13 @@
                     name="bill_to"
                     label="Bill To"
                     placeholder="Who is this to?"
-                    :value="$invoice->bill_to ?? ''"
-                />
+                    :value="$invoice->bill_to ?? ''" />
 
                 <x-input
                     name="ship_to"
                     label="Ship To"
                     placeholder="(optional)"
-                    :value="$invoice->ship_to ?? ''"
-                />
+                    :value="$invoice->ship_to ?? ''" />
 
             </div>
 
@@ -117,30 +113,26 @@
                 name="date"
                 label="Date"
                 type="date"
-                :value="isset($invoice) && $invoice->date ? $invoice->date->format('Y-m-d') : ''"
-            />
+                :value="isset($invoice) && $invoice->date ? $invoice->date->format('Y-m-d') : ''" />
 
             <!-- Payment Terms -->
             <x-input
                 name="payment_terms"
                 label="Payment Terms"
-                :value="$invoice->payment_terms ?? ''"
-            />
+                :value="$invoice->payment_terms ?? ''" />
 
             <!-- Due Date -->
             <x-input
                 name="due_date"
                 label="Due Date"
                 type="date"
-                :value="isset($invoice) && $invoice->due_date ? $invoice->due_date->format('Y-m-d') : ''"
-            />
+                :value="isset($invoice) && $invoice->due_date ? $invoice->due_date->format('Y-m-d') : ''" />
 
             <!-- PO Number -->
             <x-input
                 name="po"
                 label="PO Number"
-                :value="$invoice->po_number ?? ''"
-            />
+                :value="$invoice->po_number ?? ''" />
 
         </div>
 

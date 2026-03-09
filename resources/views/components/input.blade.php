@@ -1,5 +1,6 @@
 @props([
 'name',
+'id' => null,
 'label' => null,
 'type' => 'text',
 'value' => null,
@@ -13,13 +14,13 @@
     @endif
 
     @if($label)
-    <label for="{{ $name }}" class="block text-gray-500 mb-2 font-medium">
+    <label for="{{ $id ?? $name }}" class="block text-gray-500 mb-2 font-medium">
         {{ $label }}
     </label>
     @endif
 
     <input
-        id="{{ $name }}"
+        id="{{ $id ?? $name }}"
         name="{{ $name }}"
         type="{{ $type }}"
         value="{{ old($name, $value) }}"
@@ -27,11 +28,10 @@
         {{ $readonly ? 'readonly' : '' }}
         {{ $attributes->merge(['class' => 'rounded-lg border px-3 py-2 focus:outline-none focus:ring-2 transition']) }}
 
-        @class([
-            'border-gray-300 focus:ring-teal-500'=> !$errors->has($name),
-            'border-red-500 focus:ring-red-500' => $errors->has($name),
-            'mt-1 block w-full' => !$noWrapper && !str_contains($attributes->get('class'), 'w-'),
-        ])
+        @class([ 'border-gray-300 focus:ring-teal-500'=> !$errors->has($name),
+    'border-red-500 focus:ring-red-500' => $errors->has($name),
+    'mt-1 block w-full' => !$noWrapper && !str_contains($attributes->get('class'), 'w-'),
+    ])
     >
 
     @error($name)

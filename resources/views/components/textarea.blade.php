@@ -1,5 +1,6 @@
 @props([
 'name',
+'id' => null,
 'label' => null,
 'value' => null,
 'placeholder' => '',
@@ -8,13 +9,13 @@
 
 <div class="flex flex-col">
     @if($label)
-    <label for="{{ $name }}" class="block text-gray-500 mb-2 font-medium">
+    <label for="{{ $id ?? $name }}" class="block text-gray-500 mb-2 font-medium">
         {{ $label }}
     </label>
     @endif
 
     <textarea
-        id="{{ $name }}"
+        id="{{ $id ?? $name }}"
         name="{{ $name }}"
         rows="{{ $rows }}"
         placeholder="{{ $placeholder }}"
