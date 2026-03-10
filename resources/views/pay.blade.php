@@ -24,74 +24,103 @@
                 </div>
             </div>
 
-            <!-- Payment Options Form -->
-            <form action="{{ route('invoice.payment.process', ['id' => $invoice->invoice_number]) }}" method="POST">
+            <!-- Stripe Payment Form -->
+            <form id="stripe-form" action="{{ route('invoice.payment.process', ['id' => $invoice->invoice_number]) }}" method="POST">
                 @csrf
-                <h3 class="text-lg font-semibold text-gray-800 mb-4">Select Payment Method</h3>
 
-                <div class="space-y-4 mb-8">
-                    <!-- Option 1: Credit Card Mock -->
-                    <label class="flex items-center p-4 border rounded-lg cursor-pointer hover:bg-gray-50 focus-within:ring-2 focus-within:ring-teal-500 transition border-gray-200">
-                        <input type="radio" name="payment_method" value="credit_card" class="h-5 w-5 text-teal-600" checked required>
-                        <div class="ml-4 flex items-center gap-3">
-                            <div class="bg-slate-100 p-2 rounded">
-                                <svg class="w-6 h-6 text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path>
-                                </svg>
-                            </div>
-                            <div>
-                                <span class="block font-medium text-gray-800">Credit / Debit Card</span>
-                                <span class="block text-sm text-gray-500">Pay securely using your card</span>
-                            </div>
-                        </div>
-                    </label>
-
-                    <!-- Option 2: PayPal Mock -->
-                    <label class="flex items-center p-4 border rounded-lg cursor-pointer hover:bg-gray-50 focus-within:ring-2 focus-within:ring-teal-500 transition border-gray-200">
-                        <input type="radio" name="payment_method" value="paypal" class="h-5 w-5 text-teal-600">
-                        <div class="ml-4 flex items-center gap-3">
-                            <div class="bg-[#003087] p-2 rounded text-white font-bold italic w-10 flex justify-center">
-                                P
-                            </div>
-                            <div>
-                                <span class="block font-medium text-gray-800">PayPal</span>
-                                <span class="block text-sm text-gray-500">You will be redirected to PayPal</span>
-                            </div>
-                        </div>
-                    </label>
-
-               
+                <h3 class="text-lg font-semibold text-gray-800 mb-6">Payment Details</h3>
+                <input type="hidden" name="payment_intent_id" id="payment-intent-id">
+                <div id="card-element" class="mb-6 p-4 border border-gray-200 rounded-lg bg-gray-50">
+                    <!-- Stripe Card Element will be inserted here -->
                 </div>
-                </label>
-        </div>
 
-        <div id="payment-element">
+                <div id="card-errors" role="alert" class="hidden text-rose-500 text-sm mb-4 p-3 bg-rose-50 rounded-lg border border-rose-100"></div>
 
+                <!-- Actions -->
+                <div class="flex gap-4 pt-6 border-t border-gray-100">
+                    <a href="{{ route('invoice.show', $invoice->invoice_number) }}" class="w-1/3 text-center py-3 px-4 border border-gray-300 rounded-lg text-gray-700 font-medium hover:bg-gray-50 transition">
+                        Cancel
+                    </a>
+                    <button id="submit-button" type="button" class="w-2/3 bg-indigo-600 hover:bg-indigo-700 text-white py-3 px-4 rounded-lg font-bold shadow-lg shadow-indigo-100 transition flex justify-center items-center gap-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed">
+                        <span id="button-text">Pay {{ $invoice->currency ?? 'USD' }} {{ number_format($invoice->balance_due ?? 0, 2) }}</span>
+                        <div id="spinner" class="hidden w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                    </button>
+                </div>
+            </form>
         </div>
-
-        <!-- Actions -->
-        <div class="flex gap-4 pt-4 border-t border-gray-100">
-            <a href="{{ route('invoice.show', $invoice->invoice_number) }}" class="w-1/3 text-center py-3 px-4 border border-gray-300 rounded-lg text-gray-700 font-medium hover:bg-gray-50 transition">
-                Cancel Payment
-            </a>
-            <button type="submit" class="w-2/3 bg-teal-600 hover:bg-teal-700 text-white py-3 px-4 rounded-lg font-bold shadow-sm transition flex justify-center items-center gap-2 cursor-pointer">
-                <span>Pay</span>
-                <span>{{ $invoice->currency ?? 'USD' }} {{ number_format($invoice->balance_due ?? 0, 2) }}</span>
-            </button>
-        </div>
-        </form>
     </div>
-</div>
 </div>
 @endsection
 
 @push('scripts')
-
 <script src="https://js.stripe.com/v3/"></script>
 <script>
-    var stripe = Stripe("{{ env('STRIPE_KEY') }}");
-    var elements = stripe.elements();
-    var cardElement = elements.create('card');
-   paymentElement.mount('#payment-element');
+    const stripe = Stripe("{{ env('STRIPE_KEY') }}");
+    const elements = stripe.elements();
+
+    const style = {
+        base: {
+            fontSize: '16px',
+            color: '#32325d',
+            fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+            '::placeholder': {
+                color: '#aab7c4'
+            }
+        },
+        invalid: {
+            color: '#fa755a',
+            iconColor: '#fa755a'
+        }
+    };
+
+    const card = elements.create('card', {
+        style: style
+    });
+    card.mount('#card-element');
+
+    const form = document.getElementById('stripe-form');
+    const submitButton = document.getElementById('submit-button');
+    const buttonText = document.getElementById('button-text');
+    const spinner = document.getElementById('spinner');
+    const errorDisplay = document.getElementById('card-errors');
+
+    submitButton.addEventListener('click', async (e) => {
+        setLoading(true);
+
+        const {
+            paymentIntent,
+            error
+        } = await stripe.confirmCardPayment("{{ $clientSecret }}", {
+            payment_method: {
+                card: card,
+                billing_details: {
+                    name: "{{ addslashes($invoice->bill_to) }}"
+                }
+            }
+        });
+
+        if (error) {
+            errorDisplay.textContent = error.message;
+            errorDisplay.classList.remove('hidden');
+            setLoading(false);
+        } else {
+            if (paymentIntent.status === 'succeeded') {
+                document.getElementById('payment-intent-id').value = paymentIntent.id;
+                form.submit();
+            }
+        }
+    });
+
+    function setLoading(isLoading) {
+        if (isLoading) {
+            submitButton.disabled = true;
+            spinner.classList.remove('hidden');
+            buttonText.classList.add('hidden');
+        } else {
+            submitButton.disabled = false;
+            spinner.classList.add('hidden');
+            buttonText.classList.remove('hidden');
+        }
+    }
 </script>
 @endpush

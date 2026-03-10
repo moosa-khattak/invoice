@@ -15,7 +15,8 @@
         "laravel/framework": "^12.0",
         "laravel/socialite": "*",
         "laravel/tinker": "^2.10.1",
-        "simplesoftwareio/simple-qrcode": "*"
+        "simplesoftwareio/simple-qrcode": "*",
+        "stripe/stripe-php": "*"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",

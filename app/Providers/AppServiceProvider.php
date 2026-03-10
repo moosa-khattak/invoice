@@ -19,6 +19,10 @@ class AppServiceProvider extends ServiceProvider
             \App\Interfaces\UserRepositoryInterface::class,
             \App\Repositories\UserRepository::class
         );
+        $this->app->bind(
+            \App\Interfaces\StripeRepositoryInterface::class,
+            \App\Repositories\StripeRepository::class
+        );
     }
 
     /**
