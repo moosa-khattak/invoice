@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\PDFController;
+use App\Http\Controllers\StripeController;
 use App\Http\Controllers\UserController;
 
 Route::middleware("auth")->group(function () {
@@ -18,15 +19,22 @@ Route::middleware("auth")->group(function () {
         Route::put('/invoice/{id}', 'update')->name('invoice.update');
         Route::get("/invoice/{id}/delete", "destroy")->name("invoice.delete");
 
-        // Payment process
-        Route::get('/invoice/{id}/payment', 'payment')->name('invoice.payment');
-        Route::post('/invoice/{id}/payment/process', 'processPayment')->name('invoice.payment.process');
+        
         
     });
-    // for downlode pdf 
-    Route::get("/invoice/{id}/pdf", [PDFController::class, "downloadPdf"])->name("invoice.pdf");
-});
 
+    Route::controller(StripeController::class)->group(function(){
+        // Payment process
+        Route::get('/invoice/{id}/payment', 'payment')->name('invoice.payment');
+
+        Route::post('/invoice/{id}/payment/process', 'processPayment')->name('invoice.payment.process');
+    });
+    
+
+    
+    
+// for downlode pdf 
+Route::get("/invoice/{id}/pdf", [PDFController::class, "downloadPdf"])->name("invoice.pdf");
 
 Route::view("register", "register")->name("register");
 Route::post("/userregistersave", [UserController::class, "register"])->name("register.save");
@@ -43,3 +51,4 @@ Route::get("auth/google/callback", [UserController::class, "googleCallback"])->n
 // github login 
 Route::get("githublogin", [UserController::class, "githublogin"])->name("login.github");
 Route::get("auth/github/callback", [UserController::class, "githubCallback"])->name("github.callback");
+});

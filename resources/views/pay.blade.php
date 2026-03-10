@@ -60,27 +60,13 @@
                         </div>
                     </label>
 
-                    <!-- Option 3: Scan QR Code Mock -->
-                    <!-- <label class="flex items-center p-4 border rounded-lg cursor-pointer hover:bg-gray-50 focus-within:ring-2 focus-within:ring-teal-500 transition border-gray-200">
-                        <input type="radio" name="payment_method" value="qr_code" class="h-5 w-5 text-teal-600">
-                        <div class="ml-4 flex items-center justify-between w-full">
-                            <div class="flex items-center gap-3">
-                                <div class="bg-gray-800 p-2 rounded text-white font-bold w-10 flex justify-center">
-                                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                                        <path d="M4 4h6v6H4zM20 4h-6v6h6zM4 20h6v-6H4zM20 14h-2v-2h-2v2h-2v2h2v2h-2v2h2v-2h2v2h2v-2h-2v-2h2z"></path>
-                                    </svg>
-                                </div>
-                                <div>
-                                    <span class="block font-medium text-gray-800">Pay via QR Code</span>
-                                    <span class="block text-sm text-gray-500">Scan using your mobile banking app</span>
-                                </div>
-                            </div> -->
-                    <!-- Mock QR API generation -->
-                    <!-- <div class="hidden sm:block">
-                                <img src="https://api.qrserver.com/v1/create-qr-code/?size=80x80&data={{ urlencode(route('invoice.payment', ['id' => $invoice->invoice_number])) }}" alt="Payment QR Code" class="w-20 h-20 rounded border border-gray-200 shadow-sm" />
-                            </div> -->
+               
                 </div>
                 </label>
+        </div>
+
+        <div id="payment-element">
+
         </div>
 
         <!-- Actions -->
@@ -98,3 +84,14 @@
 </div>
 </div>
 @endsection
+
+@push('scripts')
+
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+    var stripe = Stripe("{{ env('STRIPE_KEY') }}");
+    var elements = stripe.elements();
+    var cardElement = elements.create('card');
+   paymentElement.mount('#payment-element');
+</script>
+@endpush
