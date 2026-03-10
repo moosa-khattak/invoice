@@ -62,7 +62,7 @@ class StripeController extends Controller
                 ]);
 
                 $invoice->refresh();
-                return view('successfullypaid', compact('invoice'));
+                return view('successfullypaid', compact('invoice', 'amountPaid'));
             }
 
             return redirect()->route('invoice.payment', $id)->with('error', 'Payment was not successful. Status: ' . $paymentIntent->status);

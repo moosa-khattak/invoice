@@ -131,7 +131,7 @@ class InvoiceController extends Controller
         return redirect()->route('allinvoices')->with('success', 'Invoice updated successfully!');
     }
 
-   
+
 
     public function destroy(string $id)
     {
@@ -140,8 +140,4 @@ class InvoiceController extends Controller
 
         return redirect()->route('allinvoices')->with('success', 'Invoice deleted successfully!');
     }
-
-   
-
-   
 }

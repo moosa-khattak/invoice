@@ -27,10 +27,11 @@
 
             <!-- Amount -->
             <div class="mb-6">
-                <p class="text-gray-500 text-sm">Total Amount Paid of Invoice</p>
+                <p class="text-gray-500 text-sm"> Amount Paid </p>
                 <p class="text-3xl font-bold text-gray-800 mt-1">
-                    {{ $invoice->currency ?? 'USD' }} {{ number_format($invoice->amount_paid ?? 0, 2) }}
+                    {{ $invoice->currency ?? 'USD' }} {{ number_format($amountPaid ?? $invoice->amount_paid ?? 0, 2) }}
                 </p>
+
             </div>
 
             <!-- Invoice Info -->
