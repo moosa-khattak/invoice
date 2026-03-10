@@ -195,7 +195,7 @@
 
                     @if($invoice->balance_due > 0)
                     <div class="bg-white p-2 inline-block rounded-lg">
-                        {!! QrCode::size(140)->generate(route('invoice.payment', $invoice->invoice_number)) !!}
+                        {!! QrCode::size(120)->generate(route('invoice.payment', $invoice->invoice_number)) !!}
                     </div>
 
                     @endif
