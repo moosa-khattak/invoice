@@ -15,8 +15,8 @@
             <div class="bg-gray-50 rounded-lg p-6 mb-8 border border-gray-200">
                 <h3 class="text-lg font-semibold text-gray-800 border-b border-gray-200 pb-3 mb-4">Invoice Summary</h3>
                 <div class="flex justify-between items-center mb-2">
-                    <span class="text-gray-600">Total Amount:</span>
-                    <span class="text-xl font-bold text-teal-600">{{ $invoice->currency ?? 'USD' }} {{ number_format($invoice->total ?? 0, 2) }}</span>
+                    <span class="text-gray-600">Due Amount:</span>
+                    <span class="text-xl font-bold text-teal-600">{{ $invoice->currency ?? 'USD' }} {{ number_format($invoice->balance_due ?? 0, 2) }}</span>
                 </div>
                 <div class="flex justify-between items-center text-sm">
                     <span class="text-gray-500">Bill To:</span>
@@ -90,7 +90,7 @@
             </a>
             <button type="submit" class="w-2/3 bg-teal-600 hover:bg-teal-700 text-white py-3 px-4 rounded-lg font-bold shadow-sm transition flex justify-center items-center gap-2 cursor-pointer">
                 <span>Pay</span>
-                <span>{{ $invoice->currency ?? 'USD' }} {{ number_format($invoice->total ?? 0, 2) }}</span>
+                <span>{{ $invoice->currency ?? 'USD' }} {{ number_format($invoice->balance_due ?? 0, 2) }}</span>
             </button>
         </div>
         </form>

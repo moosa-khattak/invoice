@@ -62,11 +62,10 @@ class InvoiceController extends Controller
             'discount_rate' => (float) $request->input('discount_rate', 0),
             'tax_rate' => (float) $request->input('tax_rate', 0),
             'amount_paid' => (float) $request->input('amount_paid', 0),
+            'status' => $totals['status'],
         ]);
         unset($data['logo']); // remove raw file upload, already saved as logo_path
 
-        // Normal save
-        $data['status'] = 'Unpaid';
         $invoice = $this->repository->create($data);
 
         // Check determine the action requested
@@ -120,6 +119,7 @@ class InvoiceController extends Controller
             'discount_rate' => (float) $request->input('discount_rate', 0),
             'tax_rate' => (float) $request->input('tax_rate', 0),
             'amount_paid' => (float) $request->input('amount_paid', 0),
+            'status' => $totals['status'],
         ]);
         unset($data['logo']); // remove raw file upload, already saved as logo_path
 
@@ -156,7 +156,7 @@ class InvoiceController extends Controller
     {
         $invoice = $this->repository->getByInvoiceNumber($id);
 
-        if ($invoice->status === 'Paid') {
+        if ($invoice->balance_due <= 0.1) {
             return redirect()->route('allinvoices')->with('success', 'This invoice is already paid.');
         }
 
@@ -167,7 +167,7 @@ class InvoiceController extends Controller
     {
         $invoice = $this->repository->getByInvoiceNumber($id);
 
-        if ($invoice->status === 'Paid') {
+        if ($invoice->balance_due <= 0.1) {
             return redirect()->route('allinvoices')->with('error', 'Invoice was already paid.');
         }
 

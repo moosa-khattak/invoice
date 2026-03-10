@@ -52,15 +52,28 @@ class InvoiceService
         $taxableAmount = $subtotal - $discountAmount;
         $taxAmount = $taxableAmount * ($taxRate / 100);
         $total = ($subtotal - $discountAmount) + $taxAmount + $shipping;
-        $balanceDue = $total - $amountPaid;
+
+        $total = round($total);
+        $amountPaid = round($amountPaid);
+        $balanceDue = max(0, $total - $amountPaid);
+
+        // Calculate Status
+        if ($balanceDue <= 0.1) {
+            $status = 'Paid';
+        } elseif ($balanceDue < $total) {
+            $status = 'Partial';
+        } else {
+            $status = 'Unpaid';
+        }
 
         return [
             'items' => $items,
             'subtotal' => round($subtotal),
             'discount' => round($discountAmount),
             'tax' => round($taxAmount),
-            'total' => round($total),
-            'balance_due' => round($balanceDue)
+            'total' => $total,
+            'balance_due' => round($balanceDue),
+            'status' => $status
         ];
     }
 }
