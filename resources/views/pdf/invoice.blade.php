@@ -454,11 +454,10 @@
     <!-- Totals & Notes Area -->
     <div class="clearfix">
         @if($invoice->status !== 'Paid')
-        <div class="qr-container">
-            <div class="qr-label">Scan to Pay</div>
-            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={{ urlencode(route('invoice.payment', ['id' => $invoice->invoice_number])) }}" alt="Payment QR Code" />
-            <div style="font-size: 10px; color: #9ca3af; margin-top: 5px;">Scan this QR code with your mobile<br>device to quickly pay online.</div>
+        <div style="margin-bottom: 8px;">
+            <img src="data:image/svg+xml;base64,{{ base64_encode(QrCode::size(100)->generate(route('invoice.payment', $invoice->invoice_number))) }}">
         </div>
+
         @endif
 
         <!-- Totals Box (Right floated) -->

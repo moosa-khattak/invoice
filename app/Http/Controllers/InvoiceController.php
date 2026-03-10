@@ -6,7 +6,6 @@ use App\Http\Requests\InvoiceRequest;
 use App\Interfaces\InvoiceRepositoryInterface;
 use App\Models\Currency;
 use App\Services\InvoiceService;
-use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -132,17 +131,7 @@ class InvoiceController extends Controller
         return redirect()->route('allinvoices')->with('success', 'Invoice updated successfully!');
     }
 
-    public function downloadPdf(string $id)
-    {
-        $invoice = $this->repository->getByInvoiceNumber($id);
-
-        $pdf = Pdf::loadView('pdf.invoice', compact('invoice'))
-            ->setPaper('a4', 'portrait')
-            ->setOption('isHtml5ParserEnabled', true)
-            ->setOption('isRemoteEnabled', true);
-
-        return $pdf->download('invoice-' . $invoice->invoice_number . '.pdf');
-    }
+   
 
     public function destroy(string $id)
     {

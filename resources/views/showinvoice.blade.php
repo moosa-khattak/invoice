@@ -194,11 +194,10 @@
                     </div>
 
                     @if($invoice->balance_due > 0)
-                    <div class="flex flex-col items-center p-6 bg-slate-50 rounded-2xl border border-dashed border-slate-200">
-                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={{ urlencode(route('invoice.payment', ['id' => $invoice->invoice_number])) }}"
-                            alt="QR Code" class="w-32 h-32 mb-4 mix-blend-multiply" />
-                        <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest text-center">Scan to Pay Instantly</p>
+                    <div class="bg-white p-2 inline-block rounded-lg">
+                        {!! QrCode::size(140)->generate(route('invoice.payment', $invoice->invoice_number)) !!}
                     </div>
+
                     @endif
                 </div>
 
