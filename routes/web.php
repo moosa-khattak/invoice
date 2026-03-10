@@ -36,19 +36,26 @@ Route::middleware("auth")->group(function () {
 // for downlode pdf 
 Route::get("/invoice/{id}/pdf", [PDFController::class, "downloadPdf"])->name("invoice.pdf");
 
+
+Route::controller(UserController::class)->group(function(){
+    
+    Route::post("/userregistersave",  "register")->name("register.save");
+    Route::post("loginMatch",  "login")->name("login.save");
+
+    // logout 
+    Route::post("logout",  "logout")->name("logout");
+
+    // google login 
+    Route::get("googlelogin",  "googlelogin")->name("login.google");
+    Route::get("auth/google/callback",  "googleCallback")->name("google.callback");
+
+    // github login 
+    Route::get("githublogin",  "githublogin")->name("login.github");
+
+    Route::get("auth/github/callback",  "githubCallback")->name("github.callback");
+});
+
 Route::view("register", "register")->name("register");
-Route::post("/userregistersave", [UserController::class, "register"])->name("register.save");
 Route::view("login", "login")->name("login");
-Route::post("loginMatch", [UserController::class, "login"])->name("login.save");
 
-
-Route::post("logout", [UserController::class, "logout"])->name("logout");
-
-// google login 
-Route::get("googlelogin", [UserController::class, "googlelogin"])->name("login.google");
-Route::get("auth/google/callback", [UserController::class, "googleCallback"])->name("google.callback");
-
-// github login 
-Route::get("githublogin", [UserController::class, "githublogin"])->name("login.github");
-Route::get("auth/github/callback", [UserController::class, "githubCallback"])->name("github.callback");
 });
