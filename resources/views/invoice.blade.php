@@ -1,12 +1,12 @@
 @extends('layout.layout')
-
+@section('title' , "Create Invoice")
 @section('content')
 <form action="/invoice" method="POST" enctype="multipart/form-data">
     {{-- will add route later --}}
     @csrf
 
     {{-- Alert Containers --}}
-    <!-- <div class="max-w-7xl mx-auto px-4 mb-6">
+    <div class="max-w-7xl mx-auto px-4 mb-6">
             @if (session('success'))
                 <div
                     class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4"
@@ -18,7 +18,7 @@
                     </span>
                 </div>
             @endif
-        </div> -->
+        </div>
 
     {{-- Main Container --}}
     <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-x-8 gap-y-0 items-start">
@@ -43,3 +43,6 @@
     </div>
 </form>
 @endsection
+
+
+

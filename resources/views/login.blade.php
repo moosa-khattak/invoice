@@ -1,5 +1,5 @@
 @extends("layout.layout")
-
+@section('title' , "Login Form")
 @section("content")
 <div class="min-h-screen flex items-center justify-center bg-gray-50">
     <div class="max-w-md w-full bg-white p-8 rounded-lg shadow-md">

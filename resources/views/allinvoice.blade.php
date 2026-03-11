@@ -1,4 +1,6 @@
 @extends('layout.layout')
+@section("title" , "All Invoices")
+
 
 @section('content')
 <div class="min-h-screen bg-slate-50/50 pb-20">

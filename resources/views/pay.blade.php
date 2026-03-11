@@ -1,5 +1,5 @@
 @extends('layout.layout')
-
+@section('title' , "Payment Form")
 @section('content')
 <div class="min-h-screen bg-gray-50 flex flex-col items-center pt-12 pb-24">
     <div class="w-full max-w-2xl bg-white shadow-lg rounded-xl overflow-hidden border border-gray-100">

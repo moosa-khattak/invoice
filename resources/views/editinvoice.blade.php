@@ -1,5 +1,5 @@
 @extends('layout.layout')
-
+@section("title" , "Edit Invoice")
 @section('content')
 <form
     action="{{ route('invoice.update', $invoice->invoice_number) }}"

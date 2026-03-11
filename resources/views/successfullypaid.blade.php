@@ -1,5 +1,5 @@
 @extends('layout.layout')
-
+@section('title' , "Successfully Paid")
 @section('content')
 <div class="min-h-screen bg-linear-to-br from-gray-50 to-gray-100 flex items-center justify-center px-4">
 

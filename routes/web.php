@@ -51,3 +51,8 @@ Route::controller(UserController::class)->group(function () {
     Route::get("githublogin", "githublogin")->name("login.github");
     Route::get("auth/github/callback", "githubCallback")->name("github.callback");
 });
+
+// Fallback Route for 404 Page Not Found
+Route::fallback(function () {
+    return response()->view('errors.404', [], 404);
+});
