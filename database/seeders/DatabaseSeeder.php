@@ -20,11 +20,7 @@ class DatabaseSeeder extends Seeder
 
         // User::factory(10)->create();
         $this->call(CurrencySeeder::class);
-        User::create([
-                    'name' => 'Admin',
-                    'email' => 'admin@gmail.com',
-                    'password' => bcrypt('password'),
-                ]);
+      
        
     }
 }

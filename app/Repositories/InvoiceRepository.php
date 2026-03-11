@@ -14,36 +14,78 @@ class InvoiceRepository implements InvoiceRepositoryInterface
         $user_id = Auth::user()->id;
         // print_r($user_id);
 
-        return Invoice::where('user_id', $user_id)->orderBy('id', 'asc')->get();
+        return Invoice::with(['items', 'meta'])->where('user_id', $user_id)->orderBy('id', 'asc')->get();
     }
 
     public function getById($id)
     {
         $user_id = Auth::user()->id;
-        return Invoice::where('user_id', $user_id)->findOrFail($id);
+        return Invoice::with(['items', 'meta'])->where('user_id', $user_id)->findOrFail($id);
     }
 
     public function getByInvoiceNumber($invoice_number)
     {
         $user_id = Auth::user()->id;
-        return Invoice::where('user_id', $user_id)->where('invoice_number', $invoice_number)->firstOrFail();
+        return Invoice::with(['items', 'meta'])->where('user_id', $user_id)->where('invoice_number', $invoice_number)->firstOrFail();
     }
 
     public function create(array $data)
     {
-        $data['user_id'] = Auth::user()->id;
-        return Invoice::create($data);
+        $invoiceData = collect($data)->except(['items', 'from', 'bill_to', 'ship_to', 'payment_terms', 'po_number', 'logo_path', 'header_columns', 'notes', 'terms'])->toArray();
+        $invoiceData['user_id'] = Auth::user()->id;
+
+        $invoice = Invoice::create($invoiceData);
+
+        if (isset($data['items']) && is_array($data['items'])) {
+            $itemsData = array_map(function ($item) {
+                return [
+                    'name' => $item['Item'] ?? $item['name'] ?? null,
+                    'quantity' => $item['Quantity'] ?? $item['quantity'] ?? 0,
+                    'rate' => $item['Rate'] ?? $item['rate'] ?? 0,
+                    'amount' => $item['Amount'] ?? $item['amount'] ?? 0,
+                ];
+            }, $data['items']);
+            $invoice->items()->createMany($itemsData);
+        }
+
+        $metaData = collect($data)->only(['from', 'bill_to', 'ship_to', 'payment_terms', 'po_number', 'logo_path', 'header_columns', 'notes', 'terms'])->toArray();
+        $invoice->meta()->create($metaData);
+
+        return $invoice->load(['items', 'meta']);
     }
 
     public function update(Invoice $invoice, array $data)
     {
-        return $invoice->update($data);
+        $invoiceData = collect($data)->except(['items', 'from', 'bill_to', 'ship_to', 'payment_terms', 'po_number', 'logo_path', 'header_columns', 'notes', 'terms'])->toArray();
+        $invoice->update($invoiceData);
+
+        if (isset($data['items']) && is_array($data['items'])) {
+            $invoice->items()->delete();
+            $itemsData = array_map(function ($item) {
+                return [
+                    'name' => $item['Item'] ?? $item['name'] ?? null,
+                    'quantity' => $item['Quantity'] ?? $item['quantity'] ?? 0,
+                    'rate' => $item['Rate'] ?? $item['rate'] ?? 0,
+                    'amount' => $item['Amount'] ?? $item['amount'] ?? 0,
+                ];
+            }, $data['items']);
+            $invoice->items()->createMany($itemsData);
+        }
+
+        $metaData = collect($data)->only(['from', 'bill_to', 'ship_to', 'payment_terms', 'po_number', 'logo_path', 'header_columns', 'notes', 'terms'])->toArray();
+        if ($invoice->meta) {
+            $invoice->meta()->update($metaData);
+        } else {
+            $invoice->meta()->create($metaData);
+        }
+
+        return $invoice->load(['items', 'meta']);
     }
 
     public function delete(Invoice $invoice)
     {
-        if ($invoice->logo_path) {
-            Storage::disk('public')->delete($invoice->logo_path);
+        if ($invoice->meta && $invoice->meta->logo_path) {
+            Storage::disk('public')->delete($invoice->meta->logo_path);
         }
         return $invoice->delete();
     }

@@ -81,7 +81,7 @@ function addRow(data = {}) {
 
     let rowHtml = `
             <td class="p-3">
-                <input type="text" name="items[${rowCount}][Item]" value="${data.Item ?? data.item ?? ''}" placeholder="Products" class="w-full bg-transparent border border-gray-300 px-2 py-1 rounded-md focus:outline-none" />
+                <input type="text" name="items[${rowCount}][Item]" value="${data.Item ?? data.item ?? data.name ?? ''}" placeholder="Products" class="w-full bg-transparent border border-gray-300 px-2 py-1 rounded-md focus:outline-none" />
             </td>
             <td class="p-3">
                 <input type="number" step="1" name="items[${rowCount}][Quantity]" value="${data.Quantity ?? data.quantity ?? ''}" min="0" class="quantity-input w-30 border border-gray-300 px-2 py-1 rounded-md" oninput="calculateRow(this)" />
