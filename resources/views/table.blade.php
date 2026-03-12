@@ -182,6 +182,7 @@
 @push('scripts')
 <script>
     window.invoiceOldItems = <?php echo json_encode(old('items', $invoice->items ?? [])); ?>;
+    window.invoiceErrors = <?php echo json_encode($errors->toArray()); ?>;
 </script>
 <script src="{{ asset('js/table.js') }}"></script>
 @endpush

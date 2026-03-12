@@ -11,8 +11,8 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('items-body').innerHTML = '';
 
         // Loop through each item and call your existing addRow function
-        Object.values(oldItems).forEach((item) => {
-            addRow(item);
+        Object.entries(oldItems).forEach(([index, item]) => {
+            addRow(item, index);
         });
     } else {
         // 3. Fallback: If no old data and table is empty, add one blank row

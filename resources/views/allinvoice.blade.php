@@ -1,5 +1,6 @@
 @extends('layout.layout')
 @section("title" , "All Invoices")
+<meta name="csrf-token" content="{{ csrf_token() }}">
 
 
 @section('content')
@@ -80,19 +81,50 @@
                                 </div>
                             </td>
                             <td class="px-8 py-6">
-                                @php
-                                $calculatedStatus = $invoice->balance_due <= 0.1 ? 'Paid' : ($invoice->balance_due < $invoice->total ? 'Partial' : 'Pending');
-                                        @endphp
-                                        <div class="inline-flex items-center px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border shadow-sm
-                                    @if($calculatedStatus == 'Paid') bg-emerald-50 text-emerald-600 border-emerald-100/50 
-                                    @elseif($calculatedStatus == 'Partial') bg-amber-50 text-amber-600 border-amber-100/50
-                                    @else bg-rose-50 text-rose-600 border-rose-100/50 @endif">
-                                            <span class="w-1.5 h-1.5 rounded-full mr-2 
-                                        @if($calculatedStatus == 'Paid') bg-emerald-500 
-                                        @elseif($calculatedStatus == 'Partial') bg-amber-500
-                                        @else bg-rose-400 @endif animate-pulse"></span>
-                                            {{ $calculatedStatus }}
-                                        </div>
+                                <div class="relative status-dropdown" data-invoice-id="{{ $invoice->invoice_number }}">
+                                    @php
+                                    $currentStatus = $invoice->status;
+                                    $statusConfig = [
+                                    'Paid' => ['bg' => 'bg-emerald-50', 'text' => 'text-emerald-600', 'border' => 'border-emerald-100/50', 'dot' => 'bg-emerald-500'],
+                                    'Partial' => ['bg' => 'bg-amber-50', 'text' => 'text-amber-600', 'border' => 'border-amber-100/50', 'dot' => 'bg-amber-500'],
+                                    'Unpaid' => ['bg' => 'bg-rose-50', 'text' => 'text-rose-600', 'border' => 'border-rose-100/50', 'dot' => 'bg-rose-400'],
+                                    'Pending' => ['bg' => 'bg-rose-50', 'text' => 'text-rose-600', 'border' => 'border-rose-100/50', 'dot' => 'bg-rose-400'],
+                                    ];
+                                    $cfg = $statusConfig[$currentStatus] ?? $statusConfig['Unpaid'];
+                                    $showDropdown = in_array($currentStatus, ['Unpaid', 'Partial']);
+
+                                    $statusOptions = [];
+                                    if ($showDropdown && $currentStatus !== 'Paid') {
+                                    $statusOptions[] = 'Paid';
+                                    }
+                                    @endphp
+
+                                    <button
+                                        class="{{ $showDropdown ? 'status-btn' : '' }} inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest border shadow-sm transition-all {{ $showDropdown ? 'hover:scale-105 active:scale-95 cursor-pointer' : 'cursor-default' }} {{ $cfg['bg'] }} {{ $cfg['text'] }} {{ $cfg['border'] }}">
+                                        <span class="w-1.5 h-1.5 rounded-full {{ $cfg['dot'] }} {{ $showDropdown ? 'animate-pulse' : '' }}"></span>
+                                        {{ $currentStatus }}
+                                        @if($showDropdown)
+                                        <svg class="w-2.5 h-2.5 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"></path>
+                                        </svg>
+                                        @endif
+                                    </button>
+
+                                    @if($showDropdown && count($statusOptions))
+                                    <div class="status-menu hidden absolute left-0 z-50 mt-2 w-36 bg-white rounded-2xl shadow-2xl border border-slate-100 overflow-hidden py-1">
+                                        @foreach($statusOptions as $opt)
+                                        <button
+                                            class="status-option cursor-pointer w-full text-left px-4 py-2.5 text-[10px] font-black uppercase tracking-widest flex items-center gap-2.5 transition-colors hover:bg-slate-50 text-slate-500"
+                                            data-status="{{ $opt }}"
+                                            data-balance="{{ $invoice->balance_due }}"
+                                            data-currency="{{ $invoice->currency }}">
+                                            <span class="w-1.5 h-1.5 rounded-full {{ $statusConfig[$opt]['dot'] }}"></span>
+                                            {{ $opt }}
+                                        </button>
+                                        @endforeach
+                                    </div>
+                                    @endif
+                                </div>
                             </td>
                             <td class="px-8 py-6">
                                 <div class="flex justify-center items-center gap-2">
@@ -110,8 +142,7 @@
                                         </svg>
                                     </a>
                                     <a href="{{ route('invoice.delete', $invoice->invoice_number) }}"
-                                        onclick="return confirm('Are you sure you want to delete this invoice?')"
-                                        class="p-2.5 rounded-xl bg-white border border-slate-200 text-slate-600 hover:text-rose-600 hover:border-rose-500 hover:bg-rose-50 transition-all active:scale-90" title="Delete">
+                                        class="delete-invoice-btn p-2.5 rounded-xl bg-white border border-slate-200 text-slate-600 hover:text-rose-600 hover:border-rose-500 hover:bg-rose-50 transition-all active:scale-90" title="Delete">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
                                         </svg>
@@ -143,6 +174,13 @@
         </div>
     </div>
 </div>
+
+{{-- Payment Modal (extracted to its own partial) --}}
+@include('partials.payment_modal')
+
+{{-- Delete Confirmation Modal --}}
+@include('partials.delete_confirmation_modal')
+
 @endsection
 
 @push('scripts')

@@ -7,9 +7,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 const dueDateInput = document.getElementById('due_date');
                 
                 if (dateInput) {
-                    dateInput.min = localDate;
+                    // Remove the localDate restriction to allow backdating
+                    // dateInput.min = localDate;
                     
-                    // Optional: Make due_date always be >= invoice date
                     dateInput.addEventListener('change', function() {
                         if (dueDateInput) {
                             dueDateInput.min = this.value;
@@ -20,9 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     });
                 }
                 
-                if (dueDateInput && dateInput && !dateInput.value) {
-                    dueDateInput.min = localDate;
-                } else if (dueDateInput && dateInput && dateInput.value) {
+                if (dueDateInput && dateInput && dateInput.value) {
                     dueDateInput.min = dateInput.value;
                 }
             });

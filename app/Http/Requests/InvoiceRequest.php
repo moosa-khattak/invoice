@@ -40,7 +40,10 @@ class InvoiceRequest extends FormRequest
             'due_date' => 'required|date',
             'po_number' => 'nullable|string',
             'logo' => 'nullable|image|max:2048',
-            'items' => 'required|array',
+            'items' => 'required|array|min:1',
+            'items.*.Item' => 'required|string',
+            'items.*.Quantity' => 'required|numeric|min:0.01',
+            'items.*.Rate' => 'required|numeric|min:0',
             'notes' => 'nullable|string',
             'terms' => 'nullable|string',
             'shipping' => 'nullable|numeric|min:0',
@@ -68,7 +71,12 @@ class InvoiceRequest extends FormRequest
             "bill_to.required" => "Bill To is required",
             "date.required" => "Date is Required",
             "due_date.required" => "Due Date is Required",
-            "items.required" => "Items is Required",
+            "po_number.required" => "PO Number is Required",
+            "items.required" => "At least one item is required",
+            "items.*.Item.required" => "Item name is required",
+            "items.*.Quantity.required" => "Quantity is required",
+            "items.*.Quantity.min" => "Quantity must be at least 0.01",
+            "items.*.Rate.required" => "Rate is required",
         ];
     }
 }

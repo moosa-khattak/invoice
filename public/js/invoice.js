@@ -68,8 +68,16 @@ function formatMoney(amount) {
         maximumFractionDigits: 0,
     }).format(amount);
 }
-function addRow(data = {}) {
-    rowCount++;
+function addRow(data = {}, manualIndex = null) {
+    // If manualIndex is provided, use it (handles old items/edit items)
+    // Otherwise use current rowCount and increment
+    const index = manualIndex !== null ? manualIndex : ++rowCount;
+    
+    // Ensure rowCount is always at least as large as the highest index
+    if (manualIndex !== null && parseInt(manualIndex) > rowCount) {
+        rowCount = parseInt(manualIndex);
+    }
+
     const row = document.createElement('tr');
     row.className = 'border-b border-gray-100 group';
     const selectedCurrency = document.getElementById('currency-selector').value;
@@ -79,19 +87,34 @@ function addRow(data = {}) {
     const initialRate = parseFloat(data.Rate ?? data.rate) || 0;
     const initialAmount = initialQty * initialRate;
 
+    // Helper to check for errors and return class/message
+    const getError = (fieldName) => {
+        const fullKey = `items.${index}.${fieldName}`;
+        const errors = window.invoiceErrors || {};
+        return errors[fullKey] ? errors[fullKey][0] : null;
+    };
+
+    const itemErr = getError('Item');
+    const qtyErr = getError('Quantity');
+    const rateErr = getError('Rate');
+
     let rowHtml = `
             <td class="p-3">
-                <input type="text" name="items[${rowCount}][Item]" value="${data.Item ?? data.item ?? data.name ?? ''}" placeholder="Products" class="w-full bg-transparent border border-gray-300 px-2 py-1 rounded-md focus:outline-none" />
+                <input type="text" name="items[${index}][Item]" value="${data.Item ?? data.item ?? data.name ?? ''}" placeholder="Products" 
+                    class="w-full bg-transparent border ${itemErr ? 'border-red-500' : 'border-gray-300'} px-2 py-1 rounded-md focus:outline-none" />
+                ${itemErr ? `<span class="text-red-500 text-[10px] block mt-1 font-bold">${itemErr}</span>` : ''}
             </td>
             <td class="p-3">
-                <input type="number" step="1" name="items[${rowCount}][Quantity]" value="${data.Quantity ?? data.quantity ?? ''}" min="0" class="quantity-input w-30 border border-gray-300 px-2 py-1 rounded-md" oninput="calculateRow(this)" />
+                <input type="number" step="1" name="items[${index}][Quantity]" value="${data.Quantity ?? data.quantity ?? ''}" min="0" 
+                    class="quantity-input w-30 border ${qtyErr ? 'border-red-500' : 'border-gray-300'} px-2 py-1 rounded-md" oninput="calculateRow(this)" />
+                ${qtyErr ? `<span class="text-red-500 text-[10px] block mt-1 font-bold">${qtyErr}</span>` : ''}
             </td>
             <td class="p-3">
-                <input type="number" step="1" name="items[${rowCount}][Rate]" value="${data.Rate ?? data.rate ?? ''}" min="0" class="rate-input w-30 border border-gray-300 px-2 py-1 rounded-md" oninput="calculateRow(this)" />
+                <input type="number" step="1" name="items[${index}][Rate]" value="${data.Rate ?? data.rate ?? ''}" min="0" 
+                    class="rate-input w-30 border ${rateErr ? 'border-red-500' : 'border-gray-300'} px-2 py-1 rounded-md" oninput="calculateRow(this)" />
+                ${rateErr ? `<span class="text-red-500 text-[10px] block mt-1 font-bold">${rateErr}</span>` : ''}
             </td>
         `;
-
-    // ... (rest of your dynamic columns logic)
 
     rowHtml += `
             <td class="p-3 text-right font-medium text-gray-700 amount-display">

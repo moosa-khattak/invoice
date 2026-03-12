@@ -180,6 +180,44 @@ class InvoiceController extends Controller
         return redirect()->route('invoice.show', $invoice->invoice_number)->with('success', 'Cash payment of ' . $invoice->currency . ' ' . number_format($cashReceived, 2) . ' recorded successfully!');
     }
 
+    public function updateStatus(Request $request, string $id)
+    {
+        $invoice = $this->repository->getByInvoiceNumber($id);
+
+        $request->validate([
+            'status' => 'required|string|in:Paid,Partial,Unpaid,Pending',
+            'amount' => 'nullable|numeric|min:0.01',
+        ]);
+
+        $status = $request->input('status');
+        $updateData = ['status' => $status];
+
+        if ($status === 'Paid') {
+            $updateData['amount_paid'] = $invoice->total;
+            $updateData['balance_due'] = 0;
+        } elseif ($status === 'Partial') {
+            $partialAmount = (float) $request->input('amount', 0);
+            $newAmountPaid = ($invoice->amount_paid ?? 0) + $partialAmount;
+
+            if ($newAmountPaid >= $invoice->total - 0.1) {
+                $updateData['status'] = 'Paid';
+                $updateData['amount_paid'] = $invoice->total;
+                $updateData['balance_due'] = 0;
+            } else {
+                $updateData['amount_paid'] = $newAmountPaid;
+                $updateData['balance_due'] = max(0, $invoice->total - $newAmountPaid);
+            }
+        }
+
+        $this->repository->update($invoice, $updateData);
+
+        if ($request->ajax()) {
+            return response()->json(['success' => true, 'message' => 'Status updated successfully']);
+        }
+
+        return back()->with('success', 'Status updated successfully');
+    }
+
     public function destroy(string $id)
     {
         $invoice = $this->repository->getByInvoiceNumber($id);
