@@ -57,7 +57,9 @@ class InvoiceRepository implements InvoiceRepositoryInterface
     public function update(Invoice $invoice, array $data)
     {
         $invoiceData = collect($data)->except(['items', 'from', 'bill_to', 'ship_to', 'po_number', 'logo_path', 'notes', 'terms'])->toArray();
-        $invoice->update($invoiceData);
+        if (!empty($invoiceData)) {
+            $invoice->update($invoiceData);
+        }
 
         if (isset($data['items']) && is_array($data['items'])) {
             $invoice->items()->delete();
@@ -73,10 +75,12 @@ class InvoiceRepository implements InvoiceRepositoryInterface
         }
 
         $metaData = collect($data)->only(['from', 'bill_to', 'ship_to', 'po_number', 'logo_path', 'notes', 'terms'])->toArray();
-        if ($invoice->meta) {
-            $invoice->meta()->update($metaData);
-        } else {
-            $invoice->meta()->create($metaData);
+        if (!empty($metaData)) {
+            if ($invoice->meta) {
+                $invoice->meta()->update($metaData);
+            } else {
+                $invoice->meta()->create($metaData);
+            }
         }
 
         return $invoice->load(['items', 'meta']);

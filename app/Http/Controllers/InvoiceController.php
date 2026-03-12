@@ -62,6 +62,7 @@ class InvoiceController extends Controller
             'tax_rate' => (float) $request->input('tax_rate', 0),
             'amount_paid' => (float) $request->input('amount_paid', 0),
             'status' => $totals['status'],
+            'payment_method' => $request->input('action') === 'cash' ? 'cash' : null,
         ]);
         unset($data['logo']); // remove raw file upload, already saved as logo_path
 
@@ -72,7 +73,11 @@ class InvoiceController extends Controller
             return redirect()->route('invoice.payment', ['id' => $invoice->invoice_number]);
         }
 
-        return redirect()->back()->with('success', 'Invoice saved successfully!');
+        if ($request->input('action') === 'cash') {
+            return redirect()->route('invoice.cash', ['id' => $invoice->invoice_number]);
+        }
+
+        return redirect()->route('invoice.show', $invoice->invoice_number)->with('success', 'Invoice saved successfully!');
     }
 
     public function show(string $id)
@@ -119,6 +124,7 @@ class InvoiceController extends Controller
             'tax_rate' => (float) $request->input('tax_rate', 0),
             'amount_paid' => (float) $request->input('amount_paid', 0),
             'status' => $totals['status'],
+            'payment_method' => $request->input('action') === 'cash' ? 'cash' : $invoice->payment_method,
         ]);
         unset($data['logo']); // remove raw file upload, already saved as logo_path
 
@@ -128,10 +134,51 @@ class InvoiceController extends Controller
             return redirect()->route('invoice.payment', ['id' => $invoice->invoice_number]);
         }
 
+        if ($request->input('action') === 'cash') {
+            return redirect()->route('invoice.cash', ['id' => $invoice->invoice_number]);
+        }
+
         return redirect()->route('invoice.show', $invoice->invoice_number)->with('success', 'Invoice updated successfully!');
     }
 
 
+
+    public function cashPayment(string $id)
+    {
+        $invoice = $this->repository->getByInvoiceNumber($id);
+        return view('cash_payment', compact('invoice'));
+    }
+
+    public function processCashPayment(Request $request, string $id)
+    {
+        $invoice = $this->repository->getByInvoiceNumber($id);
+
+        $request->validate([
+            'cash_amount' => 'required|numeric|min:0.01|max:' . $invoice->balance_due,
+        ]);
+
+        $cashReceived = (float) $request->input('cash_amount');
+        $newAmountPaid = ($invoice->amount_paid ?? 0) + $cashReceived;
+        $newBalanceDue = max(0, $invoice->total - $newAmountPaid);
+
+        // Determine status
+        if ($newBalanceDue <= 0.1) {
+            $status = 'Paid';
+        } elseif ($newBalanceDue < $invoice->total) {
+            $status = 'Partial';
+        } else {
+            $status = 'Unpaid';
+        }
+
+        $this->repository->update($invoice, [
+            'amount_paid' => $newAmountPaid,
+            'balance_due' => $newBalanceDue,
+            'status' => $status,
+            'payment_method' => 'cash',
+        ]);
+
+        return redirect()->route('invoice.show', $invoice->invoice_number)->with('success', 'Cash payment of ' . $invoice->currency . ' ' . number_format($cashReceived, 2) . ' recorded successfully!');
+    }
 
     public function destroy(string $id)
     {

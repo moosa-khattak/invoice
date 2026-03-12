@@ -22,6 +22,8 @@ Route::middleware("auth")->group(function () {
         Route::get("/invoice/{id}/edit", "edit")->name("invoice.edit");
         Route::put('/invoice/{id}', 'update')->name('invoice.update');
         Route::get("/invoice/{id}/delete", "destroy")->name("invoice.delete");
+        Route::get("/invoice/{id}/cash", "cashPayment")->name("invoice.cash");
+        Route::post("/invoice/{id}/cash", "processCashPayment")->name("invoice.cash.process");
     });
 
     // Payments
