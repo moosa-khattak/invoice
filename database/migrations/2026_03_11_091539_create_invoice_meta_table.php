@@ -15,10 +15,8 @@ return new class extends Migration
             $table->string('from')->nullable();
             $table->string('bill_to')->nullable();
             $table->string('ship_to')->nullable();
-            $table->string('payment_terms')->nullable();
             $table->string('po_number')->nullable();
             $table->string('logo_path')->nullable();
-            $table->json('header_columns')->nullable();
             $table->text('notes')->nullable();
             $table->text('terms')->nullable();
         });

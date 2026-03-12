@@ -45,6 +45,13 @@
             name="action"
             value="pay"
             class="w-full cursor-pointer bg-teal-600 hover:bg-teal-700 text-white font-bold py-3 px-4 rounded-lg shadow-sm transition duration-200">
+            Pay via cash
+        </button>
+        <button
+            type="submit"
+            name="action"
+            value="pay"
+            class="w-full cursor-pointer bg-teal-600 hover:bg-teal-700 text-white font-bold py-3 px-4 rounded-lg shadow-sm transition duration-200">
             Pay and Save Invoice
         </button>
         <div class="text-center">

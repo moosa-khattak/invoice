@@ -31,7 +31,7 @@ class InvoiceRepository implements InvoiceRepositoryInterface
 
     public function create(array $data)
     {
-        $invoiceData = collect($data)->except(['items', 'from', 'bill_to', 'ship_to', 'payment_terms', 'po_number', 'logo_path', 'header_columns', 'notes', 'terms'])->toArray();
+        $invoiceData = collect($data)->except(['items', 'from', 'bill_to', 'ship_to', 'po_number', 'logo_path', 'notes', 'terms'])->toArray();
         $invoiceData['user_id'] = Auth::user()->id;
 
         $invoice = Invoice::create($invoiceData);
@@ -48,7 +48,7 @@ class InvoiceRepository implements InvoiceRepositoryInterface
             $invoice->items()->createMany($itemsData);
         }
 
-        $metaData = collect($data)->only(['from', 'bill_to', 'ship_to', 'payment_terms', 'po_number', 'logo_path', 'header_columns', 'notes', 'terms'])->toArray();
+        $metaData = collect($data)->only(['from', 'bill_to', 'ship_to', 'po_number', 'logo_path', 'notes', 'terms'])->toArray();
         $invoice->meta()->create($metaData);
 
         return $invoice->load(['items', 'meta']);
@@ -56,7 +56,7 @@ class InvoiceRepository implements InvoiceRepositoryInterface
 
     public function update(Invoice $invoice, array $data)
     {
-        $invoiceData = collect($data)->except(['items', 'from', 'bill_to', 'ship_to', 'payment_terms', 'po_number', 'logo_path', 'header_columns', 'notes', 'terms'])->toArray();
+        $invoiceData = collect($data)->except(['items', 'from', 'bill_to', 'ship_to', 'po_number', 'logo_path', 'notes', 'terms'])->toArray();
         $invoice->update($invoiceData);
 
         if (isset($data['items']) && is_array($data['items'])) {
@@ -72,7 +72,7 @@ class InvoiceRepository implements InvoiceRepositoryInterface
             $invoice->items()->createMany($itemsData);
         }
 
-        $metaData = collect($data)->only(['from', 'bill_to', 'ship_to', 'payment_terms', 'po_number', 'logo_path', 'header_columns', 'notes', 'terms'])->toArray();
+        $metaData = collect($data)->only(['from', 'bill_to', 'ship_to', 'po_number', 'logo_path', 'notes', 'terms'])->toArray();
         if ($invoice->meta) {
             $invoice->meta()->update($metaData);
         } else {

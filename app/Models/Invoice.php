@@ -60,10 +60,6 @@ class Invoice extends Model
     {
         return $this->meta?->ship_to;
     }
-    public function getPaymentTermsAttribute()
-    {
-        return $this->meta?->payment_terms;
-    }
     public function getPoNumberAttribute()
     {
         return $this->meta?->po_number;
@@ -71,9 +67,5 @@ class Invoice extends Model
     public function getLogoPathAttribute()
     {
         return $this->meta?->logo_path;
-    }
-    public function getHeaderColumnsAttribute()
-    {
-        return $this->meta?->header_columns;
     }
 }

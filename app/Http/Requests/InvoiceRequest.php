@@ -38,11 +38,9 @@ class InvoiceRequest extends FormRequest
             'ship_to' => 'nullable|string',
             'date' => 'required|date',
             'due_date' => 'required|date',
-            'payment_terms' => 'required|string',
             'po_number' => 'nullable|string',
             'logo' => 'nullable|image|max:2048',
             'items' => 'required|array',
-            'header_columns' => 'nullable|array',
             'notes' => 'nullable|string',
             'terms' => 'nullable|string',
             'shipping' => 'nullable|numeric|min:0',
@@ -70,7 +68,6 @@ class InvoiceRequest extends FormRequest
             "bill_to.required" => "Bill To is required",
             "date.required" => "Date is Required",
             "due_date.required" => "Due Date is Required",
-            "payment_terms.required" => "Payment Terms is Required",
             "items.required" => "Items is Required",
         ];
     }

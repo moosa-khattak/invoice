@@ -21,6 +21,17 @@
         </div>
         @endif
 
+        @if (session('error'))
+        <div
+            class="bg-rose-100 border border-rose-400 text-rose-700 px-4 py-3 rounded relative mb-4 shadow-sm"
+            role="alert">
+            <strong class="font-bold">Error!</strong>
+            <span class="block sm:inline">
+                {{ session('error') }}
+            </span>
+        </div>
+        @endif
+
         @if ($errors->any())
         <div class="bg-rose-100 border border-rose-400 text-rose-700 px-4 py-3 rounded relative mb-4 shadow-sm" role="alert">
             <strong class="font-bold">Errors found!</strong>

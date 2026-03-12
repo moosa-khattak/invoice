@@ -119,11 +119,6 @@
                 type="date"
                 :value="isset($invoice) && $invoice->date ? $invoice->date->format('Y-m-d') : ''" />
 
-            <!-- Payment Terms -->
-            <x-input
-                name="payment_terms"
-                label="Payment Terms"
-                :value="$invoice->payment_terms ?? ''" />
 
             <!-- Due Date -->
             <x-input

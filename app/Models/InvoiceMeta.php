@@ -14,7 +14,6 @@ class InvoiceMeta extends Model
     protected $guarded = [];
 
     protected $casts = [
-        'header_columns' => 'array',
     ];
 
     public function invoice(): BelongsTo

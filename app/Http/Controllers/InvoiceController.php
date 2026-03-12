@@ -128,7 +128,7 @@ class InvoiceController extends Controller
             return redirect()->route('invoice.payment', ['id' => $invoice->invoice_number]);
         }
 
-        return redirect()->route('allinvoices')->with('success', 'Invoice updated successfully!');
+        return redirect()->route('invoice.show', $invoice->invoice_number)->with('success', 'Invoice updated successfully!');
     }
 
 
