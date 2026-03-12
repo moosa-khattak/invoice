@@ -16,7 +16,6 @@ return new class extends Migration
             $table->decimal('quantity', 15, 2)->default(0);
             $table->decimal('rate', 15, 2)->default(0);
             $table->decimal('amount', 15, 2)->default(0);
-            $table->timestamps();
         });
     }
 

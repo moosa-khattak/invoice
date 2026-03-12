@@ -11,67 +11,35 @@
 
         body {
             font-family: 'Helvetica Neue', 'Helvetica', Arial, sans-serif;
-            font-size: 14px;
+            font-size: 13px;
             color: #374151;
-            /* text-gray-700 */
-            line-height: 1.5;
-            margin-top: 2cm;
-            margin-left: 2cm;
-            margin-right: 2cm;
-            margin-bottom: 2cm;
+            margin: 40px;
             background-color: #ffffff;
         }
 
-        /* Typography */
+        /* Headers & Typography */
         h1,
         h2,
         h3,
-        h4,
-        h5,
-        h6 {
+        h4 {
             margin: 0;
             color: #111827;
-            /* text-gray-900 */
-        }
-
-        .text-sm {
-            font-size: 12px;
-        }
-
-        .text-xs {
-            font-size: 10px;
-        }
-
-        .text-lg {
-            font-size: 18px;
-        }
-
-        .text-xl {
-            font-size: 20px;
-        }
-
-        .text-2xl {
-            font-size: 24px;
-        }
-
-        .font-bold {
-            font-weight: bold;
-        }
-
-        .font-semibold {
-            font-weight: 600;
-        }
-
-        .font-medium {
-            font-weight: 500;
         }
 
         .text-gray-500 {
             color: #6b7280;
         }
 
-        .text-gray-600 {
-            color: #4b5563;
+        .text-gray-900 {
+            color: #111827;
+        }
+
+        .font-bold {
+            font-weight: bold;
+        }
+
+        .font-medium {
+            font-weight: 500;
         }
 
         .text-right {
@@ -82,15 +50,39 @@
             text-align: center;
         }
 
+        .text-sm {
+            font-size: 11px;
+        }
+
+        .text-xs {
+            font-size: 10px;
+        }
+
+        .text-lg {
+            font-size: 16px;
+        }
+
+        .text-2xl {
+            font-size: 24px;
+        }
+
         .uppercase {
             text-transform: uppercase;
         }
 
-        .tracking-wide {
+        .tracking-wider {
             letter-spacing: 0.05em;
         }
 
-        /* Utilities */
+        /* Layout Utilities */
+        .w-full {
+            width: 100%;
+        }
+
+        .w-half {
+            width: 50%;
+        }
+
         .mb-2 {
             margin-bottom: 0.5rem;
         }
@@ -103,233 +95,219 @@
             margin-bottom: 1.5rem;
         }
 
-        .mb-8 {
-            margin-bottom: 2rem;
-        }
-
-        .mt-2 {
-            margin-top: 0.5rem;
-        }
-
         .mt-4 {
             margin-top: 1rem;
         }
 
-        .mt-8 {
-            margin-top: 2rem;
-        }
-
-        .pb-4 {
-            padding-bottom: 1rem;
-        }
-
-        .pt-4 {
-            padding-top: 1rem;
-        }
-
-        .py-2 {
-            padding-top: 0.5rem;
-            padding-bottom: 0.5rem;
-        }
-
-        .py-3 {
-            padding-top: 0.75rem;
-            padding-bottom: 0.75rem;
-        }
-
-        .px-4 {
-            padding-left: 1rem;
-            padding-right: 1rem;
-        }
-
-        /* Layout */
         table {
             width: 100%;
             border-collapse: collapse;
         }
 
-        .w-full {
+        /* Specific Elements */
+        .brand-band {
+            background-color: #2563eb;
+            height: 6px;
             width: 100%;
-        }
-
-        .w-half {
-            width: 50%;
-        }
-
-        /* Specific Components */
-        .header-table {
-            margin-bottom: 2rem;
-        }
-
-        .logo-container img {
-            max-width: 150px;
-            max-height: 80px;
-            object-fit: contain;
+            position: absolute;
+            top: 0;
+            left: 0;
         }
 
         .invoice-title {
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             font-weight: 800;
-            color: #2563eb;
-            /* text-blue-600 */
+            color: #111827;
             letter-spacing: -0.025em;
-            margin-bottom: 0.25rem;
+            text-transform: uppercase;
         }
 
+        .logo-container {
+            height: 80px;
+            text-align: left;
+        }
+
+        .logo-container img {
+            max-width: 160px;
+            max-height: 70px;
+            object-fit: contain;
+        }
+
+        /* Badges */
         .badge {
             display: inline-block;
             padding: 4px 12px;
-            border-radius: 9999px;
-            font-size: 11px;
+            border-radius: 4px;
+            font-size: 10px;
             font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 0.05em;
-            background-color: #dbeafe;
-            /* bg-blue-100 */
-            color: #1e40af;
-            /* text-blue-800 */
         }
 
-        /* Info grid */
+        .badge-paid {
+            background-color: #dcfce7;
+            color: #166534;
+        }
+
+        .badge-partial {
+            background-color: #fef9c3;
+            color: #854d0e;
+        }
+
+        .badge-unpaid {
+            background-color: #fee2e2;
+            color: #991b1b;
+        }
+
+        /* Info Boxes */
+        .info-grid {
+            width: 100%;
+            margin-top: 20px;
+            margin-bottom: 30px;
+        }
+
         .info-box {
-            background-color: #f9fafb;
-            /* bg-gray-50 */
-            border-radius: 0.5rem;
-            padding: 1.5rem;
-            margin-bottom: 2rem;
-            border: 1px solid #e5e7eb;
+            padding: 15px;
+            background-color: #f8fafc;
+            border-left: 3px solid #2563eb;
+            border-radius: 4px;
         }
 
-        .info-table td {
-            vertical-align: top;
+        .info-label {
+            font-size: 10px;
+            font-weight: bold;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 5px;
+        }
+
+        .info-value {
+            font-size: 13px;
+            color: #334155;
+            line-height: 1.4;
         }
 
         /* Items Table */
-        .items-table {
-            width: 100%;
-            margin-bottom: 2rem;
+        .items-header {
+            background-color: #1e293b;
+            color: #ffffff;
         }
 
-        .items-table th {
-            background-color: #f3f4f6;
-            /* bg-gray-100 */
-            color: #374151;
-            /* text-gray-700 */
-            font-size: 11px;
+        .items-header th {
+            padding: 12px 10px;
+            font-size: 10px;
             font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 0.05em;
-            padding: 12px 16px;
-            border-top: 1px solid #e5e7eb;
-            border-bottom: 1px solid #e5e7eb;
+            border: none;
         }
 
-        .items-table td {
-            padding: 16px;
-            border-bottom: 1px solid #e5e7eb;
-            color: #111827;
-            font-size: 13px;
+        .items-row td {
+            padding: 12px 10px;
+            border-bottom: 1px solid #e2e8f0;
+            color: #334155;
         }
 
-        .items-table tr:last-child td {
-            border-bottom: none;
+        .items-row:nth-child(even) {
+            background-color: #f8fafc;
         }
 
         /* Totals Section */
-        .totals-table {
+        .totals-wrapper {
             width: 100%;
+            margin-top: 20px;
         }
 
-        .totals-container {
-            width: 45%;
-            float: right;
-            background-color: #f9fafb;
-            border-radius: 0.5rem;
-            padding: 1.5rem;
-            border: 1px solid #e5e7eb;
-        }
-
-        .qr-container {
+        .qr-section {
             width: 45%;
             float: left;
-            padding-top: 0.5rem;
+            padding: 20px 0;
         }
 
-        .qr-container .qr-label {
-            font-size: 11px;
-            font-weight: bold;
-            color: #6b7280;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-bottom: 8px;
-        }
-
-        .qr-container img {
+        .qr-code {
             width: 100px;
             height: 100px;
-            border: 1px solid #e5e7eb;
+            border: 1px solid #e2e8f0;
             padding: 5px;
-            background-color: #ffffff;
+            border-radius: 4px;
         }
 
-        .totals-row td {
-            padding: 8px 0;
-            font-size: 13px;
-            color: #4b5563;
+        .totals-section {
+            width: 50%;
+            float: right;
         }
 
-        .totals-row td.amount {
+        .totals-table td {
+            padding: 6px 0;
+        }
+
+        .totals-label {
+            text-align: left;
+            color: #64748b;
+            font-size: 12px;
+        }
+
+        .totals-value {
             text-align: right;
+            color: #1e293b;
             font-weight: 500;
-            color: #111827;
+            font-size: 13px;
         }
 
         .totals-divider {
-            border-top: 1px solid #e5e7eb;
+            border-top: 1px solid #cbd5e1;
             margin: 8px 0;
         }
 
-        .total-final td {
-            padding-top: 12px;
+        .total-final .totals-label {
+            font-size: 14px;
+            font-weight: bold;
+            color: #0f172a;
+            padding-top: 8px;
+        }
+
+        .total-final .totals-value {
             font-size: 18px;
             font-weight: bold;
-            color: #111827;
-        }
-
-        .total-final td.amount {
             color: #2563eb;
-            /* text-blue-600 */
+            padding-top: 8px;
         }
 
-        /* Notes */
+        .balance-due {
+            background-color: #f1f5f9;
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+
+        /* Footer Notes */
         .footer-notes {
             clear: both;
-            padding-top: 3rem;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid #e2e8f0;
         }
 
-        .note-box {
-            margin-bottom: 1.5rem;
+        .note-block {
+            margin-bottom: 20px;
         }
 
         .note-title {
-            font-size: 11px;
+            font-size: 10px;
             font-weight: bold;
-            color: #6b7280;
+            color: #94a3b8;
             text-transform: uppercase;
             letter-spacing: 0.05em;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
 
         .note-content {
-            font-size: 12px;
-            color: #4b5563;
-            background-color: #f9fafb;
-            padding: 12px;
-            border-left: 4px solid #d1d5db;
-            border-radius: 0 4px 4px 0;
+            font-size: 11px;
+            color: #475569;
+            line-height: 1.5;
         }
 
-        /* Clearfix */
         .clearfix::after {
             content: "";
             display: table;
@@ -339,153 +317,147 @@
 </head>
 
 <body>
-    <!-- Header -->
-    <table class="header-table w-full">
+    <div class="brand-band"></div>
+
+    <!-- Header Section -->
+    <table class="w-full mb-6" style="margin-top: 20px;">
         <tr>
             <td class="w-half logo-container" style="vertical-align: top;">
-                @if ($invoice->logo_path)
-                @php
-                $logoPath = storage_path('app/public/' . $invoice->logo_path);
-                @endphp
-                @if (file_exists($logoPath))
-                @php
-                $type = pathinfo($logoPath, PATHINFO_EXTENSION);
-                $data = file_get_contents($logoPath);
-                $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
-                @endphp
-                <img src="{{ $base64 }}" alt="Company Logo" />
+                @if (isset($logoBase64) && $logoBase64)
+                <img src="{{ $logoBase64 }}" alt="Logo" />
                 @else
-                <div style="height: 60px;"></div>
-                @endif
-                @else
-                <!-- Placeholder for alignment if no logo -->
-                <div style="height: 60px;"></div>
+                <div style="height: 40px;"></div>
                 @endif
             </td>
             <td class="w-half text-right" style="vertical-align: top;">
                 <div class="invoice-title">INVOICE</div>
-                <div class="text-gray-500 font-medium mb-2">#{{ $invoice->invoice_number }}</div>
+                <div class="text-gray-500 font-bold tracking-wider mb-2">#{{ $invoice->invoice_number }}</div>
+
                 @if($invoice->balance_due == 0)
-                <div class="badge" style="background-color: #dcfce7; color: #166534;">PAID IN FULL</div>
+                <div class="badge badge-paid">Paid In Full</div>
                 @elseif($invoice->balance_due < $invoice->total)
-                    <div class="badge" style="background-color: #fef9c3; color: #854d0e;">PARTIALLY PAID</div>
+                    <div class="badge badge-partial">Partially Paid</div>
                     @else
-                    <div class="badge" style="background-color: #fee2e2; color: #991b1b;">UNPAID</div>
+                    <div class="badge badge-unpaid">Payment Pending</div>
                     @endif
             </td>
         </tr>
     </table>
 
     <!-- Info Grid -->
-    <div class="info-box block">
-        <table class="info-table w-full">
-            <tr>
-                <!-- Left Column (Bill To) -->
-                <td style="width: 35%;">
-                    <div class="text-xs font-bold text-gray-500 uppercase   tracking-wide mb-2">Billed To</div>
-                    <div class="font-semibold text-lg mb-1">{{ explode("\n", $invoice->bill_to)[0] ?? 'N/A' }}</div>
-                    <div class="text-gray-600 text-sm">
+    <table class="info-grid">
+        <tr>
+            <!-- Billed To -->
+            <td style="width: 32%; padding-right: 15px; vertical-align: top;">
+                <div class="info-box border-left">
+                    <div class="info-label">Billed To</div>
+                    <div class="info-value">
+                        <span style="font-weight: bold; font-size: 14px; display: block; margin-bottom: 3px;">{{ explode("\n", $invoice->bill_to)[0] ?? 'N/A' }}</span>
                         {!! nl2br(e(implode("\n", array_slice(explode("\n", $invoice->bill_to), 1)))) !!}
                     </div>
-                </td>
+                </div>
+            </td>
 
-                <!-- Middle Column (Ship To - Optional) -->
-                <td style="width: 35%;">
-                    @if ($invoice->ship_to)
-                    <div class="text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">Shipped To</div>
-                    <div class="font-semibold text-lg mb-1">{{ explode("\n", $invoice->ship_to)[0] ?? 'N/A' }}</div>
-                    <div class="text-gray-600 text-sm">
+            <!-- Shipped To -->
+            <td style="width: 32%; padding-right: 15px; vertical-align: top;">
+                @if ($invoice->ship_to)
+                <div class="info-box">
+                    <div class="info-label">Shipped To</div>
+                    <div class="info-value">
+                        <span style="font-weight: bold; font-size: 14px; display: block; margin-bottom: 3px;">{{ explode("\n", $invoice->ship_to)[0] ?? 'N/A' }}</span>
                         {!! nl2br(e(implode("\n", array_slice(explode("\n", $invoice->ship_to), 1)))) !!}
                     </div>
-                    @endif
-                </td>
+                </div>
+                @endif
+            </td>
 
-                <!-- Right Column (Dates & PO) -->
-                <td style="width: 30%; text-align: right;">
-                    <table class="w-full text-right" style="font-size: 13px;">
+            <!-- Invoice Details -->
+            <td style="width: 36%; vertical-align: top;">
+                <div class="info-box">
+                    <table class="w-full text-right">
                         <tr>
-                            <td class="text-gray-500 pb-2">Invoice Date:</td>
-                            <td class="font-medium pb-2 text-gray-900">{{ $invoice->date ? $invoice->date->format('M d, Y') : 'N/A' }}</td>
+                            <td class="info-label text-right" style="padding-bottom: 5px;">Invoice Date:</td>
+                            <td class="info-value text-right" style="font-weight: bold; padding-bottom: 5px;">{{ $invoice->date ? $invoice->date->format('M d, Y') : 'N/A' }}</td>
                         </tr>
                         <tr>
-                            <td class="text-gray-500 pb-2">Due Date:</td>
-                            <td class="font-medium pb-2 text-gray-900">{{ $invoice->due_date ? $invoice->due_date->format('M d, Y') : 'N/A' }}</td>
+                            <td class="info-label text-right" style="padding-bottom: 5px;">Due Date:</td>
+                            <td class="info-value text-right" style="font-weight: bold; color: #ef4444; padding-bottom: 5px;">{{ $invoice->due_date ? $invoice->due_date->format('M d, Y') : 'N/A' }}</td>
                         </tr>
                         @if ($invoice->po_number)
                         <tr>
-                            <td class="text-gray-500">P.O. Number:</td>
-                            <td class="font-medium text-gray-900">{{ $invoice->po_number }}</td>
+                            <td class="info-label text-right">P.O. Number:</td>
+                            <td class="info-value text-right" style="font-weight: bold;">{{ $invoice->po_number }}</td>
                         </tr>
                         @endif
                     </table>
-                </td>
-            </tr>
-        </table>
-    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
 
-    <!-- Items Table -->
-    <table class="items-table">
-        <thead>
+    <!-- Line Items Table -->
+    <table class="w-full mb-6" style="border-radius: 4px; overflow: hidden;">
+        <thead class="items-header">
             <tr>
-                <th style="text-align: left; width: 45%;">Description</th>
-                <th style="text-align: center; width: 15%;">Quantity</th>
-                <th style="text-align: right; width: 20%;">Rate</th>
+                <th style="text-align: left; width: 45%;">Item Description</th>
+                <th style="text-align: center; width: 15%;">Qty</th>
+                <th style="text-align: right; width: 20%;">Price</th>
                 <th style="text-align: right; width: 20%;">Amount</th>
             </tr>
         </thead>
         <tbody>
-            @if ($invoice->items)
-            @foreach ($invoice->items as $item)
-            <tr>
-                <td class="font-medium">{{ $item['Item'] ?? 'Untitled Item' }}</td>
-                <td class="text-center text-gray-600">{{ $item['Quantity'] ?? 0 }}</td>
-                <td class="text-right text-gray-600">{{ $invoice->currency }} {{ number_format($item['Rate'] ?? 0, 0) }}</td>
-                <td class="text-right font-medium text-gray-900">{{ $invoice->currency }} {{ number_format($item['Amount'] ?? 0, 0) }}</td>
+            @forelse ($invoice->items as $item)
+            <tr class="items-row">
+                <td>
+                    <div class="font-bold">{{ $item->name ?? 'Untitled Item' }}</div>
+                    <div class="text-xs text-gray-500" style="margin-top: 2px;">Product / Service</div>
+                </td>
+                <td class="text-center font-medium">{{ $item->quantity ?? 0 }}</td>
+                <td class="text-right">{{ $invoice->currency }} {{ number_format($item->rate ?? 0, 0) }}</td>
+                <td class="text-right font-bold">{{ $invoice->currency }} {{ number_format($item->amount ?? 0, 0) }}</td>
             </tr>
-            @endforeach
-            @else
+            @empty
             <tr>
-                <td colspan="4" class="text-center text-gray-500" style="padding: 2rem;">No items added to this invoice.</td>
+                <td colspan="4" class="text-center text-gray-500" style="padding: 30px;">No line items found.</td>
             </tr>
-            @endif
+            @endforelse
         </tbody>
     </table>
 
-    <!-- Totals & Notes Area -->
-    <div class="clearfix">
-        @if($invoice->status !== 'Paid')
-        <div style="margin-bottom: 8px;">
-            <img src="data:image/svg+xml;base64,{{ base64_encode(QrCode::size(100)->generate(route('invoice.payment', $invoice->invoice_number))) }}">
+    <!-- Totals Area -->
+    <div class="totals-wrapper clearfix">
+
+        <!-- QR Code -->
+        <div class="qr-section">
+            @if($invoice->status !== 'Paid')
+            <div class="info-label text-left mb-2">Scan To Pay</div>
+            <img class="qr-code" src="data:image/svg+xml;base64,{{ base64_encode(QrCode::size(100)->generate(route('invoice.payment', $invoice->invoice_number))) }}" alt="Payment QR Code">
+            @endif
         </div>
 
-        @endif
-
-        <!-- Totals Box (Right floated) -->
-        <div class="totals-container">
-            <table class="totals-table">
-                <tr class="totals-row">
-                    <td>Subtotal</td>
-                    <td class="amount">{{ $invoice->currency }} {{ number_format($invoice->subtotal, 0) }}</td>
+        <!-- Calculations -->
+        <div class="totals-section">
+            <table class="totals-table w-full">
+                <tr>
+                    <td class="totals-label">Subtotal</td>
+                    <td class="totals-value">{{ $invoice->currency }} {{ number_format($invoice->subtotal, 0) }}</td>
                 </tr>
-
                 @if ($invoice->discount > 0)
-                <tr class="totals-row">
-                    <td>Discount ({{ $invoice->discount_rate }}%)</td>
-                    <td class="amount" style="color: #ef4444;">-{{ $invoice->currency }} {{ number_format($invoice->discount, 0) }}</td>
+                <tr>
+                    <td class="totals-label">Discount ({{ $invoice->discount_rate }}%)</td>
+                    <td class="totals-value" style="color: #ef4444;">-{{ $invoice->currency }} {{ number_format($invoice->discount, 0) }}</td>
                 </tr>
                 @endif
-
                 @if ($invoice->tax > 0)
-                <tr class="totals-row">
-                    <td>Tax ({{ $invoice->tax_rate }}%)</td>
-                    <td class="amount">{{ $invoice->currency }} {{ number_format($invoice->tax, 0) }}</td>
+                <tr>
+                    <td class="totals-label">Tax ({{ $invoice->tax_rate }}%)</td>
+                    <td class="totals-value">{{ $invoice->currency }} {{ number_format($invoice->tax, 0) }}</td>
                 </tr>
                 @endif
-
                 @if ($invoice->shipping > 0)
-                <tr class="totals-row">
-                    <td>Shipping</td>
-                    <td class="amount">{{ $invoice->currency }} {{ number_format($invoice->shipping, 0) }}</td>
+                <tr>
+                    <td class="totals-label">Shipping</td>
+                    <td class="totals-value">{{ $invoice->currency }} {{ number_format($invoice->shipping, 0) }}</td>
                 </tr>
                 @endif
 
@@ -496,8 +468,8 @@
                 </tr>
 
                 <tr class="total-final">
-                    <td>Total</td>
-                    <td class="amount">{{ $invoice->currency }} {{ number_format($invoice->total, 0) }}</td>
+                    <td class="totals-label">Grand Total</td>
+                    <td class="totals-value">{{ $invoice->currency }} {{ number_format($invoice->total, 0) }}</td>
                 </tr>
 
                 @if ($invoice->amount_paid > 0)
@@ -506,13 +478,21 @@
                         <div class="totals-divider"></div>
                     </td>
                 </tr>
-                <tr class="totals-row">
-                    <td style="padding-top: 8px;">Amount Paid</td>
-                    <td class="amount" style="padding-top: 8px; color: #10b981;">{{ $invoice->currency }} {{ number_format($invoice->amount_paid, 0) }}</td>
+                <tr>
+                    <td class="totals-label" style="color: #10b981;">Amount Paid</td>
+                    <td class="totals-value" style="color: #10b981;">{{ $invoice->currency }} {{ number_format($invoice->amount_paid, 0) }}</td>
                 </tr>
-                <tr class="total-final" style="font-size: 16px;">
-                    <td style="color: #374151;">Balance Due</td>
-                    <td class="amount" style="color: #111827;">{{ $invoice->currency }} {{ number_format($invoice->balance_due, 0) }}</td>
+                <tr>
+                    <td colspan="2">
+                        <div class="balance-due">
+                            <table class="w-full">
+                                <tr>
+                                    <td class="info-label" style="margin: 0;">Balance Due</td>
+                                    <td class="text-right" style="font-size: 16px; font-weight: bold; color: #0f172a;">{{ $invoice->currency }} {{ number_format($invoice->balance_due, 0) }}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </td>
                 </tr>
                 @endif
             </table>
@@ -522,16 +502,15 @@
     <!-- Footer Notes -->
     <div class="footer-notes">
         @if ($invoice->notes)
-        <div class="note-box" style="page-break-inside: avoid;">
-            <div class="note-title">Notes</div>
+        <div class="note-block" style="page-break-inside: avoid;">
+            <div class="note-title">Additional Notes</div>
             <div class="note-content">
                 {!! nl2br(e($invoice->notes)) !!}
             </div>
         </div>
         @endif
-
         @if ($invoice->terms)
-        <div class="note-box" style="page-break-inside: avoid;">
+        <div class="note-block" style="page-break-inside: avoid;">
             <div class="note-title">Terms & Conditions</div>
             <div class="note-content">
                 {!! nl2br(e($invoice->terms)) !!}

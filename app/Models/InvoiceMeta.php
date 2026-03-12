@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class InvoiceMeta extends Model
 {
+    //timestamps
+    public $timestamps = false;
     protected $table = 'invoice_meta';
 
     protected $guarded = [];

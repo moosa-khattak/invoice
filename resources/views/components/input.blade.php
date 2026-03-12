@@ -25,6 +25,7 @@
         type="{{ $type }}"
         value="{{ old($name, $value) }}"
         placeholder="{{ $placeholder }}"
+        {{ $attributes->has('min') ? 'min=' . $attributes->get('min') : '' }}
         {{ $readonly ? 'readonly' : '' }}
         {{ $attributes->merge(['class' => 'rounded-lg border px-3 py-2 focus:outline-none focus:ring-2 transition']) }}
 

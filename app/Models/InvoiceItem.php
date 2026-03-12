@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class InvoiceItem extends Model
 {
+    //timestamps
+    public $timestamps = false;
     protected $guarded = [];
 
     protected $casts = [

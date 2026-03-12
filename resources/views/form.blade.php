@@ -100,12 +100,12 @@
                     label="Ship To"
                     placeholder="(optional)"
                     :value="$invoice->ship_to ?? ''" />
-                    
-                </div>
-                <x-input
-                    name="po_number"
-                    label="PO Number"
-                    :value="$invoice->po_number ?? ''" />
+
+            </div>
+            <x-input
+                name="po_number"
+                label="PO Number"
+                :value="$invoice->po_number ?? ''" />
 
         </div>
 
@@ -132,7 +132,7 @@
                 type="date"
                 :value="isset($invoice) && $invoice->due_date ? $invoice->due_date->format('Y-m-d') : ''" />
 
-           
+
 
         </div>
 

@@ -3,8 +3,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 const today = new Date();
                 const localDate = new Date(today.getTime() - (today.getTimezoneOffset() * 60000)).toISOString().split('T')[0];
                 
-                const dateInput = document.getElementById('invoice-date');
-                const dueDateInput = document.getElementById('invoice-due-date');
+                const dateInput = document.getElementById('date');
+                const dueDateInput = document.getElementById('due_date');
                 
                 if (dateInput) {
                     dateInput.min = localDate;

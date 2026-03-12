@@ -78,7 +78,7 @@
                         </div>
 
                         <!-- Addressing -->
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16 pb-12 border-b border-slate-100">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-12  pb-12 border-b border-slate-100">
                             <div>
                                 <h3 class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4">Billed To</h3>
                                 <div class="text-slate-900 font-bold text-lg mb-1">{{ explode("\n", $invoice->bill_to)[0] }}</div>
@@ -113,12 +113,12 @@
                                     @foreach ($invoice->items as $item)
                                     <tr>
                                         <td class="py-6 px-2">
-                                            <div class="text-slate-900 font-bold">{{ $item['Item'] ?? 'Item' }}</div>
+                                            <div class="text-slate-900 font-bold">{{ $item->name ?? 'Item' }}</div>
                                             <div class="text-slate-400 text-xs font-medium mt-0.5">Custom Product Service</div>
                                         </td>
-                                        <td class="py-6 px-2 text-center text-slate-600 font-bold text-sm">{{ $item['Quantity'] ?? 0 }}</td>
-                                        <td class="py-6 px-2 text-right text-slate-600 font-bold text-sm">{{ $invoice->currency }} {{ number_format($item['Rate'] ?? 0, 0) }}</td>
-                                        <td class="py-6 px-2 text-right text-slate-900 font-black text-sm">{{ $invoice->currency }} {{ number_format($item['Amount'] ?? 0, 0) }}</td>
+                                        <td class="py-6 px-2 text-center text-slate-600 font-bold text-sm">{{ $item->quantity ?? 0 }}</td>
+                                        <td class="py-6 px-2 text-right text-slate-600 font-bold text-sm">{{ $invoice->currency }} {{ number_format($item->rate ?? 0, 0) }}</td>
+                                        <td class="py-6 px-2 text-right text-slate-900 font-black text-sm">{{ $invoice->currency }} {{ number_format($item->amount ?? 0, 0) }}</td>
                                     </tr>
                                     @endforeach
                                 </tbody>

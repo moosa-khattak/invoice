@@ -21,7 +21,6 @@ return new class extends Migration
             $table->json('header_columns')->nullable();
             $table->text('notes')->nullable();
             $table->text('terms')->nullable();
-            $table->timestamps();
         });
     }
 
