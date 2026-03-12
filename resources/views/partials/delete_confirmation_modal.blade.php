@@ -1,5 +1,5 @@
 {{-- Delete Confirmation Modal --}}
-<div id="deleteModal" class="fixed inset-0 z-[60] hidden" role="dialog" aria-modal="true">
+<div id="deleteModal" class="fixed inset-0 z-60 hidden" role="dialog" aria-modal="true">
     <div class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm" id="deleteModalOverlay"></div>
     <div class="relative flex items-center justify-center min-h-screen p-4">
         <div class="relative bg-white rounded-[2.5rem] shadow-2xl border border-slate-100 w-full max-w-md transform transition-all">
