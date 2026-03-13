@@ -12,7 +12,7 @@ class RefundedController extends Controller
         protected InvoiceRepositoryInterface $repository,
         protected StripeRepositoryInterface $stripeRepository
     ) {}
-   public function processRefund(Request $request, string $id, \App\Interfaces\StripeRepositoryInterface $stripeRepository)
+    public function processRefund(Request $request, string $id)
     {
         $invoice = $this->repository->getByInvoiceNumber($id);
 
@@ -29,7 +29,7 @@ class RefundedController extends Controller
         try {
             if ($invoice->payment_method === 'stripe' || $invoice->payment_method === 'card') {
                 if ($invoice->transaction_id) {
-                    $stripeRepository->refundPayment($invoice->transaction_id);
+                    $this->stripeRepository->refundPayment($invoice->transaction_id);
                 } else {
                     return back()->with('error', 'Stripe transaction ID not found. Automated refund cannot be processed.');
                 }

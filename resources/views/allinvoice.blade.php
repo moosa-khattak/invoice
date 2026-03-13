@@ -75,7 +75,7 @@
                             <td class="px-8 py-6">
                                 <div class="flex flex-col">
                                     <span class="text-slate-900 font-black tracking-tight">{{ $invoice->currency }} {{ number_format($invoice->total, 0) }}</span>
-                                    <span class="text-[10px] font-bold @if($invoice->balance_due > 0) text-rose-600 @else text-emerald-600 @endif uppercase tracking-wider">
+                                    <span class="text-[10px] font-bold {{ $invoice->balance_due > 0 ? 'text-rose-600' : 'text-emerald-600' }} uppercase tracking-wider">
                                         @if($invoice->balance_due > 0) Due: {{ number_format($invoice->balance_due, 0) }} @else Fully Paid @endif
                                     </span>
                                 </div>
