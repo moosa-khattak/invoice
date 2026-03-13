@@ -39,4 +39,24 @@ class StripeRepository implements StripeRepositoryInterface
     {
         return PaymentIntent::retrieve($paymentIntentId);
     }
+
+    /**
+     * Refund a Stripe PaymentIntent by ID.
+     *
+     * @param string $paymentIntentId
+     * @param float|null $amount
+     * @return \Stripe\Refund
+     */
+    public function refundPayment(string $paymentIntentId, ?float $amount = null)
+    {
+        $params = [
+            'payment_intent' => $paymentIntentId,
+        ];
+
+        if ($amount) {
+            $params['amount'] = (int)($amount * 100);
+        }
+
+        return \Stripe\Refund::create($params);
+    }
 }

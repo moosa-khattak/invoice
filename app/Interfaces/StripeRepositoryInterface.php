@@ -21,4 +21,13 @@ interface StripeRepositoryInterface
      * @return \Stripe\PaymentIntent
      */
     public function retrievePaymentIntent(string $paymentIntentId);
+
+    /**
+     * Refund a Stripe PaymentIntent by ID.
+     *
+     * @param string $paymentIntentId
+     * @param float|null $amount
+     * @return \Stripe\Refund
+     */
+    public function refundPayment(string $paymentIntentId, ?float $amount = null);
 }

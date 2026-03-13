@@ -83,12 +83,13 @@
                             <td class="px-8 py-6">
                                 <div class="relative status-dropdown" data-invoice-id="{{ $invoice->invoice_number }}">
                                     @php
-                                    $currentStatus = $invoice->status;
+                                    $currentStatus = ucfirst($invoice->status);
                                     $statusConfig = [
                                     'Paid' => ['bg' => 'bg-emerald-50', 'text' => 'text-emerald-600', 'border' => 'border-emerald-100/50', 'dot' => 'bg-emerald-500'],
                                     'Partial' => ['bg' => 'bg-amber-50', 'text' => 'text-amber-600', 'border' => 'border-amber-100/50', 'dot' => 'bg-amber-500'],
                                     'Unpaid' => ['bg' => 'bg-rose-50', 'text' => 'text-rose-600', 'border' => 'border-rose-100/50', 'dot' => 'bg-rose-400'],
                                     'Pending' => ['bg' => 'bg-rose-50', 'text' => 'text-rose-600', 'border' => 'border-rose-100/50', 'dot' => 'bg-rose-400'],
+                                    'Refunded' => ['bg' => 'bg-slate-50', 'text' => 'text-slate-600', 'border' => 'border-slate-200', 'dot' => 'bg-slate-400'],
                                     ];
                                     $cfg = $statusConfig[$currentStatus] ?? $statusConfig['Unpaid'];
                                     $showDropdown = in_array($currentStatus, ['Unpaid', 'Partial']);
@@ -147,6 +148,16 @@
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
                                         </svg>
                                     </a>
+                                    @if($invoice->amount_paid > 0 && !in_array($invoice->status, ['Refunded']))
+                                    <form action="{{ route('invoice.refund', $invoice->invoice_number) }}" method="POST" class="inline">
+                                        @csrf
+                                        <button type="button" class="refund-invoice-btn p-2.5 cursor-pointer rounded-xl bg-white border border-slate-200 text-slate-600 hover:text-purple-600 hover:border-purple-500 hover:bg-purple-50 transition-all active:scale-90" title="Issue Refund">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"></path>
+                                            </svg>
+                                        </button>
+                                    </form>
+                                    @endif
                                 </div>
                             </td>
                         </tr>
@@ -180,6 +191,9 @@
 
 {{-- Delete Confirmation Modal --}}
 @include('partials.delete_confirmation_modal')
+
+{{-- Refund Confirmation Modal --}}
+@include('partials.refund_confirmation_modal')
 
 @endsection
 

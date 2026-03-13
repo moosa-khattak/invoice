@@ -218,6 +218,8 @@ class InvoiceController extends Controller
         return back()->with('success', 'Status updated successfully');
     }
 
+    
+
     public function destroy(string $id)
     {
         $invoice = $this->repository->getByInvoiceNumber($id);

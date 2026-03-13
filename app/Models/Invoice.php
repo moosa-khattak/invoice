@@ -23,6 +23,7 @@ class Invoice extends Model
         'total' => 'decimal:2',
         'amount_paid' => 'decimal:2',
         'balance_due' => 'decimal:2',
+        'amount_refunded' => 'decimal:2',
     ];
 
     public function user(): BelongsTo

@@ -55,10 +55,11 @@ class StripeController extends Controller
                 $amountPaid = $paymentIntent->amount / 100;
 
                 $this->invoiceRepository->update($invoice, [
-                    'status' => 'paid',
+                    'status' => 'Paid',
                     'amount_paid' => ($invoice->amount_paid ?? 0) + $amountPaid,
                     'balance_due' => max(0, $invoice->balance_due - $amountPaid),
                     'payment_method' => $paymentIntent->payment_method_types[0] ?? 'stripe',
+                    'transaction_id' => $paymentIntentId,
                 ]);
 
                 $invoice->refresh();

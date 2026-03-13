@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\PDFController;
+use App\Http\Controllers\RefundedController;
 use App\Http\Controllers\StripeController;
 use App\Http\Controllers\UserController;
 
@@ -32,6 +33,8 @@ Route::middleware("auth")->group(function () {
         Route::get('/invoice/{id}/payment', 'payment')->name('invoice.payment');
         Route::post('/invoice/{id}/payment/process', 'processPayment')->name('invoice.payment.process');
     });
+
+    Route::post("/invoice/{id}/refund",[RefundedController::class,"processRefund"] )->name("invoice.refund");
 
     // PDF Export
     Route::get("/invoice/{id}/pdf", [PDFController::class, "downloadPdf"])->name("invoice.pdf");

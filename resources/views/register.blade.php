@@ -16,7 +16,7 @@
         </div>
         @endif
 
-        <form action="{{ route("register.save") }}" method="post" class="space-y-4">
+        <form action="{{ route('register.save') }}" method="post" class="space-y-4">
             @csrf
 
             <x-input

@@ -40,6 +40,17 @@
                     Pay via Card
                 </a>
                 @endif
+                @if($invoice->amount_paid > 0 && !in_array($invoice->status, ['Refunded']))
+                <form action="{{ route('invoice.refund', $invoice->invoice_number) }}" method="POST" class="inline">
+                    @csrf
+                    <button type="button" class="refund-invoice-btn inline-flex items-center cursor-pointer px-5 py-2.5 bg-white border border-slate-200 text-purple-700 text-sm font-bold rounded-xl hover:bg-purple-50 transition-all shadow-sm">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"></path>
+                        </svg>
+                        Issue Refund
+                    </button>
+                </form>
+                @endif
             </div>
         </div>
 
@@ -71,11 +82,12 @@
                                 <p class="text-4xl font-black text-slate-900 tracking-tighter">{{ $invoice->currency }} {{ number_format($invoice->total, 0) }}</p>
                                 <div class="mt-4">
                                     @php
-                                    $calculatedStatus = $invoice->balance_due <= 0.1 ? 'Paid' : ($invoice->balance_due < $invoice->total ? 'Partial' : 'Pending');
+                                    $calculatedStatus = $invoice->status === 'Refunded' ? 'Refunded' : ($invoice->balance_due <= 0.1 ? 'Paid' : ($invoice->balance_due < $invoice->total ? 'Partial' : 'Pending'));
                                             @endphp
                                             <span class="inline-flex items-center px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest
                                         @if($calculatedStatus == 'Paid') bg-emerald-100 text-emerald-700 
                                         @elseif($calculatedStatus == 'Partial') bg-amber-100 text-amber-700
+                                        @elseif($calculatedStatus == 'Refunded') bg-slate-200 text-slate-700
                                         @else bg-rose-100 text-rose-700 @endif">
                                                 {{ $calculatedStatus }}
                                             </span>
@@ -175,6 +187,13 @@
                                 <span class="text-lg font-black text-white leading-none">{{ $invoice->currency }} {{ number_format($invoice->balance_due, 0) }}</span>
                             </div>
                             @endif
+
+                            @if($invoice->amount_refunded > 0)
+                            <div class="flex justify-between w-full max-w-[240px] pt-4 mt-2 border-t border-slate-100 text-sm text-slate-600 font-bold">
+                                <span>Amount Refunded</span>
+                                <span>{{ $invoice->currency }} {{ number_format($invoice->amount_refunded, 0) }}</span>
+                            </div>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -188,13 +207,13 @@
                     <div class="flex items-center justify-between mb-8">
                         <div>
                             @php
-                            $headlineStatus = $invoice->balance_due <= 0.1 ? 'Completed' : ($invoice->balance_due < $invoice->total ? 'Partial' : 'Pending');
-                                    $statusDotColor = $invoice->balance_due <= 0.1 ? 'bg-emerald-500' : ($invoice->balance_due < $invoice->total ? 'bg-amber-500' : 'bg-rose-500');
+                            $headlineStatus = $invoice->status === 'Refunded' ? 'Refunded' : ($invoice->balance_due <= 0.1 ? 'Completed' : ($invoice->balance_due < $invoice->total ? 'Partial' : 'Pending'));
+                                    $statusDotColor = $invoice->status === 'Refunded' ? 'bg-slate-400' : ($invoice->balance_due <= 0.1 ? 'bg-emerald-500' : ($invoice->balance_due < $invoice->total ? 'bg-amber-500' : 'bg-rose-500'));
                                             @endphp
                                             <div class="text-2xl font-black text-slate-900 mb-1">
                                                 {{ $headlineStatus }}
                                             </div>
-                                            <div class="text-sm text-slate-500 font-medium">Payment is {{ $calculatedStatus }}</div>
+                                            <div class="text-sm text-slate-500 font-medium">Payment is {{ strtolower($headlineStatus) }}</div>
                         </div>
                         <div class="w-3 h-3 rounded-full {{ $statusDotColor }} animate-pulse"></div>
                     </div>
@@ -256,3 +275,6 @@
     </div>
 </div>
 @endsection
+
+{{-- Refund Confirmation Modal --}}
+@include('partials.refund_confirmation_modal')
