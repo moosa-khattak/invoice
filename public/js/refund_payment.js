@@ -15,6 +15,12 @@
         // Submit the stored form on confirm
         confirmRefundBtn.addEventListener('click', () => {
             if (refundForm) {
+                // Prevent double clicks
+                confirmRefundBtn.disabled = true;
+                confirmRefundBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                const span = confirmRefundBtn.querySelector('span');
+                if (span) span.textContent = 'Processing Refund...';
+
                 refundForm.submit();
             }
         });

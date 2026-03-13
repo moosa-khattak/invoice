@@ -16,6 +16,10 @@ class RefundedController extends Controller
     {
         $invoice = $this->repository->getByInvoiceNumber($id);
 
+        if ($invoice->status === 'Refunded') {
+            return back()->with('error', 'This invoice has already been refunded.');
+        }
+
         if (!in_array($invoice->status, ['Paid', 'Partial'])) {
             return back()->with('error', 'Only paid or partially paid invoices can be refunded.');
         }
