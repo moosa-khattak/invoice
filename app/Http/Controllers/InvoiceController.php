@@ -197,9 +197,11 @@ class InvoiceController extends Controller
         $request->validate([
             'status' => 'required|string|in:Paid,Partial,Unpaid,Pending',
             'amount' => 'nullable|numeric|min:0.01',
+            'payment_method' => 'nullable|string',
         ]);
 
         $status = $request->input('status');
+        $paymentMethod = $request->input('payment_method', 'Manual');
         $updateData = ['status' => $status];
         $transactionAmount = 0;
 
@@ -207,13 +209,13 @@ class InvoiceController extends Controller
             $transactionAmount = $invoice->total - ($invoice->amount_paid ?? 0);
             $updateData['amount_paid'] = $invoice->total;
             $updateData['balance_due'] = 0;
-            $updateData['payment_method'] = 'Bank Transfer';
+            $updateData['payment_method'] = $paymentMethod;
         } elseif ($status === 'Partial') {
             $partialAmount = (float) $request->input('amount', 0);
             $transactionAmount = $partialAmount;
             $newAmountPaid = ($invoice->amount_paid ?? 0) + $partialAmount;
 
-            $updateData['payment_method'] = 'Bank Transfer';
+            $updateData['payment_method'] = $paymentMethod;
             if ($newAmountPaid >= $invoice->total - 0.1) {
                 $updateData['status'] = 'Paid';
                 $updateData['amount_paid'] = $invoice->total;
@@ -245,12 +247,7 @@ class InvoiceController extends Controller
 
     
 
-    public function history(string $id)
-    {
-        $invoice = $this->repository->getByInvoiceNumber($id);
-        $transactions = $invoice->transactions()->orderBy('created_at', 'desc')->paginate(5);
-        return view('invoice_history', compact('invoice', 'transactions'));
-    }
+    
 
     public function destroy(string $id)
     {

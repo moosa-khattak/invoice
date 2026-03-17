@@ -3,6 +3,7 @@
         const confirmBtn = document.getElementById('confirmPayment');
         const amountField = document.getElementById('amountField');
         const partialInput = document.getElementById('partialAmount');
+        const paymentMethod = document.getElementById('paymentMethod');
         const modalTitle = modal.querySelector('h3');
         const modalDesc = modal.querySelector('p');
         const confirmText = document.getElementById('confirmText');
@@ -67,7 +68,8 @@
         confirmBtn.addEventListener('click', async () => {
             document.getElementById('modalError').classList.add('hidden');
             const amount = activeStatus === 'Partial' ? partialInput.value : null;
-            await sendStatusUpdate(activeInvoiceId, activeStatus, amount);
+            const method = paymentMethod ? paymentMethod.value : 'Manual';
+            await sendStatusUpdate(activeInvoiceId, activeStatus, amount, method);
         });
 
         // ── Close modal ───────────────────────────────────────────────────────────
@@ -87,10 +89,11 @@
             el.classList.remove('hidden');
         }
 
-        async function sendStatusUpdate(invoiceId, status, amount = null) {
+        async function sendStatusUpdate(invoiceId, status, amount = null, method = 'Manual') {
             try {
                 const body = {
-                    status
+                    status,
+                    payment_method: method
                 };
                 if (amount) body.amount = amount;
 

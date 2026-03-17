@@ -53,16 +53,27 @@ class StripeController extends Controller
             if ($paymentIntent->status === 'succeeded') {
                 // Update invoice status
                 $amountPaid = $paymentIntent->amount / 100;
+                $paymentMethod = $paymentIntent->payment_method_types[0] ?? 'stripe';
 
                 $this->invoiceRepository->update($invoice, [
                     'status' => 'Paid',
                     'amount_paid' => ($invoice->amount_paid ?? 0) + $amountPaid,
                     'balance_due' => max(0, $invoice->balance_due - $amountPaid),
-                    'payment_method' => $paymentIntent->payment_method_types[0] ?? 'stripe',
+                    'payment_method' => $paymentMethod,
                     'transaction_id' => $paymentIntentId,
                 ]);
 
                 $invoice->refresh();
+
+                // Log the transaction
+                $invoice->transactions()->create([
+                    'amount' => $amountPaid,
+                    'type' => 'payment',
+                    'payment_method' => $paymentMethod,
+                    'transaction_id' => $paymentIntentId,
+                    'notes' => 'Payment received via Stripe',
+                ]);
+
                 return view('successfullypaid', compact('invoice', 'amountPaid'));
             }
 

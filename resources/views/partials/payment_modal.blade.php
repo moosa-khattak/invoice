@@ -21,6 +21,17 @@
                 <div class="space-y-5">
                     <p id="modalError" class="mt-2 text-[11px] text-rose-500 font-bold hidden"></p>
 
+                    <div id="paymentMethodField" class="mb-4">
+                        <label class="block text-slate-700 font-bold text-sm mb-2 ml-1">Payment Method</label>
+                        <select id="paymentMethod" class="block w-full px-4 py-3 bg-slate-50 border-2 border-slate-100 rounded-2xl text-sm font-bold text-slate-800 focus:outline-none focus:ring-4 focus:ring-teal-500/10 focus:border-teal-500 transition-all appearance-none">
+                            <option value="Bank Transfer">Bank Transfer</option>
+                            <option value="Cash">Cash</option>
+                            <option value="Credit Card">Credit Card</option>
+                            <option value="Check">Check</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+
                     <div id="amountField" class="hidden">
                         <label class="block text-slate-700 font-bold text-sm mb-2 ml-1">Payment Amount</label>
                         <div class="relative group">
