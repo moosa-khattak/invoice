@@ -41,6 +41,11 @@ class Invoice extends Model
         return $this->hasOne(InvoiceMeta::class);
     }
 
+    public function transactions(): HasMany
+    {
+        return $this->hasMany(InvoiceTransaction::class)->orderBy('created_at', 'desc');
+    }
+
     public function getNotesAttribute()
     {
         return $this->meta?->notes;

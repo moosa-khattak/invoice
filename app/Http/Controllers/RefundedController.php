@@ -41,6 +41,15 @@ class RefundedController extends Controller
                 'balance_due' => $invoice->total,
             ]);
 
+            // Log refund transaction
+            $invoice->transactions()->create([
+                'amount' => $refundAmount,
+                'type' => 'refund',
+                'payment_method' => $invoice->payment_method,
+                'transaction_id' => $invoice->transaction_id,
+                'notes' => 'Refund processed successfully',
+            ]);
+
             return back()->with('success', 'Refund processed successfully!');
         } catch (\Exception $e) {
             return back()->with('error', 'Refund failed: ' . $e->getMessage());

@@ -8,7 +8,7 @@
                     id="header-row">
                     <th class="p-3 whitespace-nowrap">Item</th>
                     <th class="p-3 text-center whitespace-nowrap">Quantity</th>
-                    <th class="p-3 text-center whitespace-nowrap">Rate</th>
+                    <th class="p-3 text-center whitespace-nowrap">Price</th>
                     <th class="p-3 text-right whitespace-nowrap">Amount</th>
                     <th class="p-3 w-10"></th>
                     <!-- Delete Action Column -->
@@ -56,17 +56,17 @@
             <!-- Hidden inputs for calculated values required by backend -->
             <input
                 type="hidden"
-                value="{{ old('subtotal', $invoice->subtotal ?? '') }}"
+                value="{{ old('subtotal', isset($invoice) ? number_format($invoice->subtotal, 2, '.', '') : '') }}"
                 name="subtotal"
                 id="input-subtotal" />
             <input
                 type="hidden"
-                value="{{ old('total', $invoice->total ?? '') }}"
+                value="{{ old('total', isset($invoice) ? number_format($invoice->total, 2, '.', '') : '') }}"
                 name="total"
                 id="input-total" />
             <input
                 type="hidden"
-                value="{{ old('balance_due', $invoice->balance_due ?? '') }}"
+                value="{{ old('balance_due', isset($invoice) ? number_format($invoice->balance_due, 2, '.', '') : '') }}"
                 name="balance_due"
                 id="input-balance-due" />
             <input
@@ -79,9 +79,9 @@
                 <span>Subtotal</span>
 
                 <div class="flex gap-5">
-                    <span class="currency-code-display">USD</span>
+                    <span class="currency-code-display">{{ old('currency', $invoice->currency ?? 'USD') }}</span>
                     <span id="subtotal">
-                        {{ number_format(old('subtotal', $invoice->subtotal ?? 0), 0) }}
+                        {{ number_format(old('subtotal', $invoice->subtotal ?? 0), 2) }}
                     </span>
                 </div>
             </div>
@@ -107,7 +107,7 @@
                 <span>Shipping</span>
 
                 <div class="flex gap-2 items-center">
-                    <span class="currency-code-display">USD</span>
+                    <span class="currency-code-display">{{ old('currency', $invoice->currency ?? 'USD') }}</span>
 
                     <x-input
                         name="shipping"
@@ -116,6 +116,7 @@
                         id="shipping"
                         class="w-24 text-right"
                         min="0"
+                        step="0.01"
                         noWrapper="true"
                         oninput="if (this.value < 0) this.value = 0;" />
                 </div>
@@ -142,9 +143,9 @@
             <div class="flex justify-between font-semibold text-lg">
                 <span>Total</span>
                 <div class="flex gap-5">
-                    <span id="currency" class="currency-code-display">USD</span>
+                    <span id="currency" class="currency-code-display">{{ old('currency', $invoice->currency ?? 'USD') }}</span>
                     <span id="total">
-                        {{ number_format(old('total', $invoice->total ?? 0), 0) }}
+                        {{ number_format(old('total', $invoice->total ?? 0), 2) }}
                     </span>
                 </div>
             </div>
@@ -153,7 +154,7 @@
                 <span>Amount Paid</span>
 
                 <div class="flex gap-2 items-center">
-                    <span id="currency" class="currency-code-display">USD</span>
+                    <span id="currency" class="currency-code-display">{{ old('currency', $invoice->currency ?? 'USD') }}</span>
                     <x-input
                         name="amount_paid"
                         type="number"
@@ -169,9 +170,9 @@
             <div class="flex justify-between font-semibold">
                 <span>Balance Due</span>
                 <div class="flex gap-5">
-                    <span id="currency" class="currency-code-display">USD</span>
+                    <span id="currency" class="currency-code-display">{{ old('currency', $invoice->currency ?? 'USD') }}</span>
                     <span id="balance">
-                        {{ number_format(old('balance_due', $invoice->balance_due ?? 0), 0) }}
+                        {{ number_format(old('balance_due', $invoice->balance_due ?? 0), 2) }}
                     </span>
                 </div>
             </div>

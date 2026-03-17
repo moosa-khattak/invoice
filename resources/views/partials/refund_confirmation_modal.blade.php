@@ -11,7 +11,14 @@
                 </div>
 
                 <h3 class="text-2xl font-black text-slate-900 tracking-tighter mb-2">Issue Refund?</h3>
-                <p class="text-slate-500 font-medium text-sm mb-10">This will process a refund for the invoice. This action cannot be undone.</p>
+                <p class="text-slate-500 font-medium text-sm mb-4">This will process a refund for the invoice. This action cannot be undone.</p>
+
+                {{-- Refund Amount Display --}}
+                <div class="bg-purple-50 border border-purple-100 rounded-2xl px-6 py-4 mb-6 text-center">
+                    <p class="text-xs font-bold uppercase tracking-widest text-purple-400 mb-1">Refund Amount</p>
+                    <p id="refundAmountDisplay" class="text-3xl font-black text-purple-700 tracking-tight">—</p>
+                    <p class="text-xs text-slate-400 mt-1 font-medium">Amount that was paid and will be returned</p>
+                </div>
 
                 <div class="flex flex-col gap-3">
                     <button type="button" id="confirmRefundBtn"

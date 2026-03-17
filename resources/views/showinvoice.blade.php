@@ -43,7 +43,7 @@
                 @if($invoice->amount_paid > 0 && !in_array($invoice->status, ['Refunded']))
                 <form action="{{ route('invoice.refund', $invoice->invoice_number) }}" method="POST" class="inline">
                     @csrf
-                    <button type="button" class="refund-invoice-btn inline-flex items-center cursor-pointer px-5 py-2.5 bg-white border border-slate-200 text-purple-700 text-sm font-bold rounded-xl hover:bg-purple-50 transition-all shadow-sm">
+                    <button type="button" class="refund-invoice-btn inline-flex items-center cursor-pointer px-5 py-2.5 bg-white border border-slate-200 text-purple-700 text-sm font-bold rounded-xl hover:bg-purple-50 transition-all shadow-sm" data-amount="{{ number_format($invoice->amount_paid, 2) }}" data-currency="{{ $invoice->currency }}">
                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"></path>
                         </svg>
@@ -79,7 +79,7 @@
 
                             <div class="text-right">
                                 <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Total Amount</p>
-                                <p class="text-4xl font-black text-slate-900 tracking-tighter">{{ $invoice->currency }} {{ number_format($invoice->total, 0) }}</p>
+                                <p class="text-4xl font-black text-slate-900 tracking-tighter">{{ $invoice->currency }} {{ number_format($invoice->total, 2) }}</p>
                                 <div class="mt-4">
                                     @php
                                     $calculatedStatus = $invoice->status === 'Refunded' ? 'Refunded' : ($invoice->balance_due <= 0.1 ? 'Paid' : ($invoice->balance_due < $invoice->total ? 'Partial' : 'Pending'));
@@ -135,8 +135,8 @@
                                             <div class="text-slate-400 text-xs font-medium mt-0.5">Custom Product Service</div>
                                         </td>
                                         <td class="py-6 px-2 text-center text-slate-600 font-bold text-sm">{{ $item->quantity ?? 0 }}</td>
-                                        <td class="py-6 px-2 text-right text-slate-600 font-bold text-sm">{{ $invoice->currency }} {{ number_format($item->rate ?? 0, 0) }}</td>
-                                        <td class="py-6 px-2 text-right text-slate-900 font-black text-sm">{{ $invoice->currency }} {{ number_format($item->amount ?? 0, 0) }}</td>
+                                        <td class="py-6 px-2 text-right text-slate-600 font-bold text-sm">{{ $invoice->currency }} {{ number_format($item->rate ?? 0, 2) }}</td>
+                                        <td class="py-6 px-2 text-right text-slate-900 font-black text-sm">{{ $invoice->currency }} {{ number_format($item->amount ?? 0, 2) }}</td>
                                     </tr>
                                     @endforeach
                                 </tbody>
@@ -145,53 +145,53 @@
 
                         <!-- Summary -->
                         <div class="flex flex-col items-end gap-3 pt-6 border-t border-slate-200">
-                            <div class="flex justify-between w-full max-w-[240px] text-sm text-slate-500 font-bold">
+                            <div class="flex justify-between w-full max-w-[320px] text-sm text-slate-500 font-bold">
                                 <span>Subtotal</span>
-                                <span>{{ $invoice->currency }} {{ number_format($invoice->subtotal, 0) }}</span>
+                                <span class="whitespace-nowrap">{{ $invoice->currency }} {{ number_format($invoice->subtotal, 2) }}</span>
                             </div>
 
                             @if($invoice->discount > 0)
-                            <div class="flex justify-between w-full max-w-[240px] text-sm text-rose-500 font-bold">
+                            <div class="flex justify-between w-full max-w-[320px] text-sm text-rose-500 font-bold">
                                 <span>Discount ({{ $invoice->discount_rate }}%)</span>
-                                <span>-{{ $invoice->currency }} {{ number_format($invoice->discount, 0) }}</span>
+                                <span class="whitespace-nowrap">-{{ $invoice->currency }} {{ number_format($invoice->discount, 2) }}</span>
                             </div>
                             @endif
 
                             @if($invoice->tax > 0)
-                            <div class="flex justify-between w-full max-w-[240px] text-sm text-slate-500 font-bold">
+                            <div class="flex justify-between w-full max-w-[320px] text-sm text-slate-500 font-bold">
                                 <span>Tax ({{ $invoice->tax_rate }}%)</span>
-                                <span>{{ $invoice->currency }} {{ number_format($invoice->tax, 0) }}</span>
+                                <span class="whitespace-nowrap">{{ $invoice->currency }} {{ number_format($invoice->tax, 2) }}</span>
                             </div>
                             @endif
 
                             <!-- shipping -->
                             @if($invoice->shipping > 0)
-                            <div class="flex justify-between w-full max-w-[240px] text-sm text-slate-500 font-bold">
+                            <div class="flex justify-between w-full max-w-[320px] text-sm text-slate-500 font-bold">
                                 <span>Shipping</span>
-                                <span>{{ $invoice->currency }} {{ number_format($invoice->shipping, 0) }}</span>
+                                <span class="whitespace-nowrap">{{ $invoice->currency }} {{ number_format($invoice->shipping, 2) }}</span>
                             </div>
                             @endif
 
-                            <div class="flex justify-between w-full max-w-[240px] pt-4 mt-2 border-t border-slate-100">
+                            <div class="flex justify-between w-full max-w-[320px] pt-4 mt-2 border-t border-slate-100">
                                 <span class="text-[12px] font-black text-slate-400 uppercase tracking-widest">Grand Total</span>
-                                <span class="text-2xl font-black text-slate-900">{{ $invoice->currency }} {{ number_format($invoice->total, 0) }}</span>
+                                <span class="text-2xl font-black text-slate-900 whitespace-nowrap">{{ $invoice->currency }} {{ number_format($invoice->total, 2) }}</span>
                             </div>
 
                             @if($invoice->amount_paid > 0)
-                            <div class="flex justify-between w-full max-w-[240px] text-sm text-green-600 font-bold">
+                            <div class="flex justify-between w-full max-w-[320px] text-sm text-green-600 font-bold">
                                 <span>Amount Paid</span>
-                                <span>{{ $invoice->currency }} {{ number_format($invoice->amount_paid, 0) }}</span>
+                                <span class="whitespace-nowrap">{{ $invoice->currency }} {{ number_format($invoice->amount_paid, 2) }}</span>
                             </div>
-                            <div class="flex justify-between w-full max-w-[240px] p-4 bg-slate-900 rounded-2xl mt-4">
+                            <div class="flex justify-between w-full max-w-[320px] p-4 bg-slate-900 rounded-2xl mt-4">
                                 <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Balance Due</span>
-                                <span class="text-lg font-black text-white leading-none">{{ $invoice->currency }} {{ number_format($invoice->balance_due, 0) }}</span>
+                                <span class="text-lg font-black text-white leading-none whitespace-nowrap">{{ $invoice->currency }} {{ number_format($invoice->balance_due, 2) }}</span>
                             </div>
                             @endif
 
                             @if($invoice->amount_refunded > 0)
-                            <div class="flex justify-between w-full max-w-[240px] pt-4 mt-2 border-t border-slate-100 text-sm text-slate-600 font-bold">
+                            <div class="flex justify-between w-full max-w-[320px] pt-4 mt-2 border-t border-slate-100 text-sm text-slate-600 font-bold">
                                 <span>Amount Refunded</span>
-                                <span>{{ $invoice->currency }} {{ number_format($invoice->amount_refunded, 0) }}</span>
+                                <span class="whitespace-nowrap">{{ $invoice->currency }} {{ number_format($invoice->amount_refunded, 2) }}</span>
                             </div>
                             @endif
                         </div>

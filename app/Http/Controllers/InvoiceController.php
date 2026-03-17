@@ -19,6 +19,8 @@ class InvoiceController extends Controller
     public function index()
     {
         $invoices = $this->repository->getAll();
+        // Eager load transactions for the history modal
+        $invoices->load('transactions');
         return view('allinvoice', compact('invoices'));
     }
 
@@ -177,6 +179,14 @@ class InvoiceController extends Controller
             'payment_method' => 'cash',
         ]);
 
+        // Log transaction history
+        $invoice->transactions()->create([
+            'amount' => $cashReceived,
+            'type' => 'payment',
+            'payment_method' => 'cash',
+            'notes' => 'Manual cash payment recorded',
+        ]);
+
         return redirect()->route('invoice.show', $invoice->invoice_number)->with('success', 'Cash payment of ' . $invoice->currency . ' ' . number_format($cashReceived, 2) . ' recorded successfully!');
     }
 
@@ -191,14 +201,19 @@ class InvoiceController extends Controller
 
         $status = $request->input('status');
         $updateData = ['status' => $status];
+        $transactionAmount = 0;
 
         if ($status === 'Paid') {
+            $transactionAmount = $invoice->total - ($invoice->amount_paid ?? 0);
             $updateData['amount_paid'] = $invoice->total;
             $updateData['balance_due'] = 0;
+            $updateData['payment_method'] = 'Bank Transfer';
         } elseif ($status === 'Partial') {
             $partialAmount = (float) $request->input('amount', 0);
+            $transactionAmount = $partialAmount;
             $newAmountPaid = ($invoice->amount_paid ?? 0) + $partialAmount;
 
+            $updateData['payment_method'] = 'Bank Transfer';
             if ($newAmountPaid >= $invoice->total - 0.1) {
                 $updateData['status'] = 'Paid';
                 $updateData['amount_paid'] = $invoice->total;
@@ -211,6 +226,16 @@ class InvoiceController extends Controller
 
         $this->repository->update($invoice, $updateData);
 
+        // Log transaction history if amount was modified
+        if ($transactionAmount > 0) {
+            $invoice->transactions()->create([
+                'amount' => $transactionAmount,
+                'type' => 'payment',
+                'payment_method' => $updateData['payment_method'] ?? 'manual',
+                'notes' => 'Manual status update to ' . $status,
+            ]);
+        }
+
         if ($request->ajax()) {
             return response()->json(['success' => true, 'message' => 'Status updated successfully']);
         }
@@ -219,6 +244,13 @@ class InvoiceController extends Controller
     }
 
     
+
+    public function history(string $id)
+    {
+        $invoice = $this->repository->getByInvoiceNumber($id);
+        $transactions = $invoice->transactions()->orderBy('created_at', 'desc')->paginate(5);
+        return view('invoice_history', compact('invoice', 'transactions'));
+    }
 
     public function destroy(string $id)
     {

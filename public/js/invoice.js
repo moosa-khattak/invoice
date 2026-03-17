@@ -64,8 +64,8 @@ if (logoInput && logoPreview) {
 
 function formatMoney(amount) {
     return new Intl.NumberFormat('en-US', {
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 0,
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
     }).format(amount);
 }
 function addRow(data = {}, manualIndex = null) {
@@ -105,12 +105,12 @@ function addRow(data = {}, manualIndex = null) {
                 ${itemErr ? `<span class="text-red-500 text-[10px] block mt-1 font-bold">${itemErr}</span>` : ''}
             </td>
             <td class="p-3">
-                <input type="number" step="1" name="items[${index}][Quantity]" value="${data.Quantity ?? data.quantity ?? ''}" min="0" 
+                <input type="number" step="0.01" name="items[${index}][Quantity]" value="${data.Quantity ?? data.quantity ?? ''}" min="0" 
                     class="quantity-input w-30 border ${qtyErr ? 'border-red-500' : 'border-gray-300'} px-2 py-1 rounded-md" oninput="calculateRow(this)" />
                 ${qtyErr ? `<span class="text-red-500 text-[10px] block mt-1 font-bold">${qtyErr}</span>` : ''}
             </td>
             <td class="p-3">
-                <input type="number" step="1" name="items[${index}][Rate]" value="${data.Rate ?? data.rate ?? ''}" min="0" 
+                <input type="number" step="0.01" name="items[${index}][Rate]" value="${data.Rate ?? data.rate ?? ''}" min="0" 
                     class="rate-input w-30 border ${rateErr ? 'border-red-500' : 'border-gray-300'} px-2 py-1 rounded-md" oninput="calculateRow(this)" />
                 ${rateErr ? `<span class="text-red-500 text-[10px] block mt-1 font-bold">${rateErr}</span>` : ''}
             </td>
@@ -186,19 +186,19 @@ function calculateTotals() {
     const taxableAmount = subtotal - discountAmount;
     const taxAmount = taxableAmount * (taxRate / 100);
 
-    // Calculate final figures (rounded)
-    const total = Math.round(subtotal - discountAmount + taxAmount + shipping) || 0;
-    const balance = Math.round(total - paid) || 0;
+    // Calculate final figures
+    const total = (subtotal - discountAmount + taxAmount + shipping) || 0;
+    const balance = (total - paid) || 0;
 
     // Update UI Text
-    subtotalEl.textContent = formatMoney(Math.round(subtotal));
+    subtotalEl.textContent = formatMoney(subtotal);
     totalEl.textContent = formatMoney(total);
     balanceEl.textContent = formatMoney(balance);
 
     // Update Hidden Inputs
-    inputs.subtotal.value = Math.round(subtotal);
-    inputs.total.value = total;
-    inputs.balance.value = balance;
+    inputs.subtotal.value = subtotal.toFixed(2);
+    inputs.total.value = total.toFixed(2);
+    inputs.balance.value = balance.toFixed(2);
 }
 
 // Initialize
@@ -206,3 +206,4 @@ function calculateTotals() {
 if (itemsBody.children.length === 0) {
     addRow();
 }
+updateCurrency();

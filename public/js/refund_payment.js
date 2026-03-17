@@ -8,6 +8,15 @@
             btn.addEventListener('click', (e) => {
                 e.preventDefault();
                 refundForm = btn.closest('form');
+
+                // Populate the refund amount in the modal
+                const amount = btn.dataset.amount ?? '0.00';
+                const currency = btn.dataset.currency ?? '';
+                const display = document.getElementById('refundAmountDisplay');
+                if (display) {
+                    display.textContent = currency + ' ' + amount;
+                }
+
                 refundModal.classList.remove('hidden');
             });
         });

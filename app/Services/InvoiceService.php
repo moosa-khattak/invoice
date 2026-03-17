@@ -41,8 +41,8 @@ class InvoiceService
         foreach ($items as &$item) {
             $qty = (float)($item['Quantity'] ?? $item['quantity'] ?? 0);
             $rate = (float)($item['Rate'] ?? $item['rate'] ?? 0);
-            $item['Amount'] = round($qty * $rate);
-            $item['Quantity'] = $qty; // Normalize for DB consistency
+            $item['Amount'] = $qty * $rate;
+            $item['Quantity'] = (int)$qty; // Cast to integer for DB consistency
             $item['Rate'] = $rate;
             $subtotal += $item['Amount'];
         }
@@ -53,8 +53,6 @@ class InvoiceService
         $taxAmount = $taxableAmount * ($taxRate / 100);
         $total = ($subtotal - $discountAmount) + $taxAmount + $shipping;
 
-        $total = round($total);
-        $amountPaid = round($amountPaid);
         $balanceDue = max(0, $total - $amountPaid);
 
         // Calculate Status
@@ -68,11 +66,11 @@ class InvoiceService
 
         return [
             'items' => $items,
-            'subtotal' => round($subtotal),
-            'discount' => round($discountAmount),
-            'tax' => round($taxAmount),
+            'subtotal' => $subtotal,
+            'discount' => $discountAmount,
+            'tax' => $taxAmount,
             'total' => $total,
-            'balance_due' => round($balanceDue),
+            'balance_due' => $balanceDue,
             'status' => $status
         ];
     }

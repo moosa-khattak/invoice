@@ -14,7 +14,7 @@ class InvoiceRepository implements InvoiceRepositoryInterface
         $user_id = Auth::user()->id;
         // print_r($user_id);
 
-        return Invoice::with(['items', 'meta'])->where('user_id', $user_id)->orderBy('id', 'asc')->get();
+        return Invoice::with(['items', 'meta'])->where('user_id', $user_id)->orderBy('id', 'asc')->paginate(3);
     }
 
     public function getById($id)

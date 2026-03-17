@@ -136,6 +136,16 @@
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
                                         </svg>
                                     </a>
+                                    
+                                    {{-- History Link --}}
+                                    <a href="{{ route('invoice.history', $invoice->invoice_number) }}" 
+                                        class="p-2.5 rounded-xl bg-white border border-slate-200 text-slate-600 hover:text-indigo-600 hover:border-indigo-500 hover:bg-indigo-50 transition-all active:scale-90" 
+                                        title="View History">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                        </svg>
+                                    </a>
+
                                     <a href="{{ route('invoice.edit', $invoice->invoice_number) }}"
                                         class="p-2.5 rounded-xl bg-white border border-slate-200 text-slate-600 hover:text-blue-600 hover:border-blue-500 hover:bg-blue-50 transition-all active:scale-90" title="Edit Invoice">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -151,7 +161,7 @@
                                     @if($invoice->amount_paid > 0 && !in_array($invoice->status, ['Refunded']))
                                     <form action="{{ route('invoice.refund', $invoice->invoice_number) }}" method="POST" class="inline">
                                         @csrf
-                                        <button type="button" class="refund-invoice-btn p-2.5 cursor-pointer rounded-xl bg-white border border-slate-200 text-slate-600 hover:text-purple-600 hover:border-purple-500 hover:bg-purple-50 transition-all active:scale-90" title="Issue Refund">
+                                        <button type="button" class="refund-invoice-btn p-2.5 cursor-pointer rounded-xl bg-white border border-slate-200 text-slate-600 hover:text-purple-600 hover:border-purple-500 hover:bg-purple-50 transition-all active:scale-90" title="Issue Refund" data-amount="{{ number_format($invoice->amount_paid, 2) }}" data-currency="{{ $invoice->currency }}">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"></path>
                                             </svg>
@@ -182,6 +192,11 @@
                     </tbody>
                 </table>
             </div>
+        </div>
+
+        <!-- Pagination -->
+        <div class="mt-8">
+            {{ $invoices->links() }}
         </div>
     </div>
 </div>
